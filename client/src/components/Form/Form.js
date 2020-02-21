@@ -26,7 +26,7 @@ class Form extends Component {
   };
 
   validation = ({ target }) => {
-    const { name, value } = target;
+    const { value } = target;
 
     this.setState({
       emptyError: {
