@@ -42,7 +42,6 @@ class Form extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log(this.state.message);
     this.props.post(this.state.message);
   };
 
