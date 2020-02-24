@@ -14,7 +14,7 @@ const init = () => {
   } else {
     console.log('Creating file...');
     const items = [];
-    for(i = 0; i < 10; i++) {
+    for(i = 0; i < 123; i++) {
       items.push({
         "id": faker.random.uuid(),
         "message": faker.lorem.sentences(), 
@@ -39,10 +39,13 @@ app.get('/api/chat', (req, res) => {
     }
 
     const messages = JSON.parse(data);
-    if (messages.length <= offset + 10) {
-      res.send({data: messages.slice(offset), hasMore: false});
+    if (messages.length < offset + limit) {
+      res.send({messages: messages.slice(offset), hasMore: false});
+    } else if (messages.length === offset + limit) {
+      res.send({messages: [], hasMore: false});
     } else {
-      res.send({data: messages.slice(offset), hasMore: true});
+
+      res.send({messages: messages.slice(offset, offset + limit), hasMore: true});
     }
   });  
 });
@@ -57,7 +60,7 @@ app.post('/api/chat', (req, res)=>{
     }
 
     const messages = JSON.parse(data);
-    messages.push(req.body);
+    messages.unshift(req.body);
 
     fs.writeFile('./chat.json', JSON.stringify(messages), (err) => {
       if(err) {
@@ -93,7 +96,6 @@ app.delete('/api/chat/:id', (req, res)=>{
       });
     });
   } 
-  //change items from [] to file or use local store get 10 then if scroll up => load more 
 });
 
 app.listen(PORT, () => console.log(`listen on ${PORT}`));
