@@ -39,12 +39,9 @@ app.get('/api/chat', (req, res) => {
     }
 
     const messages = JSON.parse(data);
-    if (messages.length < offset + limit) {
+    if (messages.length <= offset + limit) {
       res.send({messages: messages.slice(offset), hasMore: false});
-    } else if (messages.length === offset + limit) {
-      res.send({messages: [], hasMore: false});
     } else {
-
       res.send({messages: messages.slice(offset, offset + limit), hasMore: true});
     }
   });  
