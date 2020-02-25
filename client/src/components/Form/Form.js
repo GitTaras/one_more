@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from '../Input/Input';
-import { postChatMessageThunk } from '../../thunks/index';
+//import { postChatMessageThunk } from '../../thunks/index';
+import { postChatMessage } from '../../actions/actionCreators';
 import styles from './Form.module.css';
 
 const errorState = {
@@ -78,7 +79,8 @@ class Form extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  post: message => dispatch(postChatMessageThunk(message)),
+  // post: message => dispatch(postChatMessageThunk(message)),
+  post: message => dispatch(postChatMessage(message)),
 });
 
 export default connect(null, mapDispatchToProps)(Form);

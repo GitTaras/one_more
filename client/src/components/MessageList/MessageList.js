@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Message from '../Message/Message';
 import styles from './MessageList.module.css';
-import { getChatMessagesThunk } from '../../thunks/index';
+// import { getChatMessagesThunk } from '../../thunks/index';
+import { getChatMessages } from '../../actions/actionCreators';
 import { cleanChat } from '../../actions/actionCreators';
 
 class MessageList extends Component {
@@ -103,7 +104,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getChatMessages: offset => dispatch(getChatMessagesThunk(offset)),
+  // getChatMessages: offset => dispatch(getChatMessagesThunk(offset)),
+  getChatMessages: offset => dispatch(getChatMessages(offset)),
   cleanChat: () => dispatch(cleanChat()),
 });
 

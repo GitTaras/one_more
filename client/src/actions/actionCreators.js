@@ -14,6 +14,11 @@ export const getChatMessagesSuccess = (messages, hasMore) => ({
   hasMore,
 });
 
+export const getChatMessages = offset => ({
+  type: ACTION.FCHAT_MESSAGES,
+  offset,
+});
+
 export const postChatMessageSuccess = message => ({
   type: ACTION.POST_CHAT_MESSAGE_SUCCESS,
   message,
@@ -22,6 +27,16 @@ export const postChatMessageSuccess = message => ({
 export const deleteChatMessageSuccess = id => ({
   type: ACTION.DELETE_CHAT_MESSAGE_SUCCESS,
   id,
+});
+
+export const deleteChatMessage = id => ({
+  type: ACTION.DELETE_CHAT_MESSAGE,
+  id,
+});
+
+export const postChatMessage = message => ({
+  type: ACTION.POST_CHAT_MESSAGE,
+  message,
 });
 
 export const chatMessagesError = etext => ({
