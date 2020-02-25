@@ -22,7 +22,7 @@ class Form extends Component {
 
   onChange = ({ target }) => {
     const value = target.value;
-    this.setState({ [target.name]: value });
+    this.setState({ [target.name]: value }, () => this.validation({ target }));
   };
 
   validation = ({ target }) => {
@@ -38,13 +38,6 @@ class Form extends Component {
 
   get disableButton() {
     return this.state.emptyError.status;
-  }
-
-  onEnter = e => {
-    console.log("on Enter");
-    if (e.key === 'Enter') {
-      this.validation({target: {value: this.state.message}});
-    }
   }
 
   handleSubmit = e => {
@@ -65,9 +58,9 @@ class Form extends Component {
             autoFocus={true}
             onChange={this.onChange}
             onBlur={this.validation}
-            onKeyPress={this.onEnter}
             error={this.state.emptyError}
             required={true}
+            maxLength={200}
           />
           <div>
             <button

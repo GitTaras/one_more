@@ -13,6 +13,7 @@ export const Input = ({
   onChange,
   checked,
   required,
+  ...rest
 }) => (
   <>
     <div className={style.container}>
@@ -29,6 +30,7 @@ export const Input = ({
           onChange={onChange}
           onBlur={onBlur}
           required={required}
+          {...rest}
         />
         {error.status && <span className={style.error}>{error.message}</span>}
       </div>

@@ -29,7 +29,7 @@ export function getChatMessagesThunk(offset) {
 
 export function deleteChatMessageThunk(id) {
   return function(dispatch) {
-    dispatch(chatMessagesReq());
+    //dispatch(chatMessagesReq());
     deleteChatMessageReq(id)
       .then(data => {
         dispatch(deleteChatMessageSuccess(id));
