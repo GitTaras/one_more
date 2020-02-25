@@ -4,6 +4,11 @@ export const chatMessagesReq = () => ({
   type: ACTION.FCHAT_MESSAGES_LOADING,
 });
 
+export const cleanChat = () => ({
+  type: ACTION.CLEAN_CHAT,
+});
+
+
 export const getChatMessagesSuccess = (messages, hasMore) => ({
   type: ACTION.FCHAT_MESSAGES_SUCCESS,
   messages,

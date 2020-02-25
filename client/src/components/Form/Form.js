@@ -40,6 +40,13 @@ class Form extends Component {
     return this.state.emptyError.status;
   }
 
+  onEnter = e => {
+    console.log("on Enter");
+    if (e.key === 'Enter') {
+      this.validation({target: {value: this.state.message}});
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.post({ id: Date.now().toString(), message: this.state.message });
@@ -58,6 +65,7 @@ class Form extends Component {
             autoFocus={true}
             onChange={this.onChange}
             onBlur={this.validation}
+            onKeyPress={this.onEnter}
             error={this.state.emptyError}
             required={true}
           />

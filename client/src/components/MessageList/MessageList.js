@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Message from '../Message/Message';
 import styles from './MessageList.module.css';
 import { getChatMessagesThunk } from '../../thunks/index';
+import { cleanChat } from '../../actions/actionCreators';
 
 class MessageList extends Component {
   constructor(props) {
@@ -40,6 +41,12 @@ class MessageList extends Component {
     ) {
       return this.scrollToBottom();
     }
+
+    if (this.props.messages.length < 10 && this.props.hasMore) {
+      this.props.cleanChat();
+      this.props.getChatMessages();
+    }
+
     if (snapshot !== null) {
       const list = this.scroller;
       list.scrollTop = list.scrollHeight - snapshot;
@@ -97,6 +104,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getChatMessages: offset => dispatch(getChatMessagesThunk(offset)),
+  cleanChat: () => dispatch(cleanChat()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

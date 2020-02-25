@@ -10,6 +10,9 @@ const initialState = {
 
 export default function Messages(state = initialState, action) {
   switch (action.type) {
+    case ACTION.CLEAN_CHAT: {
+      return initialState;
+    }
     case ACTION.FCHAT_MESSAGES_LOADING:
       return { ...state, isLoading: true };
     case ACTION.FCHAT_MESSAGES_ERROR:
