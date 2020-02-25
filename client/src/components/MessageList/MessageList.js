@@ -24,7 +24,7 @@ class MessageList extends Component {
     if (
       prevProps.messages.length !== this.props.messages.length &&
       this.scroller &&
-      this.scroller.scrollTop < 10
+      this.scroller.scrollTop < 50
     ) {
       const scroller = this.scroller;
       return scroller.scrollHeight;
@@ -33,6 +33,13 @@ class MessageList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      prevProps.messages.length < this.props.messages.length &&
+      !snapshot &&
+      this.scroller.scrollTop >= 30
+    ) {
+      return this.scrollToBottom();
+    }
     if (snapshot !== null) {
       const list = this.scroller;
       list.scrollTop = list.scrollHeight - snapshot;
@@ -42,14 +49,10 @@ class MessageList extends Component {
   handleScroll = () => {
     if (
       this.props.messages.length > 9 &&
-      this.scroller.scrollTop < 5 &&
+      this.scroller.scrollTop <= 25 &&
       this.props.hasMore
     ) {
-      
-      this.debounce(
-        this.props.getChatMessages(this.props.messages.length),
-        1000
-      );
+      this.debounce(this.props.getChatMessages(this.props.messages.length), 20);
     }
   };
 
@@ -75,11 +78,9 @@ class MessageList extends Component {
           this.scroller = el;
         }}
       >
-        {isLoading && <div>loading</div>}
+        {isLoading && <div>loading...</div>}
         {error && alert(`Error: ${etext}`)}
-        {!isLoading &&
-          !error &&
-          messages.map(m => <Message key={m.id} {...m} />)}
+        {!error && messages.map(m => <Message key={m.id} {...m} />)}
         <div ref={this.messagesEnd} />
       </div>
     );

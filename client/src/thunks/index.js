@@ -45,7 +45,7 @@ export function deleteChatMessageThunk(id) {
 
 export function postChatMessageThunk(message) {
   return function(dispatch) {
-    dispatch(chatMessagesReq());
+    //dispatch(chatMessagesReq());
     postChatMessageReq(message)
       .then(data => {
         dispatch(postChatMessageSuccess(message));
