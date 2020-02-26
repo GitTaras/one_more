@@ -20,7 +20,7 @@ export default function Messages(state = initialState, action) {
     case ACTION.FCHAT_MESSAGES_SUCCESS:
       return {
         ...state,
-        messages: [...action.messages.reverse(), ...state.messages],
+        messages: [...action.messages, ...state.messages],
         isLoading: false,
         error: false,
         etext: '',

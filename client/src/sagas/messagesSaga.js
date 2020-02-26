@@ -1,15 +1,19 @@
 import { put } from 'redux-saga/effects';
-import { getChatMessagesThunk, deleteChatMessageThunk, postChatMessageThunk } from '../thunks/index';
+import {
+  getChatMessagesThunk,
+  deleteChatMessageThunk,
+  postChatMessageThunk,
+} from '../thunks/index';
 
-export function* getMessages({offset}) {
+export function* getMessages({ offset }) {
   try {
     yield put(getChatMessagesThunk(offset));
   } catch {
-    console.log('error get saga')
+    console.log('error get saga');
   }
 }
 
-export function* deleteMessage({id}) {
+export function* deleteMessage({ id }) {
   try {
     yield put(deleteChatMessageThunk(id));
   } catch {
@@ -17,7 +21,7 @@ export function* deleteMessage({id}) {
   }
 }
 
-export function* addMessage({message}) {
+export function* addMessage({ message }) {
   try {
     yield put(postChatMessageThunk(message));
   } catch {
