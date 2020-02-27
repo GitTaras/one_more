@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Message.module.css';
-import { deleteChatMessage } from '../../actions/actionCreators';
+import { deleteChatMessage } from '../../store/messages/actionCreators';
 // import { deleteChatMessageThunk } from '../../thunks/index';
 import { connect } from 'react-redux';
 

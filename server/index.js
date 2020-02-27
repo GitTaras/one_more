@@ -37,6 +37,7 @@ init();
 app.get('/api/chat', async (req, res) => {
   // let {offset = 0, limit = 10} = req.query;
   // console.log({offset, limit});
+  //res.sendStatus(404);
   let offset = Number(req.query.offset) || 0;
   let limit = Number(req.query.limit) || 10;
 
@@ -67,6 +68,7 @@ app.post('/api/chat', async (req, res) => {
     res.sendStatus(200);
     console.log(`write message: ${req.body.id} succesfully!`);
   } catch(e) {
+    console.error(e);
     res.sendStatus(400);
   }
 
@@ -93,6 +95,7 @@ app.delete('/api/chat/:id', async (req, res)=>{
     res.sendStatus(200);
     console.log(`delete message: ${id} succesfully!`);
   } catch(e) {
+    console.error(e);
     res.sendStatus(400);
   }
 

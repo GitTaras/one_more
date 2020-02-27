@@ -3,7 +3,7 @@ import {
   getChatMessagesThunk,
   deleteChatMessageThunk,
   postChatMessageThunk,
-} from '../thunks/index';
+} from '../../thunks';
 
 export function* getMessages({ offset }) {
   try {

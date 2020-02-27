@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Message from '../Message/Message';
 import styles from './MessageList.module.css';
-// import { getChatMessagesThunk } from '../../thunks/index';
-import { getChatMessages } from '../../actions/actionCreators';
-import { cleanChat } from '../../actions/actionCreators';
+import { getChatMessages } from '../../store/messages/actionCreators';
+import { cleanChat } from '../../store/messages/actionCreators';
 
 class MessageList extends Component {
   constructor(props) {
@@ -18,8 +17,9 @@ class MessageList extends Component {
   };
 
   componentDidMount() {
-    this.props.getChatMessages();
-    setTimeout(this.scrollToBottom, 50);
+    this.props.getChatMessages().then(() => {
+      this.scrollToBottom();
+    });
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -58,23 +58,12 @@ class MessageList extends Component {
     if (
       this.props.messages.length > 9 &&
       this.scroller.scrollTop <= 25 &&
-      this.props.hasMore
+      this.props.hasMore &&
+      !this.props.isLoading
     ) {
-      this.debounce(this.props.getChatMessages(this.props.messages.length), 20);
+      this.props.getChatMessages(this.props.messages.length);
     }
   };
-
-  debounce(f, ms) {
-    let isCooldown = false;
-
-    return function() {
-      if (isCooldown) return;
-
-      f.apply(this, arguments);
-      isCooldown = true;
-      setTimeout(() => (isCooldown = false), ms);
-    };
-  }
 
   render() {
     const { messages, error, etext, isLoading } = this.props;
@@ -104,7 +93,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // getChatMessages: offset => dispatch(getChatMessagesThunk(offset)),
   getChatMessages: offset => dispatch(getChatMessages(offset)),
   cleanChat: () => dispatch(cleanChat()),
 });

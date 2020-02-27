@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from '../Input/Input';
 //import { postChatMessageThunk } from '../../thunks/index';
-import { postChatMessage } from '../../actions/actionCreators';
+import { postChatMessage } from '../../store/messages/actionCreators';
 import styles from './Form.module.css';
 
 const errorState = {
