@@ -37,7 +37,7 @@ init();
 app.get('/api/chat', async (req, res) => {
   //res.sendStatus(404);
   let offset = parseInt(_.get(req, 'query.offset', 0), 10);
-  let limit = parseInt(_.get(req, 'query.limit', 10), 10);
+  let limit = parseInt(_.get(req, 'query.limit', 15), 10);
 
   try {
 

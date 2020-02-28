@@ -48,7 +48,7 @@ class MessageList extends Component {
       alert(`Error: ${this.props.errorMessage}`);
     }
 
-    if (this.props.messages.length < 10 && this.props.hasMore) {
+    if (this.props.messages.length < 15 && this.props.hasMore) {
       this.props.cleanChat();
       this.props.getChatMessages();
     }
@@ -61,7 +61,7 @@ class MessageList extends Component {
 
   handleScroll = () => {
     if (
-      this.props.messages.length > 9 &&
+      this.props.messages.length > 14 &&
       this.scroller.scrollTop <= 25 &&
       this.props.hasMore &&
       !this.props.isLoading

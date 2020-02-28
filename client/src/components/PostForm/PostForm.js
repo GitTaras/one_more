@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from '../Input/Input';
+import { Button } from 'antd';
 import { postChatMessage } from '../../store/messages/actions';
 import styles from './PostForm.module.css';
 
@@ -63,13 +64,15 @@ class PostForm extends Component {
             maxLength={200}
           />
           <div>
-            <button
-              type="submit"
+            <Button
+              type="primary"
+              size="large"
+              onClick={this.handleSubmit}
               disabled={this.disableButton}
-              className={styles.buttomPost}
+              loading={this.props.isLoading}
             >
               Post
-            </button>
+            </Button>
           </div>
         </form>
       </>
