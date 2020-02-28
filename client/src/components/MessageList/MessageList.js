@@ -84,7 +84,7 @@ class MessageList extends Component {
           loading={isLoading}
           dataSource={messages}
           renderItem={item => (
-            <List.Item className={styles.antListItem} key={item.id}>
+            <List.Item key={item.id}>
               <Message key={item.id} {...item} />
             </List.Item>
           )}

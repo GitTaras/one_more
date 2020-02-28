@@ -26,9 +26,6 @@
   height: 11px;
 }
 
-.antListItem {
-  display: block !important;
-}
 /*scss or less*/
 /*.antListItem {*/
 /*  :global {*/

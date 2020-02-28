@@ -38,13 +38,16 @@ class PostForm extends Component {
   };
 
   get disableButton() {
-    return this.state.emptyError.status || this.props.isLoading;
+    return this.state.emptyError.status || this.props.isLoading || !this.state.message;
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.post({ id: Date.now().toString(), message: this.state.message });
-    this.setState({ message: '' });
+
+    if (!this.props.isLoading) {
+      this.props.post({ id: Date.now().toString(), message: this.state.message });
+      this.setState({ message: '' });
+    }
   };
 
   render() {
@@ -58,16 +61,15 @@ class PostForm extends Component {
             placeholder="type your message"
             autoFocus={true}
             onChange={this.onChange}
-            onBlur={this.validation}
             error={this.state.emptyError}
             required={true}
             maxLength={200}
           />
           <div>
             <Button
+              htmlType="submit"
               type="primary"
               size="large"
-              onClick={this.handleSubmit}
               disabled={this.disableButton}
               loading={this.props.isLoading}
             >
