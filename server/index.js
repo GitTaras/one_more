@@ -3,7 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import faker from 'faker';
 import util from 'util';
-
+import _ from 'lodash';
 const PORT = process.env.PORT || 5000;
 const app = express();
 const readFilePromise = util.promisify(fs.readFile);
@@ -28,18 +28,16 @@ const init = () => {
     }
     const data = JSON.stringify(items);
     fs.writeFileSync('chat.json', data);
-    console.log('written random data to chat.json...');
+    console.log('wrote random data to chat.json...');
   }
 };
 
 init();
 
 app.get('/api/chat', async (req, res) => {
-  // let {offset = 0, limit = 10} = req.query;
-  // console.log({offset, limit});
   //res.sendStatus(404);
-  let offset = Number(req.query.offset) || 0;
-  let limit = Number(req.query.limit) || 10;
+  let offset = parseInt(_.get(req, 'query.offset', 0), 10);
+  let limit = parseInt(_.get(req, 'query.limit', 10), 10);
 
   try {
 
@@ -57,7 +55,7 @@ app.get('/api/chat', async (req, res) => {
 });
 
 app.post('/api/chat', async (req, res) => {
-
+    // res.sendStatus(400);
   try {
     const data = await readFilePromise('./chat.json', 'utf-8');
     const messages = JSON.parse(data);

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from '../Input/Input';
-//import { postChatMessageThunk } from '../../thunks/index';
-import { postChatMessage } from '../../store/messages/actionCreators';
-import styles from './Form.module.css';
+import { postChatMessage } from '../../store/messages/actions';
+import styles from './PostForm.module.css';
 
 const errorState = {
   emptyError: {
@@ -12,7 +11,7 @@ const errorState = {
   },
 };
 
-class Form extends Component {
+class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +37,7 @@ class Form extends Component {
   };
 
   get disableButton() {
-    return this.state.emptyError.status;
+    return this.state.emptyError.status || this.props.isLoading;
   }
 
   handleSubmit = e => {
@@ -78,9 +77,12 @@ class Form extends Component {
   }
 }
 
+const mapStateToProps = store => ({
+  isLoading: store.messages.isLoading,
+});
+
 const mapDispatchToProps = dispatch => ({
-  // post: message => dispatch(postChatMessageThunk(message)),
   post: message => dispatch(postChatMessage(message)),
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

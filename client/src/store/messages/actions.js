@@ -1,10 +1,6 @@
 import ACTION from '../constants';
 import { restURL } from '../../api/baseURL';
 
-export const chatMessagesReq = () => ({
-  type: ACTION.FCHAT_MESSAGES_LOADING,
-});
-
 export const cleanChat = () => ({
   type: ACTION.CLEAN_CHAT,
 });
@@ -37,8 +33,10 @@ export const postChatMessage = message => (dispatch, getState) => {
       data: message,
       method: 'post',
     },
+    // payload: {
+    //   messages,
+    // },
     meta: {
-      asPromise: true,
       messages,
     },
   });
@@ -55,13 +53,7 @@ export const deleteChatMessage = id => (dispatch, getState) => {
       method: 'delete',
     },
     meta: {
-      asPromise: true,
       messages,
     },
   });
-}
-
-export const chatMessagesError = etext => ({
-  type: ACTION.FCHAT_MESSAGES_ERROR,
-  etext,
-});
+};

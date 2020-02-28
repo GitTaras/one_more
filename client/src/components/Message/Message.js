@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from './Message.module.css';
-import { deleteChatMessage } from '../../store/messages/actionCreators';
-// import { deleteChatMessageThunk } from '../../thunks/index';
+import { deleteChatMessage } from '../../store/messages/actions';
 import { connect } from 'react-redux';
 
 function Message(props) {
@@ -22,7 +21,6 @@ function Message(props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  // deleteMessage: id => dispatch(deleteChatMessageThunk(id)),
   deleteMessage: id => dispatch(deleteChatMessage(id)),
 });
 

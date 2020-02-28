@@ -1,19 +1,19 @@
 .messageItem {
-  border-bottom: 1px solid rgba(224, 206, 206, 0.979);
+  /*border-bottom: 1px solid rgba(224, 206, 206, 0.979);*/
   display: flex;
   align-items: center;
   justify-content: flex-end;
   flex-direction: row;
   min-width: 255px;
   min-height: 40px;  
-  box-shadow: 0 0px 1px 0 rgba(0,0,0,0.1);
-  transition: 0.3s;
+  /*box-shadow: 0 0px 1px 0 rgba(0,0,0,0.1);*/
+  /*transition: 0.3s;*/
   margin: 1px 0 3px 0;
 }
 
-.messageItem:hover {
-  box-shadow: 0 0px 2px 0 rgba(0,0,0,0.2);
-}
+/*.messageItem:hover {*/
+/*  box-shadow: 0 0px 2px 0 rgba(0,0,0,0.2);*/
+/*}*/
 
 .itemDescription {
   background-color: #e6e6fa61;

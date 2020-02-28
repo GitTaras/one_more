@@ -4,7 +4,7 @@
     "es6": true,
     "node": true
   },
-  "extends": ["react-app", "plugin:prettier/recommended"],
+  "extends": ["react-app", "prettier", "prettier/react", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaVersion": 2018
   },

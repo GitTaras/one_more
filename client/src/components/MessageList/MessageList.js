@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Message from '../Message/Message';
+import { List } from 'antd';
 import styles from './MessageList.module.css';
-import { getChatMessages } from '../../store/messages/actionCreators';
-import { cleanChat } from '../../store/messages/actionCreators';
+import { getChatMessages } from '../../store/messages/actions';
+import { cleanChat } from '../../store/messages/actions';
 
 class MessageList extends Component {
   constructor(props) {
@@ -43,6 +44,10 @@ class MessageList extends Component {
       return this.scrollToBottom();
     }
 
+    if (this.props.isError) {
+      alert(`Error: ${this.props.errorMessage}`);
+    }
+
     if (this.props.messages.length < 10 && this.props.hasMore) {
       this.props.cleanChat();
       this.props.getChatMessages();
@@ -66,7 +71,7 @@ class MessageList extends Component {
   };
 
   render() {
-    const { messages, error, etext, isLoading } = this.props;
+    const { messages, isLoading } = this.props;
     return (
       <div
         className={styles.container}
@@ -75,10 +80,17 @@ class MessageList extends Component {
           this.scroller = el;
         }}
       >
-        {isLoading && <div>loading...</div>}
-        {error && alert(`Error: ${etext}`)}
-        {!error && messages.map(m => <Message key={m.id} {...m} />)}
-        <div ref={this.messagesEnd} />
+        <List
+          loading={isLoading}
+          dataSource={messages}
+          renderItem={item => (
+            <List.Item className={styles.antListItem} key={item.id}>
+              <Message key={item.id} {...item} />
+            </List.Item>
+          )}
+        >
+          <div ref={this.messagesEnd} />
+        </List>
       </div>
     );
   }
@@ -87,8 +99,8 @@ class MessageList extends Component {
 const mapStateToProps = state => ({
   messages: state.messages.messages,
   hasMore: state.messages.hasMore,
-  error: state.messages.error,
-  etext: state.messages.etext,
+  isError: state.messages.isError,
+  errorMessage: state.messages.errorMessage,
   isLoading: state.messages.isLoading,
 });
 
