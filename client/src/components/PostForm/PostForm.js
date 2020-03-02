@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Input } from '../Input/Input';
-import { Button } from 'antd';
+import { Input } from '../UI/Input/Input';
+import { Button/*,  Form, Input */} from 'antd';
 import { postChatMessage } from '../../store/messages/actions';
 import styles from './PostForm.module.css';
 

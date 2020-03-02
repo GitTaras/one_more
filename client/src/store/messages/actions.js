@@ -33,9 +33,6 @@ export const postChatMessage = message => (dispatch, getState) => {
       data: message,
       method: 'post',
     },
-    // payload: {
-    //   messages,
-    // },
     meta: {
       messages,
     },
