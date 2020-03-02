@@ -23,9 +23,7 @@ export const getChatMessages = (offset = 0) => dispatch => {
   });
 };
 
-// import { POST_CHAT_MESSAGE_SUCCESS } from '../store/constants';
 export const postChatMessage = message => (dispatch, getState) => {
-  const messages = getState().messages.messages.concat(message);
   dispatch({
     type: ACTION.POST_CHAT_MESSAGE,
     request: {
@@ -33,15 +31,12 @@ export const postChatMessage = message => (dispatch, getState) => {
       data: message,
       method: 'post',
     },
-    meta: {
-      messages,
-    },
   });
 };
 
 export const deleteChatMessage = id => (dispatch, getState) => {
   const messages = getState().messages.messages.filter(
-    message => message.id !== id
+    message => message._id !== id
   );
   dispatch({
     type: ACTION.DELETE_CHAT_MESSAGE,

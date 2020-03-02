@@ -47,12 +47,13 @@ export default (state = initialState, action) => {
       };
 
     case success(ACTION.POST_CHAT_MESSAGE): {
+      const messages = state.messages.concat(action.data);
       return {
         ...state,
         isLoading: false,
         isError: false,
         errorMessage: '',
-        messages: action.meta.messages,
+        messages: messages,
       };
     }
 

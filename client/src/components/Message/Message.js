@@ -4,10 +4,10 @@ import { deleteChatMessage } from '../../store/messages/actions';
 import { connect } from 'react-redux';
 
 function Message(props) {
-  const { id, message, deleteMessage } = props;
+  const { _id, message, deleteMessage } = props;
 
   function onDelete() {
-    deleteMessage(id);
+    deleteMessage(_id);
   }
 
   return (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Input } from '../UI/Input/Input';
-import { Button/*,  Form, Input */} from 'antd';
+import { Button } from 'antd';
 import { postChatMessage } from '../../store/messages/actions';
 import styles from './PostForm.module.css';
 
@@ -38,14 +38,18 @@ class PostForm extends Component {
   };
 
   get disableButton() {
-    return this.state.emptyError.status || this.props.isLoading || !this.state.message;
+    return (
+      this.state.emptyError.status ||
+      this.props.isLoading ||
+      !this.state.message
+    );
   }
 
   handleSubmit = e => {
     e.preventDefault();
 
     if (!this.props.isLoading) {
-      this.props.post({ id: Date.now().toString(), message: this.state.message });
+      this.props.post({ message: this.state.message });
       this.setState({ message: '' });
     }
   };
