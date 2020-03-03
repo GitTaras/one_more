@@ -20,7 +20,7 @@ export const Input = ({
       {label && <label className="label">{label}</label>}
       <div className={style.inputContainer}>
         <input
-          className={error.status ? style.inputDanger : ''}
+          className={error ? style.inputDanger : ''}
           name={name}
           value={value}
           type={type}
@@ -32,7 +32,7 @@ export const Input = ({
           required={required}
           {...rest}
         />
-        {error.status && <span className={style.error}>{error.message}</span>}
+        {error && <span className={style.error}>{error}</span>}
       </div>
     </div>
   </>
