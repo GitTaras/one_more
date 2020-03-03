@@ -12,10 +12,10 @@ function Message(props) {
 
   return (
     <div className={styles.messageItem}>
+      <span className={styles.itemDescription}>{message}</span>
       <span className={styles.closeButton} onClick={onDelete}>
         &times;
       </span>
-      <span className={styles.itemDescription}>{message}</span>
     </div>
   );
 }
