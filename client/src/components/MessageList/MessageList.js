@@ -48,7 +48,7 @@ class MessageList extends Component {
       alert(`Error: ${this.props.errorMessage}`);
     }
 
-    if (this.props.messages.length < 15 && this.props.hasMore) {
+    if (this.props.messages.length < this.props.limit && this.props.hasMore) {
       this.props.cleanChat();
       this.props.getChatMessages();
     }
@@ -61,12 +61,12 @@ class MessageList extends Component {
 
   handleScroll = () => {
     if (
-      this.props.messages.length > 14 &&
+      this.props.messages.length > this.props.limit - 1 &&
       this.scroller.scrollTop <= 25 &&
       this.props.hasMore &&
       !this.props.isLoading
     ) {
-      this.props.getChatMessages(this.props.messages.length);
+      this.props.getChatMessages(this.props.nextPage);
     }
   };
 
@@ -102,10 +102,13 @@ const mapStateToProps = state => ({
   isError: state.messages.isError,
   errorMessage: state.messages.errorMessage,
   isLoading: state.messages.isLoading,
+  limit: state.messages.limit,
+  page: state.messages.page,
+  nextPage: state.messages.nextPage,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getChatMessages: offset => dispatch(getChatMessages(offset)),
+  getChatMessages: page => dispatch(getChatMessages(page)),
   cleanChat: () => dispatch(cleanChat()),
 });
 

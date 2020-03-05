@@ -16,9 +16,7 @@ function configureStore() {
   const middleware = [thunk, sagaMiddleware];
   const store = createStore(
     reducers,
-    composeWithDevTools(
-      applyMiddleware(requestsPromiseMiddleware(), ...middleware)
-    )
+    composeWithDevTools(applyMiddleware(requestsPromiseMiddleware(), ...middleware))
   );
 
   sagaMiddleware.run(rootSaga);

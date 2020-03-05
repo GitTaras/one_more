@@ -6,6 +6,9 @@ const initialState = {
   isLoading: false,
   errorMessage: '',
   hasMore: false,
+  page: 1,
+  nextPage: 1,
+  limit: 15,
   messages: [],
 };
 
@@ -28,11 +31,14 @@ export default (state = initialState, action) => {
     case success(ACTION.FETCH_CHAT_MESSAGES):
       return {
         ...state,
-        messages: [...action.data.messages, ...state.messages],
+        messages: [...action.data.docs, ...state.messages],
         isLoading: false,
         isError: false,
         errorMessage: '',
-        hasMore: action.data.hasMore,
+        hasMore: action.data.page < action.data.pages,
+        page: action.data.page,
+        nextPage: action.data.nextPage,
+        limit: action.data.limit,
       };
 
     case ACTION.POST_CHAT_MESSAGE:

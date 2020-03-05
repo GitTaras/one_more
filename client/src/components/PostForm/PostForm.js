@@ -36,12 +36,7 @@ const PostForm = ({ isLoading, post }) => {
             maxLength={250}
           />
           <div>
-            <Button
-              htmlType="submit"
-              type="primary"
-              size="large"
-              loading={isLoading}
-            >
+            <Button htmlType="submit" type="primary" size="large" loading={isLoading}>
               Post
             </Button>
           </div>
