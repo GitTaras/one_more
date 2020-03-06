@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
-import { PostSchema } from '../../utils/validators';
+import { postSchema } from '../../utils/validators';
 import { Input } from '../UI/Input/Input';
 import { Button } from 'antd';
 import { postChatMessage } from '../../store/messages/actions';
@@ -17,7 +17,7 @@ const PostForm = ({ isLoading, post }) => {
   return (
     <Formik
       initialValues={{ message: '' }}
-      validationSchema={PostSchema}
+      validationSchema={postSchema}
       onSubmit={(values, { resetForm }) => {
         handleSubmit(values);
         resetForm({});
