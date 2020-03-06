@@ -7,4 +7,5 @@ export default {
   CLEAN_CHAT: 'CLEAN_CHAT',
   AUTH: 'AUTH',
   LOGOUT: 'LOGOUT',
+  AUTH_CLEAR: 'AUTH_CLEAR',
 };

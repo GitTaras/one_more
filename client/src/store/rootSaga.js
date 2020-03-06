@@ -18,12 +18,15 @@ axios.interceptors.request.use(
 );
 
 axios.interceptors.response.use(
-  response => response,
+  response => {
+    if (response.data.token) localStorage.setItem('token', response.data.token);
+    return response;
+  },
   error => {
     if (error.response.status === 401) {
       window.location.replace('/signin');
     }
-    if (error.response.status === 403) {
+    if (error.response.status === 404) {
       window.location.replace('/not_found');
     }
     return Promise.reject(error);

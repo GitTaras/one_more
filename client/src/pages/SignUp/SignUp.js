@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Field } from 'formik';
-import MyTextField from '../../components/MyTextField';
+import MyTextField from '../../components/UI/TextField/TextField';
 import { signupSchema } from '../../utils/validators';
-import { Paper, withStyles, Grid, Button } from '@material-ui/core';
+import { Paper, Grid, Button, CircularProgress, Snackbar } from '@material-ui/core';
+import MuiAlert from '../../components/UI/Alert/MuiAlert';
+import { makeStyles } from '@material-ui/core/styles';
 import { Face, Fingerprint, Email } from '@material-ui/icons';
-const styles = theme => ({
+import { useDispatch, useSelector } from 'react-redux';
+import { clearAuth, signup } from '../../store/auth/actions';
+
+const useStyles = makeStyles(theme => ({
   margin: {
     margin: theme.spacing(2),
   },
   padding: {
     padding: theme.spacing(),
   },
-});
+}));
 
 const initialValues = {
   firstName: '',
@@ -21,9 +26,26 @@ const initialValues = {
   confirmPassword: '',
 };
 
-const SignUp = ({ classes }) => {
+const SignUp = ({ history }) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.auth.isLoading);
+  const isError = useSelector(state => state.auth.isError);
+  const errorMessage = useSelector(state => state.auth.errorMessage);
+  const currentUser = useSelector(state => state.auth.currentUser);
+
+  useEffect(() => {
+    if (!isError && !isLoading && localStorage.getItem('token') && currentUser) {
+      history.push('/chat');
+    }
+  }, [isLoading, isError, currentUser]);
+
+  const handleClose = () => {
+    dispatch(clearAuth());
+  };
+
   const handleSubmit = values => {
-    console.log(values);
+    dispatch(signup(values));
   };
 
   return (
@@ -38,24 +60,27 @@ const SignUp = ({ classes }) => {
         <form onSubmit={handleSubmit}>
           <Paper className={classes.padding}>
             <div className={classes.margin}>
-              <Grid container spacing={8} alignItems="flex-end">
+              <Snackbar open={isError} autoHideDuration={6000} onClose={handleClose}>
+                <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
+              </Snackbar>
+              <Grid container spacing={2} alignItems="flex-end">
                 <Grid item>
                   <Face />
                 </Grid>
                 <Grid item md={true} sm={true} xs={true}>
                   <Field
-                   name="firstName"
-                   id="firstName"
-                   label="First Name"
-                   type="text"
-                   fullWidth
-                   autoFocus
-                   required
-                   component={MyTextField}
+                    name="firstName"
+                    id="firstName"
+                    label="First Name"
+                    type="text"
+                    fullWidth
+                    autoFocus
+                    required
+                    component={MyTextField}
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={8} alignItems="flex-end">
+              <Grid container spacing={2} alignItems="flex-end">
                 <Grid item>
                   <Face />
                 </Grid>
@@ -71,7 +96,7 @@ const SignUp = ({ classes }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={8} alignItems="flex-end">
+              <Grid container spacing={2} alignItems="flex-end">
                 <Grid item>
                   <Email />
                 </Grid>
@@ -87,7 +112,7 @@ const SignUp = ({ classes }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={8} alignItems="flex-end">
+              <Grid container spacing={2} alignItems="flex-end">
                 <Grid item>
                   <Fingerprint />
                 </Grid>
@@ -103,7 +128,7 @@ const SignUp = ({ classes }) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container spacing={8} alignItems="flex-end">
+              <Grid container spacing={2} alignItems="flex-end">
                 <Grid item>
                   <Fingerprint />
                 </Grid>
@@ -120,9 +145,17 @@ const SignUp = ({ classes }) => {
                 </Grid>
               </Grid>
               <Grid container justify="center" style={{ marginTop: '10px' }}>
-                <Button type="submit" variant="outlined" color="primary" style={{ textTransform: 'none' }}>
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  color="primary"
+                  style={{ textTransform: 'none' }}
+                >
                   Sign Up
                 </Button>
+              </Grid>
+              <Grid container justify="center" style={{ marginTop: '10px' }}>
+                {isLoading && <CircularProgress size={24} />}
               </Grid>
             </div>
           </Paper>
@@ -132,4 +165,4 @@ const SignUp = ({ classes }) => {
   );
 };
 
-export default withStyles(styles)(SignUp);
+export default SignUp;

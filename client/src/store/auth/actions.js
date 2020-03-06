@@ -15,7 +15,7 @@ export const auth = () => dispatch => {
 };
 
 //log
-export const signin = (userData, history) => dispatch => {
+export const signin = userData => dispatch => {
   return dispatch({
     type: ACTION.AUTH,
     request: {
@@ -24,16 +24,16 @@ export const signin = (userData, history) => dispatch => {
       method: 'post',
     },
     meta: {
-      asPromise: true,
+      // asPromise: true,
     },
   });
 };
 //reg
-export const signup = (userData, histroy) => (dispatch, getState) => {
+export const signup = userData => dispatch => {
   dispatch({
-    type: ACTION.C,
+    type: ACTION.AUTH,
     request: {
-      url: `${restURL}/auth/singup`,
+      url: `${restURL}/auth/signup`,
       data: userData,
       method: 'post',
     },
@@ -44,6 +44,11 @@ export const logout = history => dispatch => {
   dispatch({
     type: ACTION.LOGOUT,
   });
+  //todo move to component
   localStorage.removeItem('token');
   history.push('/');
+};
+
+export const clearAuth = () => dispatch => {
+  return dispatch({ type: ACTION.AUTH_CLEAR });
 };

@@ -28,11 +28,14 @@ export default (state = initialState, action) => {
     case success(ACTION.AUTH):
       return {
         ...state,
-        currentUser: action.data.currentUser,
+        currentUser: action.data.user,
         isLoading: false,
         isError: false,
         errorMessage: '',
       };
+
+    case ACTION.AUTH_CLEAR:
+      return { ...initialState };
 
     default:
       return state;

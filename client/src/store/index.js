@@ -5,11 +5,12 @@ import { requestsPromiseMiddleware } from 'redux-saga-requests';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootSaga from './rootSaga';
 import messages from './messages/reducer';
+import auth from './auth/reducer';
 
 function configureStore() {
   const reducers = combineReducers({
     messages,
-    //
+    auth,
   });
 
   const sagaMiddleware = createSagaMiddleware();
