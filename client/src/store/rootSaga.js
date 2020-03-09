@@ -8,7 +8,7 @@ axios.interceptors.request.use(
     const token = localStorage.getItem('token');
 
     if (token != null) {
-      config.headers.Authorization = token;
+      config.headers.Authorization = `Baerer: ${token}`;
     }
     return config;
   },
@@ -23,6 +23,8 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
+    console.log(error);
+    debugger;
     if (error.response.status === 401) {
       window.location.replace('/signin');
     }

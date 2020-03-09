@@ -8,7 +8,8 @@ body {
 }
 
 #root{
-  width: 30%;
+  flex-grow: 1;
+  /*width: 30%;*/
 }
 
 /*reset css*/

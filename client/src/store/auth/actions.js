@@ -9,7 +9,7 @@ export const auth = () => dispatch => {
       url: `${restURL}/auth/get-user`,
     },
     meta: {
-      asPromise: true,
+      // asPromise: true,
     },
   });
 };
@@ -40,15 +40,16 @@ export const signup = userData => dispatch => {
   });
 };
 
-export const logout = history => dispatch => {
-  dispatch({
-    type: ACTION.LOGOUT,
-  });
-  //todo move to component
-  localStorage.removeItem('token');
-  history.push('/');
-};
+// export const logout = history => dispatch => {
+//   dispatch({
+//     type: ACTION.LOGOUT,
+//   });
+//   //todo move to component
+//   localStorage.removeItem('token');
+//   history.push('/');
+// };
 
 export const clearAuth = () => dispatch => {
+  localStorage.removeItem('token');
   return dispatch({ type: ACTION.AUTH_CLEAR });
 };

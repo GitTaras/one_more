@@ -9,5 +9,4 @@ const ChatListPage = () => (
     <Form />
   </div>
 );
-
 export default ChatListPage;
