@@ -7,7 +7,8 @@ import MuiAlert from '../../components/UI/Alert/MuiAlert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Face, Fingerprint, Email } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearAuth, signup } from '../../store/auth/actions';
+import { clearAuth, signup } from '../../store/auth/authActions';
+import useAuth from '../../components/Hooks/useAuth';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -29,10 +30,7 @@ const initialValues = {
 const SignUp = ({ history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.auth.isLoading);
-  const isError = useSelector(state => state.auth.isError);
-  const errorMessage = useSelector(state => state.auth.errorMessage);
-  const currentUser = useSelector(state => state.auth.currentUser);
+  const { isLoading, isError, errorMessage, currentUser } = useAuth();
 
   useEffect(() => {
     if (!isError && !isLoading && localStorage.getItem('token') && currentUser) {

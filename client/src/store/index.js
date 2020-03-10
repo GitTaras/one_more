@@ -4,8 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import { requestsPromiseMiddleware } from 'redux-saga-requests';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootSaga from './rootSaga';
-import messages from './messages/reducer';
-import auth from './auth/reducer';
+import messages from './messages/messagesReducer';
+import auth from './auth/authReducer';
 
 function configureStore() {
   const reducers = combineReducers({

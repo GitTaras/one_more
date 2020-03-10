@@ -1,27 +1,22 @@
-import React from 'react';
-import ChatListPage from './pages/ChatListPage/ChatListPage';
-import NotFound from './pages/NotFound/NotFound';
-import SignIn from './pages/SignIn/SignIn';
-import SignUp from './pages/SignUp/SignUp';
-import Layout from './components/Layout/Layout';
+import React, { useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
 import store from './store/index';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Navigator from './Navigator';
+import { auth } from './store/auth/authActions';
 
-const App = () => (
-  <Provider store={store}>
-    <Router>
-      <Layout>
-        <Switch>
-          <PrivateRoute component={ChatListPage} exact path="/chat/" />
-          <Route exact path="/signin/" component={SignIn} />
-          <Route exact path="/signup/" component={SignUp} />
-          <Route component={NotFound} />
-        </Switch>
-      </Layout>
-    </Router>
-  </Provider>
-);
+const App = () => {
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem('token') {
+  //     dispatch(auth);
+  //   }
+  // }, []);
+  return (
+    <Provider store={store}>
+      <Navigator />
+    </Provider>
+  );
+};
 
 export default App;

@@ -12,7 +12,7 @@ import {
   Link,
 } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
-import { clearAuth } from '../../store/auth/actions';
+import { clearAuth } from '../../store/auth/authActions';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
@@ -27,8 +27,10 @@ const Layout = ({ children }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.currentUser);
+
   let location = useLocation();
   let history = useHistory();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 

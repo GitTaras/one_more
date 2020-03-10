@@ -1,5 +1,6 @@
 import ACTION from '../constants';
 import { restURL } from '../../utils/baseURL';
+import { success } from 'redux-saga-requests';
 
 //get-user "auth"
 export const auth = () => dispatch => {
@@ -13,6 +14,13 @@ export const auth = () => dispatch => {
     },
   });
 };
+
+// export const signinSuccess = action => dispatch => {
+//   return dispatch({
+//     type: success(ACTION.AUTH),
+//     action,
+//   });
+// }
 
 //log
 export const signin = userData => dispatch => {

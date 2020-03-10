@@ -8,7 +8,8 @@ import { Formik, Field } from 'formik';
 import { signinSchema } from '../../utils/validators';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { signin, clearAuth } from '../../store/auth/actions';
+import { signin, clearAuth } from '../../store/auth/authActions';
+import useAuth from '../../components/Hooks/useAuth';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -27,10 +28,7 @@ const initialValues = {
 const SignIn = ({ history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.auth.isLoading);
-  const isError = useSelector(state => state.auth.isError);
-  const errorMessage = useSelector(state => state.auth.errorMessage);
-  const currentUser = useSelector(state => state.auth.currentUser);
+  const { isLoading, isError, errorMessage, currentUser } = useAuth();
 
   useEffect(() => {
     if (!isError && !isLoading && localStorage.getItem('token') && currentUser) {

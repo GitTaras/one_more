@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { postSchema } from '../../utils/validators';
 import { Input } from '../UI/Input/Input';
 import { Button } from 'antd';
-import { postChatMessage } from '../../store/messages/actions';
+import { postChatMessage } from '../../store/messages/messagesActions';
 import styles from './PostForm.module.css';
 
 const PostForm = ({ isLoading, post }) => {

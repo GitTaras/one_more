@@ -1,21 +1,32 @@
 import axios from 'axios';
-import { watchRequests, createRequestInstance } from 'redux-saga-requests';
+import { watchRequests, createRequestInstance, success } from 'redux-saga-requests';
 import { createDriver } from 'redux-saga-requests-axios';
-// import('../utils/networkInterceptors');
+import { baseURL } from '../utils/baseURL';
+import ACTION from './constants';
+import { all, takeLatest } from '@redux-saga/core/effects';
+import { signinSuccess } from './auth/authActions';
 
-axios.interceptors.request.use(
-  function(config) {
-    const token = localStorage.getItem('token');
+//todo axios.defaults
 
-    if (token != null) {
-      config.headers.Authorization = `Baerer: ${token}`;
-    }
-    return config;
-  },
-  function(err) {
-    return Promise.reject(err);
-  }
-);
+axios.defaults.baseURL = baseURL;
+const token = localStorage.getItem('token');
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Baerer: ${token}`;
+}
+
+// axios.interceptors.request.use(
+//   function(config) {
+//     const token = localStorage.getItem('token');
+//
+//     if (token != null) {
+//       config.headers.Authorization = `Baerer: ${token}`;
+//     }
+//     return config;
+//   },
+//   function(err) {
+//     return Promise.reject(err);
+//   }
+// );
 
 axios.interceptors.response.use(
   response => {
@@ -37,7 +48,15 @@ axios.interceptors.response.use(
 
 function* rootSaga() {
   yield createRequestInstance({ driver: createDriver(axios) });
-  yield watchRequests();
+  yield all([
+    watchRequests(),
+    takeLatest(
+      success(ACTION.AUTH),
+      (action) => { console.log("here",action); axios.defaults.headers.common['Authorization'] = `Baerer: ${action.data.token}`;  /*signinSuccess(action)*/}
+    ),
+  ]);
+
+  //todo check for succes signin action and put token to local storage
 }
 
 export default rootSaga;

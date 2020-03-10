@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import Message from '../Message/Message';
 import { List } from 'antd';
 import styles from './MessageList.module.css';
-import { getChatMessages } from '../../store/messages/actions';
-import { cleanChat } from '../../store/messages/actions';
+import { getChatMessages } from '../../store/messages/messagesActions';
+import { cleanChat } from '../../store/messages/messagesActions';
 
 class MessageList extends Component {
   constructor(props) {
