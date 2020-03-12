@@ -6,6 +6,7 @@ import ChatListPage from './pages/ChatListPage/ChatListPage';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import NotFound from './pages/NotFound/NotFound';
+
 //todo move Layout to hocs or component
 const Navigator = () => (
   <Router>

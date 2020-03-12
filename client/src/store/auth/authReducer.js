@@ -21,8 +21,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        // currentUser: null,
-        errorMessage: action.error.message,
+        errorMessage: action.error.response.data || action.error.response.message,
       };
 
     case success(ACTION.AUTH):

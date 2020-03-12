@@ -1,6 +1,5 @@
 import ACTION from '../constants';
 import { restURL } from '../../utils/baseURL';
-import { success } from 'redux-saga-requests';
 
 //get-user "auth"
 export const auth = () => dispatch => {
@@ -14,13 +13,6 @@ export const auth = () => dispatch => {
     },
   });
 };
-
-// export const signinSuccess = action => dispatch => {
-//   return dispatch({
-//     type: success(ACTION.AUTH),
-//     action,
-//   });
-// }
 
 //log
 export const signin = userData => dispatch => {
@@ -47,15 +39,6 @@ export const signup = userData => dispatch => {
     },
   });
 };
-
-// export const logout = history => dispatch => {
-//   dispatch({
-//     type: ACTION.LOGOUT,
-//   });
-//   //todo move to component
-//   localStorage.removeItem('token');
-//   history.push('/');
-// };
 
 export const clearAuth = () => dispatch => {
   localStorage.removeItem('token');

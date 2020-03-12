@@ -7,9 +7,9 @@ import { Email, Fingerprint } from '@material-ui/icons';
 import { Formik, Field } from 'formik';
 import { signinSchema } from '../../utils/validators';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signin, clearAuth } from '../../store/auth/authActions';
-import useAuth from '../../components/Hooks/useAuth';
+import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -28,7 +28,7 @@ const initialValues = {
 const SignIn = ({ history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { isLoading, isError, errorMessage, currentUser } = useAuth();
+  const { isLoading, isError, errorMessage, currentUser } = useAuthReducerData();
 
   useEffect(() => {
     if (!isError && !isLoading && localStorage.getItem('token') && currentUser) {
@@ -36,7 +36,7 @@ const SignIn = ({ history }) => {
     }
   }, [isLoading, isError, currentUser]);
 
-  const handleClose = () => {
+  const closeSnackbar = () => {
     dispatch(clearAuth());
   };
 
@@ -53,11 +53,11 @@ const SignIn = ({ history }) => {
       }}
     >
       {({ handleSubmit }) => (
-        <Grid sm={8}>
+        <Grid item sm={8}>
           <form onSubmit={handleSubmit}>
             <Paper className={classes.padding}>
               <div className={classes.margin}>
-                <Snackbar open={isError} autoHideDuration={6000} onClose={handleClose}>
+                <Snackbar open={isError} autoHideDuration={6000} onClose={closeSnackbar}>
                   <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
                 </Snackbar>
                 <Grid container spacing={2} alignItems="flex-end">
@@ -108,7 +108,7 @@ const SignIn = ({ history }) => {
                 </Grid>
                 <Grid container justify="space-between">
                   <Grid item>
-                    <Link>Forgot password?</Link>
+                    <Link to={"#"}>Forgot password?</Link>
                   </Grid>
                   <Grid item>
                     <Link to={'/signup'}>{"Don't have an account? Sign Up"}</Link>

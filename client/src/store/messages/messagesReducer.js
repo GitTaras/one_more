@@ -14,6 +14,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ACTION.AUTH_CLEAR:
+      return { ...initialState };
+
     case ACTION.CLEAN_CHAT:
       return { ...initialState };
 

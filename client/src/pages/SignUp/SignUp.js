@@ -6,9 +6,9 @@ import { Paper, Grid, Button, CircularProgress, Snackbar } from '@material-ui/co
 import MuiAlert from '../../components/UI/Alert/MuiAlert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Face, Fingerprint, Email } from '@material-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { clearAuth, signup } from '../../store/auth/authActions';
-import useAuth from '../../components/Hooks/useAuth';
+import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -30,7 +30,7 @@ const initialValues = {
 const SignUp = ({ history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { isLoading, isError, errorMessage, currentUser } = useAuth();
+  const { isLoading, isError, errorMessage, currentUser } = useAuthReducerData();
 
   useEffect(() => {
     if (!isError && !isLoading && localStorage.getItem('token') && currentUser) {
@@ -38,7 +38,7 @@ const SignUp = ({ history }) => {
     }
   }, [isLoading, isError, currentUser]);
 
-  const handleClose = () => {
+  const closeSnackbar = () => {
     dispatch(clearAuth());
   };
 
@@ -55,11 +55,11 @@ const SignUp = ({ history }) => {
       }}
     >
       {({ handleSubmit }) => (
-        <Grid sm={8}>
+        <Grid item sm={8}>
           <form onSubmit={handleSubmit}>
             <Paper className={classes.padding}>
               <div className={classes.margin}>
-                <Snackbar open={isError} autoHideDuration={6000} onClose={handleClose}>
+                <Snackbar open={isError} autoHideDuration={6000} onClose={closeSnackbar}>
                   <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
                 </Snackbar>
                 <Grid container spacing={2} alignItems="flex-end">
