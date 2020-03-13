@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useHistory, Link as RouterLink } from 'react-router-dom';
+import { useLocation, Link as RouterLink } from 'react-router-dom';
 import {
   IconButton,
   Toolbar,
@@ -29,14 +29,9 @@ const Layout = ({ component: Component, ...rest }) => {
   const currentUser = useSelector(state => state.auth.currentUser);
 
   let location = useLocation();
-  let history = useHistory();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpen = Boolean(anchorEl);
-
-  // useEffect(() => {
-  //   const currentPath = location.pathname;
-  // }, [location]);
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);

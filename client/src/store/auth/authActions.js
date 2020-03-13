@@ -14,7 +14,6 @@ export const auth = () => dispatch => {
   });
 };
 
-//log
 export const signin = userData => dispatch => {
   return dispatch({
     type: ACTION.AUTH,
@@ -28,7 +27,7 @@ export const signin = userData => dispatch => {
     },
   });
 };
-//reg
+
 export const signup = userData => dispatch => {
   dispatch({
     type: ACTION.AUTH,

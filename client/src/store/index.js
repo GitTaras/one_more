@@ -7,21 +7,18 @@ import rootSaga from './rootSaga';
 import messages from './messages/messagesReducer';
 import auth from './auth/authReducer';
 
-function configureStore() {
-  const reducers = combineReducers({
-    messages,
-    auth,
-  });
+const reducers = combineReducers({
+  messages,
+  auth,
+});
 
-  const sagaMiddleware = createSagaMiddleware();
-  const middleware = [thunk, sagaMiddleware];
-  const store = createStore(
-    reducers,
-    composeWithDevTools(applyMiddleware(requestsPromiseMiddleware(), ...middleware))
-  );
+const sagaMiddleware = createSagaMiddleware();
+const middleware = [thunk, sagaMiddleware];
+const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(requestsPromiseMiddleware(), ...middleware))
+);
 
-  sagaMiddleware.run(rootSaga);
-  return store;
-}
+sagaMiddleware.run(rootSaga);
 
-export default configureStore();
+export default store;

@@ -10,9 +10,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ACTION.LOGOUT:
-      return { ...initialState };
-
     case ACTION.AUTH:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 

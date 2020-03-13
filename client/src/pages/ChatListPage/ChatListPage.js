@@ -2,7 +2,6 @@ import React from 'react';
 import MessageList from '../../components/MessageList/MessageList';
 import Form from '../../components/PostForm/PostForm';
 import Grid from '@material-ui/core/Grid';
-import { Container } from '@material-ui/core';
 
 const ChatListPage = () => (
   <Grid container direction={'row'} justify={'center'}>
