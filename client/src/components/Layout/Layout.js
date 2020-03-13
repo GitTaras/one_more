@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useHistory, Link as RouterLink } from 'react-router-dom';
@@ -39,8 +39,6 @@ const Layout = ({ children }) => {
   // }, [location]);
 
   const handleMenu = event => {
-    //event.preventDefault();
-    //todo fix trouble with menu
     setAnchorEl(event.currentTarget);
   };
 
@@ -54,52 +52,56 @@ const Layout = ({ children }) => {
 
   return (
     <Container>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            {location.pathname.split('/')}
-          </Typography>
-          {currentUser ? (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                getContentAnchorEl={null}
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={isOpen}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
-              </Menu>
-            </div>
-          ) : (
-            <Link component={RouterLink} to="/signin" color="inherit">
-              Sign In
-            </Link>
-          )}
-        </Toolbar>
-      </AppBar>
-      <Grid container direction='row' justify='center' spacing={3} alignItems='center'>
-        {children}
+      <Grid container spacing={2}>
+        <Grid item sm={12} xl={12} xs={12}>
+          <AppBar position="static">
+            <Toolbar>
+              <Typography variant="h6" className={classes.title}>
+                {location.pathname.split('/')}
+              </Typography>
+              {currentUser ? (
+                <div>
+                  <IconButton
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleMenu}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+                  <Menu
+                    getContentAnchorEl={null}
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={isOpen}
+                    onClose={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={handleClose}>My account</MenuItem>
+                    <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
+                  </Menu>
+                </div>
+              ) : (
+                <Link component={RouterLink} to="/signin" color="inherit">
+                  Sign In
+                </Link>
+              )}
+            </Toolbar>
+          </AppBar>
+        </Grid>
+        <Grid container item justify="center" alignItems="center">
+          {children}
+        </Grid>
       </Grid>
     </Container>
   );

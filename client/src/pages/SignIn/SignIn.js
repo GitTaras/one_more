@@ -31,7 +31,7 @@ const SignIn = ({ history }) => {
   const { isLoading, isError, errorMessage, currentUser } = useAuthReducerData();
 
   useEffect(() => {
-    if (!isError && !isLoading && localStorage.getItem('token') && currentUser) {
+    if (!isError && !isLoading && currentUser) {
       history.push('/chat');
     }
   }, [isLoading, isError, currentUser]);
@@ -108,7 +108,7 @@ const SignIn = ({ history }) => {
                 </Grid>
                 <Grid container justify="space-between">
                   <Grid item>
-                    <Link to={"#"}>Forgot password?</Link>
+                    <Link to="#">Forgot password?</Link>
                   </Grid>
                   <Grid item>
                     <Link to={'/signup'}>{"Don't have an account? Sign Up"}</Link>

@@ -33,7 +33,7 @@ const SignUp = ({ history }) => {
   const { isLoading, isError, errorMessage, currentUser } = useAuthReducerData();
 
   useEffect(() => {
-    if (!isError && !isLoading && localStorage.getItem('token') && currentUser) {
+    if (!isError && !isLoading && currentUser) {
       history.push('/chat');
     }
   }, [isLoading, isError, currentUser]);

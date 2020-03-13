@@ -7,6 +7,6 @@ const useAuthReducerData = () => {
   const currentUser = useSelector(state => state.auth.currentUser);
 
   return { isLoading, isError, errorMessage, currentUser };
-}
+};
 
 export default useAuthReducerData;

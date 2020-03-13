@@ -14,9 +14,9 @@ if (token) {
 axios.interceptors.response.use(
   response => response,
   error => {
-    console.log("interseptor>>>");
-    console.log(error);
-    debugger;
+    // console.log("interseptor>>>");
+    // console.log(error);
+    // debugger;
     if (error.response.status === 401) {
       window.location.replace('/signin');
     }
