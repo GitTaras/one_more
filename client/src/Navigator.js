@@ -7,17 +7,14 @@ import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import NotFound from './pages/NotFound/NotFound';
 
-//todo move Layout to hocs or component
 const Navigator = () => (
   <Router>
-    <Layout>
-      <Switch>
-        <PrivateRoute component={ChatListPage} exact path="/chat/" />
-        <Route exact path="/signin/" component={SignIn} />
-        <Route exact path="/signup/" component={SignUp} />
-        <Route component={NotFound} />
-      </Switch>
-    </Layout>
+    <Switch>
+      <PrivateRoute component={ChatListPage} exact path="/chat/" />
+      <Route exact path="/signin/" render={props => <Layout component={SignIn} {...props} />} />
+      <Route exact path="/signup/" render={props => <Layout component={SignUp} {...props} />} />
+      <Route component={NotFound} />
+    </Switch>
   </Router>
 );
 

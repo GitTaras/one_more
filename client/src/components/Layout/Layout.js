@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Layout = ({ children }) => {
+const Layout = ({ component: Component, ...rest }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.currentUser);
@@ -45,6 +45,8 @@ const Layout = ({ children }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const renderComponent = () => <Component {...rest} />;
 
   const onSignOut = () => {
     dispatch(clearAuth());
@@ -100,7 +102,7 @@ const Layout = ({ children }) => {
           </AppBar>
         </Grid>
         <Grid container item justify="center" alignItems="center">
-          {children}
+          {renderComponent()}
         </Grid>
       </Grid>
     </Container>

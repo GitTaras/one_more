@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import useUserFetchedData from '../Hooks/useUserFetchedData';
+import Layout from '../Layout/Layout';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const currentUser = useUserFetchedData();
@@ -10,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={props =>
         currentUser ? (
-          <Component {...props} />
+          <Layout component={Component} {...props} />
         ) : (
           <Redirect
             to={{
