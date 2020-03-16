@@ -148,6 +148,7 @@ const SignUp = ({ history }) => {
                     type="submit"
                     variant="outlined"
                     color="primary"
+                    disabled={isLoading}
                     style={{ textTransform: 'none' }}
                   >
                     Sign Up

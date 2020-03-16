@@ -14,11 +14,14 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
     case error(ACTION.AUTH):
+      debugger;
       return {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.error.response.data || action.error.response.message,
+        errorMessage: action.response
+          ? action.error.response.data || action.error.response.message
+          : action.error.message,
       };
 
     case success(ACTION.AUTH):

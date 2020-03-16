@@ -28,7 +28,9 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.error.message,
+        errorMessage: action.response
+          ? action.error.response.data || action.error.response.message
+          : action.error.message,
       };
 
     case success(ACTION.FETCH_CHAT_MESSAGES):
@@ -52,7 +54,9 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.error.message,
+        errorMessage: action.response
+          ? action.error.response.data || action.error.response.message
+          : action.error.message,
       };
 
     case success(ACTION.POST_CHAT_MESSAGE): {
@@ -74,7 +78,9 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.error.message,
+        errorMessage: action.response
+          ? action.error.response.data || action.error.response.message
+          : action.error.message,
       };
 
     case success(ACTION.DELETE_CHAT_MESSAGE): {
