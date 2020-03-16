@@ -1,17 +1,18 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import useUserFetchedData from '../Hooks/useUserFetchedData';
-import Layout from '../Layout/Layout';
+import withLayout from '../Hocs/withLayout';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const currentUser = useUserFetchedData();
+  const WrappedComponent = withLayout(Component);
 
   return (
     <Route
       {...rest}
       render={props =>
         currentUser ? (
-          <Layout component={Component} {...props} />
+          <WrappedComponent {...props} />
         ) : (
           <Redirect
             to={{

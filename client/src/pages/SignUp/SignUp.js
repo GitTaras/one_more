@@ -9,6 +9,7 @@ import { Face, Fingerprint, Email } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { clearAuth, signup } from '../../store/auth/authActions';
 import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
+import withLayout from '../../components/Hocs/withLayout';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -166,4 +167,4 @@ const SignUp = ({ history }) => {
   );
 };
 
-export default SignUp;
+export default withLayout(SignUp);

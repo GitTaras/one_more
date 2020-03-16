@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { signin, clearAuth } from '../../store/auth/authActions';
 import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
+import withLayout from '../../components/Hocs/withLayout';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -123,4 +124,4 @@ const SignIn = ({ history }) => {
   );
 };
 
-export default SignIn;
+export default withLayout(SignIn);

@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.response
+        errorMessage: action.error.response
           ? action.error.response.data || action.error.response.message
           : action.error.message,
       };
@@ -54,7 +54,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.response
+        errorMessage: action.error.response
           ? action.error.response.data || action.error.response.message
           : action.error.message,
       };
@@ -78,7 +78,7 @@ export default (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.response
+        errorMessage: action.error.response
           ? action.error.response.data || action.error.response.message
           : action.error.message,
       };
