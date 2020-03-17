@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import MuiAlert from '../../components/UI/Alert/MuiAlert';
 import { Email, Fingerprint } from '@material-ui/icons';
 import { Formik, Field } from 'formik';
-import { signinSchema } from '../../utils/validators';
+import { signInSchema } from '../../utils/validators';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import { signin, clearAuth } from '../../store/auth/authActions';
+import { signIn, clearAuth } from '../../store/auth/authActions';
 import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
 import withLayout from '../../components/Hocs/withLayout';
 
@@ -33,7 +33,7 @@ const SignIn = ({ history }) => {
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
-      history.push('/chat');
+      history.push('/');
     }
   }, [isLoading, isError, currentUser]);
 
@@ -42,13 +42,13 @@ const SignIn = ({ history }) => {
   };
 
   const handleSubmit = values => {
-    dispatch(signin(values));
+    dispatch(signIn(values));
   };
 
   return (
     <Formik
       initialValues={{ ...initialValues }}
-      validationSchema={signinSchema}
+      validationSchema={signInSchema}
       onSubmit={values => {
         handleSubmit(values);
       }}

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Formik, Field } from 'formik';
 import MyTextField from '../../components/UI/TextField/TextField';
-import { signupSchema } from '../../utils/validators';
+import { signUpSchema } from '../../utils/validators';
 import { Paper, Grid, Button, CircularProgress, Snackbar } from '@material-ui/core';
 import MuiAlert from '../../components/UI/Alert/MuiAlert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Face, Fingerprint, Email } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { clearAuth, signup } from '../../store/auth/authActions';
+import { clearAuth, signUp } from '../../store/auth/authActions';
 import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
 import withLayout from '../../components/Hocs/withLayout';
 
@@ -35,7 +35,7 @@ const SignUp = ({ history }) => {
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
-      history.push('/chat');
+      history.push('/');
     }
   }, [isLoading, isError, currentUser]);
 
@@ -44,13 +44,13 @@ const SignUp = ({ history }) => {
   };
 
   const handleSubmit = values => {
-    dispatch(signup(values));
+    dispatch(signUp(values));
   };
 
   return (
     <Formik
       initialValues={{ ...initialValues }}
-      validationSchema={signupSchema}
+      validationSchema={signUpSchema}
       onSubmit={values => {
         handleSubmit(values);
       }}

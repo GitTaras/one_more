@@ -14,7 +14,7 @@ export const auth = () => dispatch => {
   });
 };
 
-export const signin = userData => dispatch => {
+export const signIn = userData => dispatch => {
   return dispatch({
     type: ACTION.AUTH,
     request: {
@@ -28,7 +28,7 @@ export const signin = userData => dispatch => {
   });
 };
 
-export const signup = userData => dispatch => {
+export const signUp = userData => dispatch => {
   dispatch({
     type: ACTION.AUTH,
     request: {

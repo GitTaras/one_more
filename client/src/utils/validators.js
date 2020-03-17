@@ -7,7 +7,7 @@ export const postSchema = Yup.object().shape({
     .required('type message'),
 });
 
-export const signupSchema = Yup.object().shape({
+export const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
     .required()
     .trim()
@@ -34,7 +34,7 @@ export const signupSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'Passwords do not match'),
 });
 
-export const signinSchema = Yup.object().shape({
+export const signInSchema = Yup.object().shape({
   email: Yup.string()
     .required()
     .email('bad email')
