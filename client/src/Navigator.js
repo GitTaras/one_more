@@ -5,11 +5,13 @@ import ChatListPage from './pages/ChatListPage/ChatListPage';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import NotFound from './pages/NotFound/NotFound';
+import UserProfile from './pages/UserProfile';
 
 const Navigator = () => (
   <Router>
     <Switch>
       <PrivateRoute component={ChatListPage} exact path="/" />
+      <PrivateRoute exact path="/profile/" component={UserProfile} />
       <Route exact path="/signin/" component={SignIn} />
       <Route exact path="/signup/" component={SignUp} />
       <Route component={NotFound} />

@@ -78,7 +78,9 @@ const Header = () => {
                 open={isOpen}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem component={RouterLink} to="/profile">
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
               </Menu>
