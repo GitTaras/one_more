@@ -1,7 +1,7 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, Link as RouterLink } from 'react-router-dom';
+import { useHistory, useLocation, Link as RouterLink } from 'react-router-dom';
 import {
   IconButton,
   Toolbar,
@@ -26,7 +26,7 @@ const Header = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.currentUser);
-
+  let history = useHistory();
   let location = useLocation();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -41,6 +41,7 @@ const Header = () => {
   };
 
   const onSignOut = () => {
+    history.replace('/');
     dispatch(clearAuth());
   };
 

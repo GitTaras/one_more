@@ -33,7 +33,7 @@ const SignIn = ({ history }) => {
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
-      history.push(history.location.state.from.pathname || '/');
+      history.push(history.location.state?.from?.pathname || '/');
     }
   }, [isLoading, isError, currentUser]);
 
