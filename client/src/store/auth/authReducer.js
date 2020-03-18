@@ -14,7 +14,6 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
     case error(ACTION.AUTH):
-      debugger;
       return {
         ...state,
         isLoading: false,
