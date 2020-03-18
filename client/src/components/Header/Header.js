@@ -11,7 +11,7 @@ import {
   makeStyles,
   Link,
 } from '@material-ui/core';
-import { AccountCircle } from '@material-ui/icons';
+import { AccountCircle, HomeTwoTone } from '@material-ui/icons';
 import { clearAuth } from '../../store/auth/authActions';
 import Grid from '@material-ui/core/Grid';
 
@@ -19,6 +19,8 @@ const useStyles = makeStyles(theme => ({
   title: {
     color: 'white',
     flexGrow: 1,
+    justifyContent: 'start',
+    '&:hover': { color: 'white' },
   },
 }));
 
@@ -49,9 +51,9 @@ const Header = () => {
     <Grid item sm={12} xl={12} xs={12}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            {location.pathname.split('/')}
-          </Typography>
+          <IconButton component={RouterLink} to={'/'} className={classes.title}>
+            <HomeTwoTone />
+          </IconButton>
           {currentUser ? (
             <div>
               <IconButton
@@ -82,7 +84,6 @@ const Header = () => {
                 <MenuItem component={RouterLink} to="/profile">
                   Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
                 <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
               </Menu>
             </div>

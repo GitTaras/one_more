@@ -5,7 +5,7 @@ import ChatListPage from './pages/ChatListPage/ChatListPage';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import NotFound from './pages/NotFound/NotFound';
-import UserProfile from './pages/UserProfile';
+import UserProfile from './pages/UserProfile/UserProfile';
 
 const Navigator = () => (
   <Router>

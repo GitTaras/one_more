@@ -10,31 +10,39 @@ import {
 } from '@material-ui/core';
 import { AccountCircle, Edit } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import useUserFetchedData from '../components/Hooks/useUserFetchedData';
+import useUserFetchedData from '../../components/Hooks/useUserFetchedData';
 import IconButton from '@material-ui/core/IconButton';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     minWidth: 275,
-    maxWidth: 345,
+    maxWidth: '50%',
+  },
+  padding: {
+    padding: theme.spacing(4),
   },
   media: {
     height: 140,
+    display: 'flex',
   },
   userIcon: {
-    height: 140,
+    height: '100%',
+    flex: 1,
   },
-  pos: {
+  email: {
     marginBottom: 12,
   },
-});
+  alignRight: {
+    marginLeft: 'auto',
+  },
+}));
 
 export default () => {
   const classes = useStyles();
   const currentUser = useUserFetchedData();
   return (
     <Grid item sm={8}>
-      <Paper elevation={3}>
+      <Paper elevation={1} className={classes.padding}>
         <Card className={classes.root}>
           {currentUser.picture ? (
             <CardMedia className={classes.media} image={currentUser.picture} title="user picture" />
@@ -47,12 +55,12 @@ export default () => {
             <Typography variant="h5" component="h2">
               {currentUser.firstName} {currentUser.lastName}
             </Typography>
-            <Typography className={classes.pos} color="textSecondary">
+            <Typography className={classes.email} color="textSecondary">
               {currentUser.email}
             </Typography>
           </CardContent>
           <CardActions>
-            <IconButton aria-label="edit user">
+            <IconButton aria-label="edit user" className={classes.alignRight}>
               <Edit />
             </IconButton>
           </CardActions>

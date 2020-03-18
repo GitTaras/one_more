@@ -59,6 +59,10 @@ class MessageList extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.cleanChat();
+  }
+
   handleScroll = () => {
     if (
       this.props.messages.length > this.props.limit - 1 &&
