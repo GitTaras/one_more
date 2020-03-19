@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Paper, CardActions, CardContent, Card, CardMedia, Button } from '@material-ui/core';
+import { Grid, Paper, CardContent, Card, CardMedia, Button } from '@material-ui/core';
 import { AccountCircle, Edit, Cancel } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
