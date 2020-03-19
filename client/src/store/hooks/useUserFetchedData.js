@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useAuthReducerData from './useAuthReducerData';
-import { auth } from '../../store/auth/authActions';
+import { auth } from '../auth/authActions';
 
 function useUserFetchedData() {
   const dispatch = useDispatch();

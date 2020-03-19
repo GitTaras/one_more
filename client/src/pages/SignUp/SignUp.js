@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Face, Fingerprint, Email } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import { clearAuth, signUp } from '../../store/auth/authActions';
-import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
+import useAuthReducerData from '../../store/hooks/useAuthReducerData';
 import withLayout from '../../components/Hocs/withLayout';
 
 const useStyles = makeStyles(theme => ({

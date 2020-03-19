@@ -34,6 +34,25 @@ export const signUpSchema = Yup.object().shape({
     .oneOf([Yup.ref('password')], 'Passwords do not match'),
 });
 
+export const editUserSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .required()
+    .trim()
+    .min(2, 'min length is 2 charts')
+    .max(16, 'max length is 16 charts'),
+  lastName: Yup.string()
+    .required()
+    .trim()
+    .min(2, 'min length is 2 charts')
+    .max(16, 'max length is 16 charts'),
+  email: Yup.string()
+    .required()
+    .email()
+    .trim()
+    .max(30, 'max length is 30 charts')
+    .min(6, 'min length is 6 charts'),
+});
+
 export const signInSchema = Yup.object().shape({
   email: Yup.string()
     .required()

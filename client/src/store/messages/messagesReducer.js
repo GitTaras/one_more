@@ -15,15 +15,16 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ACTION.AUTH_CLEAR:
-      return { ...initialState };
-
     case ACTION.CLEAN_CHAT:
       return { ...initialState };
 
     case ACTION.FETCH_CHAT_MESSAGES:
+    case ACTION.DELETE_CHAT_MESSAGE:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
     case error(ACTION.FETCH_CHAT_MESSAGES):
+    case error(ACTION.POST_CHAT_MESSAGE):
+    case error(ACTION.DELETE_CHAT_MESSAGE):
       return {
         ...state,
         isLoading: false,
@@ -49,16 +50,6 @@ export default (state = initialState, action) => {
     case ACTION.POST_CHAT_MESSAGE:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
-    case error(ACTION.POST_CHAT_MESSAGE):
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-        errorMessage: action.error.response
-          ? action.error.response.data || action.error.response.message
-          : action.error.message,
-      };
-
     case success(ACTION.POST_CHAT_MESSAGE): {
       const messages = state.messages.concat(action.data);
       return {
@@ -69,19 +60,6 @@ export default (state = initialState, action) => {
         messages: messages,
       };
     }
-
-    case ACTION.DELETE_CHAT_MESSAGE:
-      return { ...state, isLoading: true, isError: false, errorMessage: '' };
-
-    case error(ACTION.DELETE_CHAT_MESSAGE):
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-        errorMessage: action.error.response
-          ? action.error.response.data || action.error.response.message
-          : action.error.message,
-      };
 
     case success(ACTION.DELETE_CHAT_MESSAGE): {
       return {

@@ -9,7 +9,7 @@ import { signInSchema } from '../../utils/validators';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { signIn, clearAuth } from '../../store/auth/authActions';
-import useAuthReducerData from '../../components/Hooks/useAuthReducerData';
+import useAuthReducerData from '../../store/hooks/useAuthReducerData';
 import withLayout from '../../components/Hocs/withLayout';
 
 const useStyles = makeStyles(theme => ({

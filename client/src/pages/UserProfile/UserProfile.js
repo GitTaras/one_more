@@ -1,17 +1,14 @@
-import React from 'react';
-import {
-  Grid,
-  Paper,
-  CardActions,
-  Typography,
-  CardContent,
-  Card,
-  CardMedia,
-} from '@material-ui/core';
-import { AccountCircle, Edit } from '@material-ui/icons';
+import React, { useState } from 'react';
+import { Grid, Paper, CardActions, CardContent, Card, CardMedia, Button } from '@material-ui/core';
+import { AccountCircle, Edit, Cancel } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import useUserFetchedData from '../../components/Hooks/useUserFetchedData';
 import IconButton from '@material-ui/core/IconButton';
+import { editUserSchema } from '../../utils/validators';
+import { Field, Formik } from 'formik';
+import MyTextField from '../../components/UI/TextField/TextField';
+import { useDispatch } from 'react-redux';
+import { editAccount } from '../../store/auth/authActions';
+import useAuthReducerData from '../../store/hooks/useAuthReducerData';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -38,8 +35,21 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const currentUser = useUserFetchedData();
+  const { currentUser, isLoading } = useAuthReducerData();
+  const [isEditing, setEditing] = useState(false);
+
+  const updateUserData = values => {
+    if (JSON.stringify(currentUser) !== JSON.stringify(values)) {
+      dispatch(editAccount(values));
+    }
+  };
+
+  const edit = () => {
+    setEditing(!isEditing);
+  };
+
   return (
     <Grid item sm={8}>
       <Paper elevation={1} className={classes.padding}>
@@ -52,18 +62,78 @@ export default () => {
             </div>
           )}
           <CardContent>
-            <Typography variant="h5" component="h2">
-              {currentUser.firstName} {currentUser.lastName}
-            </Typography>
-            <Typography className={classes.email} color="textSecondary">
-              {currentUser.email}
-            </Typography>
+            <Formik
+              initialValues={{ ...currentUser }}
+              validationSchema={editUserSchema}
+              onSubmit={values => {
+                updateUserData(values);
+              }}
+            >
+              {({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <Grid container spacing={2} direction={'column'}>
+                    <Grid item>
+                      <Field
+                        name="firstName"
+                        id="firstName"
+                        label="First Name"
+                        type="text"
+                        fullWidth
+                        autoFocus
+                        required
+                        disabled={!isEditing}
+                        component={MyTextField}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Field
+                        name="lastName"
+                        id="lastName"
+                        label="Last Name"
+                        type="text"
+                        fullWidth
+                        autoFocus
+                        required
+                        disabled={!isEditing}
+                        component={MyTextField}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Field
+                        name="email"
+                        id="email"
+                        label="Email"
+                        type="email"
+                        fullWidth
+                        autoFocus
+                        required
+                        disabled={!isEditing}
+                        component={MyTextField}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={2} direction="row">
+                    <Grid item>
+                      {isEditing && (
+                        <Button
+                          type="submit"
+                          variant="outlined"
+                          color="primary"
+                          disabled={isLoading}
+                          style={{ textTransform: 'none' }}
+                        >
+                          Save
+                        </Button>
+                      )}
+                    </Grid>
+                    <IconButton onClick={edit} aria-label="edit user" className={classes.alignRight}>
+                      {isEditing ? <Cancel /> : <Edit />}
+                    </IconButton>
+                  </Grid>
+                </form>
+              )}
+            </Formik>
           </CardContent>
-          <CardActions>
-            <IconButton aria-label="edit user" className={classes.alignRight}>
-              <Edit />
-            </IconButton>
-          </CardActions>
         </Card>
       </Paper>
     </Grid>

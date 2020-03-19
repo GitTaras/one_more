@@ -43,3 +43,14 @@ export const clearAuth = () => dispatch => {
   localStorage.removeItem('token');
   return dispatch({ type: ACTION.AUTH_CLEAR });
 };
+
+export const editAccount = userData => dispatch => {
+  dispatch({
+    type: ACTION.AUTH,
+    request: {
+      url: `${restURL}/auth/`,
+      data: userData,
+      method: 'put',
+    },
+  });
+}
