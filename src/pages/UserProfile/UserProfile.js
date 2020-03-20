@@ -8,7 +8,7 @@ import { Field, Formik } from 'formik';
 import MyTextField from '../../components/UI/TextField/TextField';
 import { useDispatch } from 'react-redux';
 import { editAccount } from '../../store/auth/authActions';
-import useAuthReducerData from '../../store/hooks/useAuthReducerData';
+import useAuthHook from '../../store/auth/useAuthHook';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
 export default () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { currentUser, isLoading } = useAuthReducerData();
+  const { currentUser, isLoading } = useAuthHook();
   const [isEditing, setEditing] = useState(false);
 
   const updateUserData = values => {

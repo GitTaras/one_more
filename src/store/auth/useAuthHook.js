@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-const useAuthReducerData = () => {
+const useAuthHook = () => {
   const isLoading = useSelector(state => state.auth.isLoading);
   const isError = useSelector(state => state.auth.isError);
   const errorMessage = useSelector(state => state.auth.errorMessage);
@@ -9,4 +9,4 @@ const useAuthReducerData = () => {
   return { isLoading, isError, errorMessage, currentUser };
 };
 
-export default useAuthReducerData;
+export default useAuthHook;

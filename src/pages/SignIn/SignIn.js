@@ -9,7 +9,7 @@ import { signInSchema } from '../../utils/validators';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { signIn, clearAuth } from '../../store/auth/authActions';
-import useAuthReducerData from '../../store/hooks/useAuthReducerData';
+import useAuthHook from '../../store/auth/useAuthHook';
 import withLayout from '../../components/Hocs/withLayout';
 
 const useStyles = makeStyles(theme => ({
@@ -29,7 +29,7 @@ const initialValues = {
 const SignIn = ({ history }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { isLoading, isError, errorMessage, currentUser } = useAuthReducerData();
+  const { isLoading, isError, errorMessage, currentUser } = useAuthHook();
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {

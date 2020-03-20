@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import useAuthReducerData from './useAuthReducerData';
+import useAuthHook from '../auth/useAuthHook';
 import { auth } from '../auth/authActions';
 
 function useUserFetchedData() {
   const dispatch = useDispatch();
   let history = useHistory();
-  const { currentUser } = useAuthReducerData();
+  const { currentUser } = useAuthHook();
 
   useEffect(() => {
     if (!currentUser) {
