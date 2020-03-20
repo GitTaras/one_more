@@ -53,4 +53,4 @@ export const editAccount = userData => dispatch => {
       method: 'put',
     },
   });
-}
+};

@@ -6,10 +6,10 @@ import Grid from '@material-ui/core/Grid';
 const ChatListPage = () => (
   <Grid container direction={'row'} justify={'center'}>
     <Grid item sm={8}>
-      <MessageList />
+      <Form />
     </Grid>
     <Grid item sm={8}>
-      <Form />
+      <MessageList />
     </Grid>
   </Grid>
 );

@@ -2,14 +2,7 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
-import {
-  IconButton,
-  Toolbar,
-  MenuItem,
-  Menu,
-  makeStyles,
-  Link,
-} from '@material-ui/core';
+import { IconButton, Toolbar, MenuItem, Menu, makeStyles, Link } from '@material-ui/core';
 import { AccountCircle, HomeTwoTone } from '@material-ui/icons';
 import { clearAuth } from '../../store/auth/authActions';
 import Grid from '@material-ui/core/Grid';

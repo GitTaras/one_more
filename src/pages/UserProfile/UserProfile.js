@@ -126,7 +126,11 @@ export default () => {
                         </Button>
                       )}
                     </Grid>
-                    <IconButton onClick={edit} aria-label="edit user" className={classes.alignRight}>
+                    <IconButton
+                      onClick={edit}
+                      aria-label="edit user"
+                      className={classes.alignRight}
+                    >
                       {isEditing ? <Cancel /> : <Edit />}
                     </IconButton>
                   </Grid>

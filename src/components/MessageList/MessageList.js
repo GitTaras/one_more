@@ -9,53 +9,60 @@ import { cleanChat } from '../../store/messages/messagesActions';
 class MessageList extends Component {
   constructor(props) {
     super(props);
-    this.messagesEnd = React.createRef();
+    this.messagesStart = React.createRef();
     this.scroller = React.createRef();
   }
 
-  scrollToBottom = () => {
-    this.messagesEnd.current.scrollIntoView({ behavior: 'auto' });
+  scrollToTop = () => {
+    this.messagesStart.current.scrollIntoView({ behavior: 'auto' });
   };
 
   componentDidMount() {
-    this.props.getChatMessages().then(() => {
-      this.scrollToBottom();
+    this.props.getChatMessages().then(({ data }) => {
+      data.docs.length && this.scrollToTop();
     });
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
+    const reachBottom =
+      this.scroller.scrollHeight === this.scroller.scrollTop + this.scroller.clientHeight;
     if (
-      prevProps.messages.length !== this.props.messages.length &&
+      prevProps.messages.length < this.props.messages.length &&
       this.scroller &&
-      this.scroller.scrollTop < 50
+      reachBottom
     ) {
+      console.log('getSnapshotBeforeUpdate');
+      console.log(reachBottom);
       const scroller = this.scroller;
-      return scroller.scrollHeight;
+      return scroller.scrollHeight - scroller.scrollTop + this.scroller.clientHeight;
     }
     return null;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    //added new one post
     if (
       prevProps.messages.length < this.props.messages.length &&
-      !snapshot &&
-      this.scroller.scrollTop >= 30
+      !snapshot //&&
+      //this.scroller.scrollTop >= 30
     ) {
-      return this.scrollToBottom();
+      //console.log("added");
+      return this.scrollToTop();
     }
 
     if (this.props.isError) {
       alert(`Error: ${this.props.errorMessage}`);
     }
-
+    //when delete message load more if the are some messages
     if (this.props.messages.length < this.props.limit && this.props.hasMore) {
       this.props.cleanChat();
       this.props.getChatMessages();
     }
-
+    //scroll to previous last element
     if (snapshot !== null) {
+      console.log('update scroll');
       const list = this.scroller;
-      list.scrollTop = list.scrollHeight - snapshot;
+      list.scrollTop = snapshot;
     }
   }
 
@@ -64,9 +71,12 @@ class MessageList extends Component {
   }
 
   handleScroll = () => {
+    const reachBottom =
+      this.scroller.scrollHeight === this.scroller.scrollTop + this.scroller.clientHeight;
+
     if (
       this.props.messages.length > this.props.limit - 1 &&
-      this.scroller.scrollTop <= 25 &&
+      reachBottom &&
       this.props.hasMore &&
       !this.props.isLoading
     ) {
@@ -87,14 +97,15 @@ class MessageList extends Component {
         <List
           loading={isLoading}
           dataSource={messages}
-          renderItem={item => (
-            <List.Item key={item.id}>
-              <Message key={item.id} {...item} />
-            </List.Item>
+          renderItem={(item, index) => (
+            <>
+              {!index && <div ref={this.messagesStart} />}
+              <List.Item key={item.id}>
+                <Message key={item.id} {...item} />
+              </List.Item>
+            </>
           )}
-        >
-          <div ref={this.messagesEnd} />
-        </List>
+        />
       </div>
     );
   }

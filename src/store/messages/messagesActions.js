@@ -29,7 +29,7 @@ export const postChatMessage = message => (dispatch, getState) => {
 };
 
 export const deleteChatMessage = id => (dispatch, getState) => {
-  const messages = getState().messages.messages.filter(message => message._id !== id);
+  const messages = getState().messages.messages.filter(message => message.id !== id);
   dispatch({
     type: ACTION.DELETE_CHAT_MESSAGE,
     request: {

@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
     case success(ACTION.FETCH_CHAT_MESSAGES):
       return {
         ...state,
-        messages: [...action.data.docs, ...state.messages],
+        messages: [...state.messages, ...action.data.docs],
         isLoading: false,
         isError: false,
         errorMessage: '',
@@ -51,7 +51,7 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
     case success(ACTION.POST_CHAT_MESSAGE): {
-      const messages = state.messages.concat(action.data);
+      const messages = [action.data, ...state.messages]; /*state.messages.concat(action.data);*/
       return {
         ...state,
         isLoading: false,
