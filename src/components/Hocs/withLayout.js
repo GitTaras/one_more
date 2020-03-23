@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../Header/Header';
 
 export default Component => props => (
-  <Container>
+  <Container maxWidth={false} disableGutters>
     <Grid container spacing={2}>
       <Header />
       <Grid container item justify="center" alignItems="center">
