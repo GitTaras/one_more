@@ -7,6 +7,8 @@ import { Button } from 'antd';
 import { postChatMessage } from '../../store/messages/messagesActions';
 import styles from './PostForm.module.css';
 import Autocomplete from 'react-autocomplete';
+import { getAutocompleteUsers } from '../../store/autocomplete/autocompleteActions';
+import style from '../UI/Input/Input.module.css';
 
 const PostForm = ({ isLoading, post }) => {
   const [mentions, setMentions] = useState([]);
@@ -18,39 +20,39 @@ const PostForm = ({ isLoading, post }) => {
     }
   };
 
-  const getMentions = () =>
-    new Promise((resolve, reject) =>
-      setTimeout(() => resolve([{ label: 'apple' }, { label: 'banana' }, { label: 'pear' }]), 200)
-    );
-
-  const getMentionsR = () => {
-    getMentions().then(data => setMentions(data));
+  const getMentions = async name => {
+    const usernames = await getAutocompleteUsers(name);
+    setMentions(usernames);
   };
 
-  const checkForMentions = (value) => {
+  const checkForMentions = value => {
     //todo write correct reg exp for @
-    if ( value.match(/(^@.\w+)/) ) {
-      console.log('open');
+    const names = value.match(/(^@.\w+)/);
+    if (names) {
       setOpenAutocomplete(true);
-      getMentionsR();
+      getMentions(names[0].substring(1));
       return;
-    };
-    console.log('close');
+    }
     setOpenAutocomplete(false);
-  }
-
+  };
 
   const renderMyInput = props => {
+    // return <Input {...props}/>
+    console.log(props);
+    const { error } = props;
     return (
-      <div>
+      <>
         <input
+          className={error ? style.inputDanger : ''}
           name="message"
           type="text"
+          id="message"
           placeholder="type your message"
           maxLength={250}
           {...props}
         />
-      </div>
+        {error && <span className={style.error}>{error}</span>}
+      </>
     );
   };
 
@@ -67,14 +69,15 @@ const PostForm = ({ isLoading, post }) => {
         {({ handleSubmit, handleChange, values, errors, setFieldValue }) => (
           <form onSubmit={handleSubmit} className={styles.chatForm}>
             <Autocomplete
+              wrapperStyle={{ display: 'flex', width: '80%' }}
               isOpen={false}
               renderInput={renderMyInput}
               autoFocus={true}
-              getItemValue={item => item.label}
+              getItemValue={item => item.username}
               items={mentions}
               renderItem={(item, isHighlighted) => (
-                <div key={item.label} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                  {item.label}
+                <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                  {item.username}
                 </div>
               )}
               value={values.message}
@@ -84,6 +87,7 @@ const PostForm = ({ isLoading, post }) => {
               }}
               onSelect={mantion => setFieldValue('message', values.message.concat(mantion), false)}
               open={isOpenAutocomplete}
+              error={errors.message}
             />
             <div>
               <Button htmlType="submit" type="primary" size="large" loading={isLoading}>

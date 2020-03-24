@@ -24,17 +24,17 @@ class MessageList extends Component {
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    const reachBottom =
+    const reachedBottom =
       this.scroller.scrollHeight === this.scroller.scrollTop + this.scroller.clientHeight;
     if (
       prevProps.messages.length < this.props.messages.length &&
       this.scroller &&
-      reachBottom
+      reachedBottom &&
+      this.props.messages.length > this.props.limit
     ) {
-      console.log('getSnapshotBeforeUpdate');
-      console.log(reachBottom);
+      // console.log('save scroll');
       const scroller = this.scroller;
-      return scroller.scrollHeight - scroller.scrollTop + this.scroller.clientHeight;
+      return scroller.scrollHeight;
     }
     return null;
   }
@@ -43,10 +43,8 @@ class MessageList extends Component {
     //added new one post
     if (
       prevProps.messages.length < this.props.messages.length &&
-      !snapshot //&&
-      //this.scroller.scrollTop >= 30
+      !snapshot
     ) {
-      //console.log("added");
       return this.scrollToTop();
     }
 
@@ -60,9 +58,8 @@ class MessageList extends Component {
     }
     //scroll to previous last element
     if (snapshot !== null) {
-      console.log('update scroll');
       const list = this.scroller;
-      list.scrollTop = snapshot;
+      list.scrollTop = snapshot - list.clientHeight;
     }
   }
 
@@ -71,15 +68,16 @@ class MessageList extends Component {
   }
 
   handleScroll = () => {
-    const reachBottom =
+    const reachedBottom =
       this.scroller.scrollHeight === this.scroller.scrollTop + this.scroller.clientHeight;
 
     if (
       this.props.messages.length > this.props.limit - 1 &&
-      reachBottom &&
+      reachedBottom &&
       this.props.hasMore &&
       !this.props.isLoading
     ) {
+      // console.log('get more in handle scroll');
       this.props.getChatMessages(this.props.nextPage);
     }
   };

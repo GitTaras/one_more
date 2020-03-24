@@ -9,7 +9,7 @@ export const getChatMessages = (page = 1) => dispatch => {
   return dispatch({
     type: ACTION.FETCH_CHAT_MESSAGES,
     request: {
-      url: `${restURL}/chat?page=${page}`,
+      url: `${restURL}/posts?page=${page}`,
     },
     meta: {
       asPromise: true,
@@ -21,7 +21,7 @@ export const postChatMessage = message => (dispatch, getState) => {
   dispatch({
     type: ACTION.POST_CHAT_MESSAGE,
     request: {
-      url: `${restURL}/chat`,
+      url: `${restURL}/posts`,
       data: message,
       method: 'post',
     },
@@ -33,7 +33,7 @@ export const deleteChatMessage = id => (dispatch, getState) => {
   dispatch({
     type: ACTION.DELETE_CHAT_MESSAGE,
     request: {
-      url: `${restURL}/chat/${id}`,
+      url: `${restURL}/posts/${id}`,
       method: 'delete',
     },
     meta: {

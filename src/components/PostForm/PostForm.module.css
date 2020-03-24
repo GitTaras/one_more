@@ -1,5 +1,5 @@
 .chatForm {
-  padding-top: 40px;
+  padding-bottom: 40px;
   display: flex;
   justify-content: space-between;
 }
@@ -14,3 +14,29 @@
 .buttomPost:hover {
   cursor: pointer;
 }
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 2px;
+  border: 1px solid #ccc;
+  line-height: normal;
+  background-color: white;
+}
+
+input:focus {
+  border-color: blue;
+}
+
+.inputDanger {
+  border-width: 1px;
+  border-color: red;
+}
+
+.error {
+  margin: 4px 0 4px 0;
+  padding: 5px 0 5px 0;
+  color: red;
+  font-size: 14px;
+}
+

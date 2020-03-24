@@ -3,7 +3,7 @@ import MessageList from '../../components/MessageList/MessageList';
 import Form from '../../components/PostForm/PostForm';
 import Grid from '@material-ui/core/Grid';
 
-const ChatListPage = () => (
+const PostsListPage = () => (
   <Grid container direction={'row'} justify={'center'}>
     <Grid item sm={8}>
       <Form />
@@ -13,4 +13,4 @@ const ChatListPage = () => (
     </Grid>
   </Grid>
 );
-export default ChatListPage;
+export default PostsListPage;
