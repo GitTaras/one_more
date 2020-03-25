@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Paper, CardContent, Card, CardMedia, Button } from '@material-ui/core';
+import { Grid, Paper, CardContent, Card, CardMedia, Button, Avatar } from '@material-ui/core';
 import { AccountCircle, Edit, Cancel } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
@@ -19,12 +19,18 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(4),
   },
   media: {
-    height: 140,
+    height: 200,
     display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   userIcon: {
     height: '100%',
     flex: 1,
+  },
+  userAvatar: {
+    height: '100%',
+    width: 'fit-content',
   },
   email: {
     marginBottom: 12,
@@ -58,7 +64,16 @@ export default () => {
             <CardMedia className={classes.media} image={currentUser.picture} title="user picture" />
           ) : (
             <div className={classes.media}>
-              <AccountCircle className={classes.userIcon} fontSize={'large'} />
+              {currentUser.avatar ? (
+                <Avatar
+                  alt={`${currentUser.firstName} ${currentUser.lastName}`}
+                  srcSet={currentUser.avatar}
+                  src={currentUser.avatar}
+                  className={classes.userAvatar}
+                />
+              ) : (
+                <AccountCircle className={classes.userIcon} fontSize={'large'} />
+              )}
             </div>
           )}
           <CardContent>

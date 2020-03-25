@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { postSchema } from '../../utils/validators';
-import { Input } from '../UI/Input/Input';
 import { Button } from 'antd';
 import { postChatMessage } from '../../store/messages/messagesActions';
 import styles from './PostForm.module.css';
 import Autocomplete from 'react-autocomplete';
 import { getAutocompleteUsers } from '../../store/autocomplete/autocompleteActions';
-import style from '../UI/Input/Input.module.css';
+import inputStyle from '../UI/Input/Input.module.css';
 
 const PostForm = ({ isLoading, post }) => {
   const [mentions, setMentions] = useState([]);
@@ -37,13 +36,11 @@ const PostForm = ({ isLoading, post }) => {
   };
 
   const renderMyInput = props => {
-    // return <Input {...props}/>
-    console.log(props);
     const { error } = props;
     return (
       <>
         <input
-          className={error ? style.inputDanger : ''}
+          className={error ? inputStyle.inputDanger : ''}
           name="message"
           type="text"
           id="message"
@@ -51,7 +48,7 @@ const PostForm = ({ isLoading, post }) => {
           maxLength={250}
           {...props}
         />
-        {error && <span className={style.error}>{error}</span>}
+        {error && <span className={inputStyle.error}>{error}</span>}
       </>
     );
   };
@@ -69,11 +66,15 @@ const PostForm = ({ isLoading, post }) => {
         {({ handleSubmit, handleChange, values, errors, setFieldValue }) => (
           <form onSubmit={handleSubmit} className={styles.chatForm}>
             <Autocomplete
+              wrapperProps={{ className: styles.inputContainer }}
               wrapperStyle={{ display: 'flex', width: '80%' }}
               isOpen={false}
               renderInput={renderMyInput}
               autoFocus={true}
               getItemValue={item => item.username}
+              inputProps={{
+                error: errors.message,
+              }}
               items={mentions}
               renderItem={(item, isHighlighted) => (
                 <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>

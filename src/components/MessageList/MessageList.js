@@ -41,10 +41,7 @@ class MessageList extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     //added new one post
-    if (
-      prevProps.messages.length < this.props.messages.length &&
-      !snapshot
-    ) {
+    if (prevProps.messages.length < this.props.messages.length && !snapshot) {
       return this.scrollToTop();
     }
 
