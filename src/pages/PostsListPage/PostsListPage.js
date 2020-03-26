@@ -1,5 +1,5 @@
 import React from 'react';
-import MessageList from '../../components/MessageList/MessageList';
+import MessageList from '../../components/PostsList/PostsList';
 import Form from '../../components/PostForm/PostForm';
 import Grid from '@material-ui/core/Grid';
 

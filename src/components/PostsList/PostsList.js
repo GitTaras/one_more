@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Message from '../Message/Message';
+import Message from '../Post/Post';
 import { List } from 'antd';
-import styles from './MessageList.module.css';
+import StyledPostsList from './StyledPostsLists';
 import { getChatMessages } from '../../store/messages/messagesActions';
 import { cleanChat } from '../../store/messages/messagesActions';
 
-class MessageList extends Component {
+class PostsList extends Component {
   constructor(props) {
     super(props);
     this.messagesStart = React.createRef();
@@ -82,8 +82,7 @@ class MessageList extends Component {
   render() {
     const { messages, isLoading } = this.props;
     return (
-      <div
-        className={styles.container}
+      <StyledPostsList
         onScroll={this.handleScroll}
         ref={el => {
           this.scroller = el;
@@ -101,7 +100,7 @@ class MessageList extends Component {
             </>
           )}
         />
-      </div>
+      </StyledPostsList>
     );
   }
 }
@@ -122,4 +121,4 @@ const mapDispatchToProps = dispatch => ({
   cleanChat: () => dispatch(cleanChat()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageList);
+export default connect(mapStateToProps, mapDispatchToProps)(PostsList);

@@ -18,12 +18,15 @@ export const getChatMessages = (page = 1) => dispatch => {
 };
 
 export const postChatMessage = message => (dispatch, getState) => {
-  dispatch({
+  return dispatch({
     type: ACTION.POST_CHAT_MESSAGE,
     request: {
       url: `${restURL}/posts`,
       data: message,
       method: 'post',
+    },
+    meta: {
+      asPromise: true,
     },
   });
 };
