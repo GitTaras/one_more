@@ -31,11 +31,12 @@ const AutocompleteTextArea = props => {
         className={error ? 'textAreaDanger' : ''}
         loadingComponent={AutocompleteLoading}
         onChange={textAreaChangeHandler}
-        rows="5"
+        rows="3"
         value={value}
         trigger={autocompleteTriggers}
         minChar={1}
         name={name}
+        maxLength={200}
       />
       {error && <span className={'postMessageFieldError'}>{error}</span>}
     </div>

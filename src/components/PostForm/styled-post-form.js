@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export default styled.div`
   > form {
-    height: 25vh;
+    height: 15vh;
     padding-bottom: 40px;
     display: flex;
     justify-content: space-between;

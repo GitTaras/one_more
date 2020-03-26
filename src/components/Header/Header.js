@@ -8,10 +8,11 @@ import { clearAuth } from '../../store/auth/authActions';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
+  toolbar: {
+    justifyContent: 'space-between',
+  },
   title: {
     color: 'white',
-    flexGrow: 1,
-    justifyContent: 'start',
     '&:hover': { color: 'white' },
   },
 }));
@@ -41,7 +42,7 @@ const Header = () => {
   return (
     <Grid item sm={12} xl={12} xs={12}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className={classes.toolbar}>
           <IconButton component={RouterLink} to={'/'} className={classes.title}>
             <HomeTwoTone />
           </IconButton>

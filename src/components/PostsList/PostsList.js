@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Message from '../Post/Post';
 import { List } from 'antd';
-import StyledPostsList from './StyledPostsLists';
+import StyledPostsList from './styled-posts-lists';
 import { getChatMessages } from '../../store/messages/messagesActions';
 import { cleanChat } from '../../store/messages/messagesActions';
 

@@ -7,7 +7,7 @@ import SignUp from './pages/SignUp/SignUp';
 import NotFound from './pages/NotFound/NotFound';
 import UserProfile from './pages/UserProfile/UserProfile';
 
-const Navigator = () => (
+const Navigation = () => (
   <Router>
     <Switch>
       <PrivateRoute component={PostsListPage} exact path="/" />
@@ -19,4 +19,4 @@ const Navigator = () => (
   </Router>
 );
 
-export default Navigator;
+export default Navigation;

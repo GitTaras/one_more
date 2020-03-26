@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { postSchema } from '../../utils/validators';
 import { Button } from 'antd';
 import { postChatMessage } from '../../store/messages/messagesActions';
-import StyledPostForm from './StyledPostForm.js';
+import StyledPostForm from './styled-post-form.js';
 import AutocompleteTextArea from '../AutocompleteTextArea/AutocompleteTextArea';
 
 const PostForm = values => {

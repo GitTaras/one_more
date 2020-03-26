@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import Navigator from './Navigator';
+import Navigation from './Navigation';
 import { auth } from './store/auth/authActions';
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
     }
   }, []);
 
-  return <Navigator />;
+  return <Navigation />;
 };
 
 export default App;

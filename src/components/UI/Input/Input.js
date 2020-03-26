@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './Input.module.css';
+import StyledInput from 'styled-input';
 
 export const Input = ({
   name,
@@ -16,11 +16,11 @@ export const Input = ({
   ...rest
 }) => (
   <>
-    <div className={style.container}>
+    <StyledInput>
       {label && <label className="label">{label}</label>}
-      <div className={style.inputContainer}>
+      <div className={'inputContainer'}>
         <input
-          className={error ? style.inputDanger : ''}
+          className={error ? 'inputDanger' : ''}
           name={name}
           value={value}
           type={type}
@@ -32,8 +32,8 @@ export const Input = ({
           required={required}
           {...rest}
         />
-        {error && <span className={style.error}>{error}</span>}
+        {error && <span className={'error'}>{error}</span>}
       </div>
-    </div>
+    </StyledInput>
   </>
 );
