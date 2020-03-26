@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import useAuthHook from '../auth/useAuthHook';
-import { auth } from '../auth/authActions';
+import useAuthHook from '../../store/auth/useAuthHook';
+import { auth } from '../../store/auth/authActions';
 
 function useUserFetchedData() {
   const dispatch = useDispatch();
