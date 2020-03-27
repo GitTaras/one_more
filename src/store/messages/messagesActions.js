@@ -1,13 +1,13 @@
 import ACTION from '../constants';
 import { restURL } from '../../utils/baseURL';
 
-export const cleanChat = () => ({
-  type: ACTION.CLEAN_CHAT,
+export const cleanPosts = () => ({
+  type: ACTION.CLEAN_POSTS,
 });
 
-export const getChatMessages = (page = 1) => dispatch => {
+export const getPosts = (page = 1) => dispatch => {
   return dispatch({
-    type: ACTION.FETCH_CHAT_MESSAGES,
+    type: ACTION.FETCH_POSTS,
     request: {
       url: `${restURL}/posts?page=${page}`,
     },
@@ -17,9 +17,9 @@ export const getChatMessages = (page = 1) => dispatch => {
   });
 };
 
-export const postChatMessage = message => (dispatch, getState) => {
+export const postMessage = message => (dispatch, getState) => {
   return dispatch({
-    type: ACTION.POST_CHAT_MESSAGE,
+    type: ACTION.POST_MESSAGE,
     request: {
       url: `${restURL}/posts`,
       data: message,
@@ -31,10 +31,10 @@ export const postChatMessage = message => (dispatch, getState) => {
   });
 };
 
-export const deleteChatMessage = id => (dispatch, getState) => {
+export const deletePost = id => (dispatch, getState) => {
   const messages = getState().messages.messages.filter(message => message.id !== id);
   dispatch({
-    type: ACTION.DELETE_CHAT_MESSAGE,
+    type: ACTION.DELETE_POST,
     request: {
       url: `${restURL}/posts/${id}`,
       method: 'delete',

@@ -15,16 +15,16 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ACTION.AUTH_CLEAR:
-    case ACTION.CLEAN_CHAT:
+    case ACTION.CLEAN_POSTS:
       return { ...initialState };
 
-    case ACTION.FETCH_CHAT_MESSAGES:
-    case ACTION.DELETE_CHAT_MESSAGE:
+    case ACTION.FETCH_POSTS:
+    case ACTION.DELETE_POST:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
-    case error(ACTION.FETCH_CHAT_MESSAGES):
-    case error(ACTION.POST_CHAT_MESSAGE):
-    case error(ACTION.DELETE_CHAT_MESSAGE):
+    case error(ACTION.FETCH_POSTS):
+    case error(ACTION.POST_MESSAGE):
+    case error(ACTION.DELETE_POST):
       return {
         ...state,
         isLoading: false,
@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
           : action.error.message,
       };
 
-    case success(ACTION.FETCH_CHAT_MESSAGES):
+    case success(ACTION.FETCH_POSTS):
       return {
         ...state,
         messages: [...state.messages, ...action.data.docs],
@@ -47,10 +47,10 @@ export default (state = initialState, action) => {
         limit: action.data.limit,
       };
 
-    case ACTION.POST_CHAT_MESSAGE:
+    case ACTION.POST_MESSAGE:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
-    case success(ACTION.POST_CHAT_MESSAGE): {
+    case success(ACTION.POST_MESSAGE): {
       const messages = [action.data, ...state.messages]; /*state.messages.concat(action.data);*/
       return {
         ...state,
@@ -61,7 +61,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case success(ACTION.DELETE_CHAT_MESSAGE): {
+    case success(ACTION.DELETE_POST): {
       return {
         ...state,
         isLoading: false,

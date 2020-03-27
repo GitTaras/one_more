@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Message from '../Post/Post';
+import Post from '../Post/Post';
 import { List } from 'antd';
 import StyledPostsList from './styled-posts-lists';
-import { getChatMessages } from '../../store/messages/messagesActions';
-import { cleanChat } from '../../store/messages/messagesActions';
+import { getPosts, cleanPosts } from '../../store/messages/messagesActions';
 
 class PostsList extends Component {
   constructor(props) {
@@ -18,7 +17,7 @@ class PostsList extends Component {
   };
 
   componentDidMount() {
-    this.props.getChatMessages().then(({ data }) => {
+    this.props.getPosts().then(({ data }) => {
       data.docs.length && this.scrollToTop();
     });
   }
@@ -50,8 +49,8 @@ class PostsList extends Component {
     }
     //when delete message load more if the are some messages
     if (this.props.messages.length < this.props.limit && this.props.hasMore) {
-      this.props.cleanChat();
-      this.props.getChatMessages();
+      this.props.cleanPosts();
+      this.props.getPosts();
     }
     //scroll to previous last element
     if (snapshot !== null) {
@@ -61,7 +60,7 @@ class PostsList extends Component {
   }
 
   componentWillUnmount() {
-    this.props.cleanChat();
+    this.props.cleanPosts();
   }
 
   handleScroll = () => {
@@ -75,7 +74,7 @@ class PostsList extends Component {
       !this.props.isLoading
     ) {
       // console.log('get more in handle scroll');
-      this.props.getChatMessages(this.props.nextPage);
+      this.props.getPosts(this.props.nextPage);
     }
   };
 
@@ -95,7 +94,7 @@ class PostsList extends Component {
             <>
               {!index && <div ref={this.messagesStart} />}
               <List.Item key={item.id}>
-                <Message key={item.id} {...item} />
+                <Post key={item.id} {...item} />
               </List.Item>
             </>
           )}
@@ -117,8 +116,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getChatMessages: page => dispatch(getChatMessages(page)),
-  cleanChat: () => dispatch(cleanChat()),
+  getPosts: page => dispatch(getPosts(page)),
+  cleanPosts: () => dispatch(cleanPosts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostsList);

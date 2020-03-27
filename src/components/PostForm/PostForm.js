@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { postSchema } from '../../utils/validators';
 import { Button } from 'antd';
-import { postChatMessage } from '../../store/messages/messagesActions';
+import { postMessage } from '../../store/messages/messagesActions';
 import StyledPostForm from './styled-post-form.js';
 import AutocompleteTextArea from '../AutocompleteTextArea/AutocompleteTextArea';
 
@@ -53,7 +53,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  post: message => dispatch(postChatMessage(message)),
+  post: message => dispatch(postMessage(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

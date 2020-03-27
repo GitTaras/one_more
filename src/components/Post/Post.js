@@ -1,14 +1,14 @@
 import React from 'react';
 import StyledMessage from './styled-post';
-import { deleteChatMessage } from '../../store/messages/messagesActions';
+import { deletePost } from '../../store/messages/messagesActions';
 import { connect } from 'react-redux';
 import reactStringReplace from 'react-string-replace';
 
 function Post(props) {
-  const { id, message, deleteMessage } = props;
+  const { id, message, deletePost } = props;
 
   function onDelete() {
-    deleteMessage(id);
+    deletePost(id);
   }
 
   let messageWithLinks = '';
@@ -48,7 +48,7 @@ function Post(props) {
 }
 
 const mapDispatchToProps = dispatch => ({
-  deleteMessage: id => dispatch(deleteChatMessage(id)),
+  deletePost: id => dispatch(deletePost(id)),
 });
 
 export default connect(null, mapDispatchToProps)(Post);
