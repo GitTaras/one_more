@@ -13,11 +13,29 @@ function Post(props) {
 
   let messageWithLinks = '';
   // Match @-mentions
-  messageWithLinks = reactStringReplace(message, /@(\w+)/g, (match, i) => (
-    <a key={match + i} href={`https://twitter.com/${match}`}>
-      @{match}
-    </a>
-  ));
+  //  ^@(\w+)|(\s)@(\w+)
+  //  ^@(\w+)|(\s)@(\w+)|@(\w+)
+  //  (?<=\s)@(\w+)|^@(\w+)
+  //debugger
+  const allowedChars = [' ', '\n', undefined];
+
+  messageWithLinks = reactStringReplace(message, /@(\w+)/gim, (match, i, offset) => {
+    //console.log(match, i, offset, message[offset]);
+    //debugger
+    const wordPosition = offset + (i - 1) / 2;
+    const firstChar = message[wordPosition]; // get '@'
+    const charBeforeWord = message[wordPosition - 1];
+
+    if (allowedChars.includes(charBeforeWord)) {
+      return (
+        <a key={match + i} href={`https://twitter.com/${match}`}>
+          {firstChar + match}
+        </a>
+      );
+    }
+
+    return firstChar + match;
+  });
 
   return (
     <StyledMessage>
