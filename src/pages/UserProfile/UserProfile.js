@@ -66,7 +66,7 @@ export default () => {
             <div className={classes.media}>
               {currentUser.avatar ? (
                 <Avatar
-                  alt={`${currentUser.firstName} ${currentUser.lastName}`}
+                  alt={currentUser.fullName}
                   srcSet={currentUser.avatar}
                   src={currentUser.avatar}
                   className={classes.userAvatar}
@@ -89,9 +89,9 @@ export default () => {
                   <Grid container spacing={2} direction={'column'}>
                     <Grid item>
                       <Field
-                        name="firstName"
-                        id="firstName"
-                        label="First Name"
+                        name="fullName"
+                        id="fullName"
+                        label="Full Name"
                         type="text"
                         fullWidth
                         autoFocus
@@ -102,9 +102,9 @@ export default () => {
                     </Grid>
                     <Grid item>
                       <Field
-                        name="lastName"
-                        id="lastName"
-                        label="Last Name"
+                        name="username"
+                        id="username"
+                        label="User Name"
                         type="text"
                         fullWidth
                         autoFocus

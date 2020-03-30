@@ -21,8 +21,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialValues = {
-  firstName: '',
-  lastName: '',
+  fullName: '',
+  username: '',
   email: '',
   password: '',
   confirmPassword: '',
@@ -69,9 +69,9 @@ const SignUp = ({ history }) => {
                   </Grid>
                   <Grid item md={true} sm={true} xs={true}>
                     <Field
-                      name="firstName"
-                      id="firstName"
-                      label="First Name"
+                      name="fullName"
+                      id="fullName"
+                      label="Full Name"
                       type="text"
                       fullWidth
                       autoFocus
@@ -87,9 +87,9 @@ const SignUp = ({ history }) => {
                   <Grid item md={true} sm={true} xs={true}>
                     <Field
                       component={MyTextField}
-                      name="lastName"
-                      id="lastName"
-                      label="Last Name"
+                      name="username"
+                      id="username"
+                      label="User Name"
                       type="text"
                       fullWidth
                       required

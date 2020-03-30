@@ -8,12 +8,12 @@ export const postSchema = Yup.object().shape({
 });
 
 export const signUpSchema = Yup.object().shape({
-  firstName: Yup.string()
+  fullName: Yup.string()
     .required()
     .trim()
     .min(2, 'min length is 2 charts')
-    .max(30, 'max length is 30 charts'),
-  lastName: Yup.string()
+    .max(50, 'max length is 50 charts'),
+  username: Yup.string()
     .required()
     .trim()
     .min(2, 'min length is 2 charts')
@@ -35,12 +35,12 @@ export const signUpSchema = Yup.object().shape({
 });
 
 export const editUserSchema = Yup.object().shape({
-  firstName: Yup.string()
+  fullName: Yup.string()
     .required()
     .trim()
     .min(2, 'min length is 2 charts')
-    .max(30, 'max length is 30 charts'),
-  lastName: Yup.string()
+    .max(50, 'max length is 50 charts'),
+  username: Yup.string()
     .required()
     .trim()
     .min(2, 'min length is 2 charts')
