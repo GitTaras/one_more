@@ -4,12 +4,15 @@ import Post from '../Post/Post';
 import { List } from 'antd';
 import StyledPostsList from './styled-posts-lists';
 import { getPosts, cleanPosts } from '../../store/messages/messagesActions';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 
 class PostsList extends Component {
   constructor(props) {
     super(props);
     this.messagesStart = React.createRef();
     this.scroller = React.createRef();
+    this.searchObj = null;
   }
 
   scrollToTop = () => {
@@ -17,7 +20,9 @@ class PostsList extends Component {
   };
 
   componentDidMount() {
-    this.props.getPosts().then(({ data }) => {
+    this.searchObj = queryString.parse(this.props.location.search);
+
+    this.props.getPosts(1, this.searchObj.username).then(({ data }) => {
       data.docs.length && this.scrollToTop();
     });
   }
@@ -50,7 +55,7 @@ class PostsList extends Component {
     //when delete message load more if the are some messages
     if (this.props.messages.length < this.props.limit && this.props.hasMore) {
       this.props.cleanPosts();
-      this.props.getPosts();
+      this.props.getPosts(1, this.searchObj.username);
     }
     //scroll to previous last element
     if (snapshot !== null) {
@@ -74,7 +79,7 @@ class PostsList extends Component {
       !this.props.isLoading
     ) {
       // console.log('get more in handle scroll');
-      this.props.getPosts(this.props.nextPage);
+      this.props.getPosts(this.props.nextPage, this.searchObj.username);
     }
   };
 
@@ -116,8 +121,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPosts: page => dispatch(getPosts(page)),
+  getPosts: (page, username) => dispatch(getPosts(page, username)),
   cleanPosts: () => dispatch(cleanPosts()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostsList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));

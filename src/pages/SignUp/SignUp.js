@@ -35,7 +35,7 @@ const SignUp = ({ history }) => {
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
-      history.push('/');
+      history.push('/posts');
     }
   }, [isLoading, isError, currentUser]);
 

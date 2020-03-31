@@ -33,7 +33,9 @@ const SignIn = ({ history }) => {
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
-      history.push(history.location.state?.from?.pathname || '/');
+      const pathname = history.location.state?.from?.pathname;
+      const search = history.location.state?.from?.search;
+      history.push({ pathname: pathname || '/posts', search: search || '' });
     }
   }, [isLoading, isError, currentUser]);
 

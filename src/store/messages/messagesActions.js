@@ -5,11 +5,11 @@ export const cleanPosts = () => ({
   type: ACTION.CLEAN_POSTS,
 });
 
-export const getPosts = (page = 1) => dispatch => {
+export const getPosts = (page = 1, username = '') => dispatch => {
   return dispatch({
     type: ACTION.FETCH_POSTS,
     request: {
-      url: `${restURL}/posts?page=${page}`,
+      url: `${restURL}/posts?page=${page}&username=${username}`,
     },
     meta: {
       asPromise: true,

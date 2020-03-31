@@ -35,7 +35,7 @@ const Header = () => {
   };
 
   const onSignOut = () => {
-    history.replace('/');
+    history.replace('/signin');
     dispatch(clearAuth());
   };
 
@@ -43,7 +43,7 @@ const Header = () => {
     <Grid item sm={12} xl={12} xs={12}>
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
-          <IconButton component={RouterLink} to={'/'} className={classes.title}>
+          <IconButton component={RouterLink} to={'/posts'} className={classes.title}>
             <HomeTwoTone />
           </IconButton>
           {currentUser ? (

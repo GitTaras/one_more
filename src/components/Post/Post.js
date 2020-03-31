@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import reactStringReplace from 'react-string-replace';
 import { Avatar, IconButton, Typography } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
+import { useHistory, Link } from 'react-router-dom';
 
 function Post(props) {
   const { id, message, createdAt, deletePost, author, currentUserId } = props;
+  const history = useHistory();
 
   function onDelete() {
     deletePost(id);
@@ -24,19 +26,23 @@ function Post(props) {
 
     if (allowedChars.includes(charBeforeWord)) {
       return (
-        <a key={match + i} href={`https://twitter.com/${match}`}>
+        <Link key={match + i} to={`/posts?username=${match}`}>
           {firstChar + match}
-        </a>
+        </Link>
       );
     }
 
     return firstChar + match;
   });
 
+  function handleAvatarClick() {
+    history.push(`/posts?username=${props.author.username}`);
+  }
+
   return (
     <StyledMessage>
       {author.avatar ? (
-        <IconButton>
+        <IconButton onClick={handleAvatarClick}>
           <Avatar alt="Remy Sharp" srcSet={author.avatar} src={author.avatar} />
         </IconButton>
       ) : (
@@ -78,4 +84,4 @@ const mapStateToProps = store => ({
   currentUserId: store.auth.currentUser.id,
 });
 
-export default connect(null, mapDispatchToProps)(Post);
+export default connect(mapStateToProps, mapDispatchToProps)(Post);
