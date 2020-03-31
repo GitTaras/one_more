@@ -12,7 +12,7 @@ const useStyles = makeStyles({
 const NotFound = () => {
   const classes = useStyles();
   return (
-    <Grid justify="center" alignItems="center" sm={12} className={classes.root}>
+    <Grid container item justify="center" alignItems="center" sm={12} className={classes.root}>
       <Typography variant="h5" component="h2">
         Not Found
       </Typography>
