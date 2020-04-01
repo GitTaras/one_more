@@ -16,7 +16,7 @@ function useUserFetchedData() {
       if (token) {
         dispatch(auth());
       } else {
-        history.replace('/signin');
+        history.replace('/sign-in');
       }
     }
   }, []);

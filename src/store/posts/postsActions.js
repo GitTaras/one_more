@@ -32,7 +32,7 @@ export const post = message => (dispatch, getState) => {
 };
 
 export const deletePost = id => (dispatch, getState) => {
-  const messages = getState().messages.messages.filter(message => message.id !== id);
+  const posts = getState().posts.posts.filter(post => post.id !== id);
   dispatch({
     type: ACTION.DELETE_POST,
     request: {
@@ -40,7 +40,7 @@ export const deletePost = id => (dispatch, getState) => {
       method: 'delete',
     },
     meta: {
-      messages,
+      posts,
     },
   });
 };

@@ -89,19 +89,6 @@ export default () => {
                   <Grid container spacing={2} direction={'column'}>
                     <Grid item>
                       <Field
-                        name="fullName"
-                        id="fullName"
-                        label="Full Name"
-                        type="text"
-                        fullWidth
-                        autoFocus
-                        required
-                        disabled={!isEditing}
-                        component={MyTextField}
-                      />
-                    </Grid>
-                    <Grid item>
-                      <Field
                         name="username"
                         id="username"
                         label="User Name"

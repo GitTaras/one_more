@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { postSchema } from '../../utils/validators';
 import { Button } from 'antd';
-import { post } from '../../store/messages/messagesActions';
+import { post } from '../../store/posts/postsActions';
 import StyledPostForm from './styled-post-form.js';
 import AutocompleteTextArea from '../AutocompleteTextArea/AutocompleteTextArea';
 
@@ -49,7 +49,7 @@ const PostForm = props => {
 };
 
 const mapStateToProps = store => ({
-  isLoading: store.messages.isLoading,
+  isLoading: store.posts.isLoading,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Post from '../Post/Post';
 import { List } from 'antd';
 import StyledPostsList from './styled-posts-lists';
-import { getPosts, cleanPosts } from '../../store/messages/messagesActions';
+import { getPosts, cleanPosts } from '../../store/posts/postsActions';
 import { withRouter } from 'react-router-dom';
 
 class PostsList extends Component {
@@ -31,10 +31,10 @@ class PostsList extends Component {
     const reachedBottom =
       this.scroller.scrollHeight === this.scroller.scrollTop + this.scroller.clientHeight;
     if (
-      prevProps.messages.length < this.props.messages.length &&
+      prevProps.posts.length < this.props.posts.length &&
       this.scroller &&
       reachedBottom &&
-      this.props.messages.length > this.props.limit
+      this.props.posts.length > this.props.limit
     ) {
       // console.log('save scroll');
       const scroller = this.scroller;
@@ -45,15 +45,15 @@ class PostsList extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     //added new one post
-    if (prevProps.messages.length < this.props.messages.length && !snapshot) {
+    if (prevProps.posts.length < this.props.posts.length && !snapshot) {
       return this.scrollToTop();
     }
 
     if (this.props.isError) {
       alert(`Error: ${this.props.errorMessage}`);
     }
-    //when delete message load more if the are some messages
-    if (this.props.messages.length < this.props.limit && this.props.hasMore) {
+    //when delete message load more if the are some posts
+    if (this.props.posts.length < this.props.limit && this.props.hasMore) {
       this.props.cleanPosts();
       this.props.getPosts(1, this.username);
     }
@@ -73,7 +73,7 @@ class PostsList extends Component {
       this.scroller.scrollHeight === this.scroller.scrollTop + this.scroller.clientHeight;
 
     if (
-      this.props.messages.length > this.props.limit - 1 &&
+      this.props.posts.length > this.props.limit - 1 &&
       reachedBottom &&
       this.props.hasMore &&
       !this.props.isLoading
@@ -84,7 +84,7 @@ class PostsList extends Component {
   };
 
   render() {
-    const { messages, isLoading } = this.props;
+    const { posts, isLoading } = this.props;
     return (
       <StyledPostsList
         onScroll={this.handleScroll}
@@ -94,7 +94,7 @@ class PostsList extends Component {
       >
         <List
           loading={isLoading}
-          dataSource={messages}
+          dataSource={posts}
           renderItem={(item, index) => (
             <>
               {!index && <div ref={this.messagesStart} />}
@@ -111,14 +111,14 @@ class PostsList extends Component {
 
 const mapStateToProps = state => ({
   currentUser: state.auth.currentUser,
-  messages: state.messages.messages,
-  hasMore: state.messages.hasMore,
-  isError: state.messages.isError,
-  errorMessage: state.messages.errorMessage,
-  isLoading: state.messages.isLoading,
-  limit: state.messages.limit,
-  page: state.messages.page,
-  nextPage: state.messages.nextPage,
+  posts: state.posts.posts,
+  hasMore: state.posts.hasMore,
+  isError: state.posts.isError,
+  errorMessage: state.posts.errorMessage,
+  isLoading: state.posts.isLoading,
+  limit: state.posts.limit,
+  page: state.posts.page,
+  nextPage: state.posts.nextPage,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -21,7 +21,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialValues = {
-  fullName: '',
   username: '',
   email: '',
   password: '',
@@ -63,23 +62,6 @@ const SignUp = ({ history }) => {
                 <Snackbar open={isError} autoHideDuration={6000} onClose={closeSnackbar}>
                   <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
                 </Snackbar>
-                <Grid container spacing={2} alignItems="flex-end">
-                  <Grid item>
-                    <Face />
-                  </Grid>
-                  <Grid item md={true} sm={true} xs={true}>
-                    <Field
-                      name="fullName"
-                      id="fullName"
-                      label="Full Name"
-                      type="text"
-                      fullWidth
-                      autoFocus
-                      required
-                      component={MyTextField}
-                    />
-                  </Grid>
-                </Grid>
                 <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>
                     <Face />

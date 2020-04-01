@@ -35,7 +35,7 @@ const Header = () => {
   };
 
   const onSignOut = () => {
-    history.replace('/signin');
+    history.replace('/sign-in');
     dispatch(clearAuth());
   };
 
@@ -84,7 +84,7 @@ const Header = () => {
               </Menu>
             </div>
           ) : (
-            <Link component={RouterLink} to="/signin" color="inherit">
+            <Link component={RouterLink} to="/sign-in" color="inherit">
               Sign In
             </Link>
           )}

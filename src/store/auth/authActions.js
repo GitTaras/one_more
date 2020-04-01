@@ -18,7 +18,7 @@ export const signIn = userData => dispatch => {
   return dispatch({
     type: ACTION.AUTH,
     request: {
-      url: `${restURL}/auth/signin`,
+      url: `${restURL}/auth/sign-in`,
       data: userData,
       method: 'post',
     },
@@ -32,7 +32,7 @@ export const signUp = userData => dispatch => {
   dispatch({
     type: ACTION.AUTH,
     request: {
-      url: `${restURL}/auth/signup`,
+      url: `${restURL}/auth/sign-up`,
       data: userData,
       method: 'post',
     },
@@ -48,7 +48,7 @@ export const editAccount = userData => dispatch => {
   dispatch({
     type: ACTION.AUTH,
     request: {
-      url: `${restURL}/auth/`,
+      url: `${restURL}/users/`,
       data: userData,
       method: 'put',
     },

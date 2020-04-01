@@ -9,7 +9,7 @@ const initialState = {
   page: 1,
   nextPage: 1,
   limit: 15,
-  messages: [],
+  posts: [],
 };
 
 export default (state = initialState, action) => {
@@ -37,7 +37,7 @@ export default (state = initialState, action) => {
     case success(ACTION.FETCH_POSTS):
       return {
         ...state,
-        messages: [...state.messages, ...action.data.docs],
+        posts: [...state.posts, ...action.data.docs],
         isLoading: false,
         isError: false,
         errorMessage: '',
@@ -51,13 +51,13 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
     case success(ACTION.POST_MESSAGE): {
-      const messages = [action.data, ...state.messages]; /*state.messages.concat(action.data);*/
+      const posts = [action.data, ...state.posts]; /*state.posts.concat(action.data);*/
       return {
         ...state,
         isLoading: false,
         isError: false,
         errorMessage: '',
-        messages: messages,
+        posts: posts,
       };
     }
 
@@ -67,7 +67,7 @@ export default (state = initialState, action) => {
         isLoading: false,
         isError: false,
         errorMessage: '',
-        messages: action.meta.messages,
+        posts: action.meta.posts,
       };
     }
 

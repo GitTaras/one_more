@@ -114,7 +114,7 @@ const SignIn = ({ history }) => {
                     <Link to="#">Forgot password?</Link>
                   </Grid>
                   <Grid item>
-                    <Link to={'/signup'}>{"Don't have an account? Sign Up"}</Link>
+                    <Link to={'/sign-up'}>{"Don't have an account? Sign Up"}</Link>
                   </Grid>
                 </Grid>
               </div>

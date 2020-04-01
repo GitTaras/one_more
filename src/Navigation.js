@@ -17,8 +17,8 @@ const Navigation = () => (
       </Route>
       <PrivateRoute path="/users/:username/posts" component={PostsListPage} />
       <PrivateRoute path="/profile/" component={UserProfile} />
-      <Route path="/signin/" component={SignIn} />
-      <Route path="/signup/" component={SignUp} />
+      <Route path="/sign-in/" component={SignIn} />
+      <Route path="/sign-up/" component={SignUp} />
       <Route component={NotFound} />
     </Switch>
   </Router>

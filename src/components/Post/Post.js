@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import StyledMessage from './styled-post';
-import { deletePost } from '../../store/messages/messagesActions';
+import { deletePost } from '../../store/posts/postsActions';
 import { connect } from 'react-redux';
 import reactStringReplace from 'react-string-replace';
 import { Avatar, IconButton, Typography } from '@material-ui/core';
@@ -63,7 +63,7 @@ function Post(props) {
               noWrap={true}
               gutterBottom
             >
-              {author.fullName}
+              {author.username}
             </Typography>
             <Typography variant="body2" gutterBottom>
               {moment(createdAt, moment.ISO_8601).format('MMMM Do YYYY')}
