@@ -9,7 +9,7 @@ export const getPosts = (page = 1, username = '') => dispatch => {
   return dispatch({
     type: ACTION.FETCH_POSTS,
     request: {
-      url: `${restURL}/posts?page=${page}&username=${username}`,
+      url: `${restURL}/posts/${username}?page=${page}`,
     },
     meta: {
       asPromise: true,
@@ -17,7 +17,7 @@ export const getPosts = (page = 1, username = '') => dispatch => {
   });
 };
 
-export const postMessage = message => (dispatch, getState) => {
+export const post = message => (dispatch, getState) => {
   return dispatch({
     type: ACTION.POST_MESSAGE,
     request: {

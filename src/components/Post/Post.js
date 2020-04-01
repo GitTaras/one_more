@@ -9,7 +9,7 @@ import { AccountCircle } from '@material-ui/icons';
 import { useHistory, Link } from 'react-router-dom';
 
 function Post(props) {
-  const { id, message, createdAt, deletePost, author, currentUserId } = props;
+  const { id, message, createdAt, deletePost, author, currentUser } = props;
   const history = useHistory();
 
   function onDelete() {
@@ -26,7 +26,10 @@ function Post(props) {
 
     if (allowedChars.includes(charBeforeWord)) {
       return (
-        <Link key={match + i} to={`/posts?username=${match}`}>
+        <Link
+          key={match + i}
+          to={currentUser.username === match ? `/posts` : `/users/${match}/posts`}
+        >
           {firstChar + match}
         </Link>
       );
@@ -36,7 +39,9 @@ function Post(props) {
   });
 
   function handleAvatarClick() {
-    history.push(`/posts?username=${props.author.username}`);
+    currentUser.id === author.id
+      ? history.push('/posts')
+      : history.push(`/users/${author.username}/posts`);
   }
 
   return (
@@ -64,7 +69,7 @@ function Post(props) {
               {moment(createdAt, moment.ISO_8601).format('MMMM Do YYYY')}
             </Typography>
           </div>
-          {currentUserId === author.id && (
+          {currentUser.id === author.id && (
             <span className="closeButton" onClick={onDelete}>
               &times;
             </span>
@@ -81,7 +86,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = store => ({
-  currentUserId: store.auth.currentUser.id,
+  currentUser: store.auth.currentUser,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post);

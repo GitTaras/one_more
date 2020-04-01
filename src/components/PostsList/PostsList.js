@@ -5,14 +5,13 @@ import { List } from 'antd';
 import StyledPostsList from './styled-posts-lists';
 import { getPosts, cleanPosts } from '../../store/messages/messagesActions';
 import { withRouter } from 'react-router-dom';
-import queryString from 'query-string';
 
 class PostsList extends Component {
   constructor(props) {
     super(props);
     this.messagesStart = React.createRef();
     this.scroller = React.createRef();
-    this.searchObj = null;
+    this.username = '';
   }
 
   scrollToTop = () => {
@@ -20,9 +19,10 @@ class PostsList extends Component {
   };
 
   componentDidMount() {
-    this.searchObj = queryString.parse(this.props.location.search);
+    const { location, currentUser, match } = this.props;
+    this.username = location.pathname === '/posts' ? currentUser.username : match.params.username;
 
-    this.props.getPosts(1, this.searchObj.username).then(({ data }) => {
+    this.props.getPosts(1, this.username).then(({ data }) => {
       data.docs.length && this.scrollToTop();
     });
   }
@@ -55,7 +55,7 @@ class PostsList extends Component {
     //when delete message load more if the are some messages
     if (this.props.messages.length < this.props.limit && this.props.hasMore) {
       this.props.cleanPosts();
-      this.props.getPosts(1, this.searchObj.username);
+      this.props.getPosts(1, this.username);
     }
     //scroll to previous last element
     if (snapshot !== null) {
@@ -79,7 +79,7 @@ class PostsList extends Component {
       !this.props.isLoading
     ) {
       // console.log('get more in handle scroll');
-      this.props.getPosts(this.props.nextPage, this.searchObj.username);
+      this.props.getPosts(this.props.nextPage, this.username);
     }
   };
 
@@ -110,6 +110,7 @@ class PostsList extends Component {
 }
 
 const mapStateToProps = state => ({
+  currentUser: state.auth.currentUser,
   messages: state.messages.messages,
   hasMore: state.messages.hasMore,
   isError: state.messages.isError,

@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { postSchema } from '../../utils/validators';
 import { Button } from 'antd';
-import { postMessage } from '../../store/messages/messagesActions';
+import { post } from '../../store/messages/messagesActions';
 import StyledPostForm from './styled-post-form.js';
 import AutocompleteTextArea from '../AutocompleteTextArea/AutocompleteTextArea';
 
-const PostForm = values => {
-  const { isLoading, post } = values;
+const PostForm = props => {
+  const { isLoading, post } = props;
   const handleSubmit = values => {
     if (!isLoading) {
       return post({ message: values.message });
@@ -53,7 +53,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  post: message => dispatch(postMessage(message)),
+  post: message => dispatch(post(message)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
