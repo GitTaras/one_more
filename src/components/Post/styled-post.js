@@ -50,6 +50,7 @@ export default styled.div`
       }
     }
     .message {
+      white-space: pre-wrap;
       background-color: #e6e6fa61;
       font-size: 15px;
       font-weight: 100;
