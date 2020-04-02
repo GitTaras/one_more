@@ -16,6 +16,7 @@ const Navigation = () => (
         <Redirect to="/posts" />
       </Route>
       <PrivateRoute path="/users/:username/posts" component={PostsListPage} />
+      <PrivateRoute path="/tags/:tag/posts" component={PostsListPage} />
       <PrivateRoute path="/profile/" component={UserProfile} />
       <Route path="/sign-in/" component={SignIn} />
       <Route path="/sign-up/" component={SignUp} />

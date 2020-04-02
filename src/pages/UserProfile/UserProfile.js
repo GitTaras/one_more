@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Paper, CardContent, Card, CardMedia, Button, Avatar } from '@material-ui/core';
+import { Grid, Paper, CardContent, Card, CardMedia, Button, Avatar, Snackbar } from '@material-ui/core';
 import { AccountCircle, Edit, Cancel } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,8 +7,9 @@ import { editUserSchema } from '../../utils/validators';
 import { Field, Formik } from 'formik';
 import MyTextField from '../../components/UI/TextField/TextField';
 import { useDispatch } from 'react-redux';
-import { editAccount } from '../../store/auth/authActions';
+import { clearAuth, editAccount } from '../../store/auth/authActions';
 import useAuthHook from '../../store/auth/useAuthHook';
+import MuiAlert from '../../components/UI/Alert/MuiAlert';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 export default () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const { currentUser, isLoading } = useAuthHook();
+  const { currentUser, isLoading, isError, errorMessage } = useAuthHook();
   const [isEditing, setEditing] = useState(false);
 
   const updateUserData = values => {
@@ -59,6 +60,9 @@ export default () => {
   return (
     <Grid item sm={8}>
       <Paper elevation={1} className={classes.padding}>
+        <Snackbar open={isError} autoHideDuration={6000} onClose={e => dispatch({type: "AUTH_CLEAR_ERROR"})}>
+          <MuiAlert severity="error">Error: {errorMessage.message}</MuiAlert>
+        </Snackbar>
         <Card className={classes.root}>
           {currentUser.picture ? (
             <CardMedia className={classes.media} image={currentUser.picture} title="user picture" />

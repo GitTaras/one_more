@@ -11,7 +11,7 @@ class PostsList extends Component {
     super(props);
     this.messagesStart = React.createRef();
     this.scroller = React.createRef();
-    this.username = '';
+    //this.username = '';
   }
 
   scrollToTop = () => {
@@ -20,9 +20,16 @@ class PostsList extends Component {
 
   componentDidMount() {
     const { location, currentUser, match } = this.props;
-    this.username = location.pathname === '/posts' ? currentUser.username : match.params.username;
+    //debugger
+    const pathprefix = location.pathname.split('/')[1];
 
-    this.props.getPosts(1, this.username).then(({ data }) => {
+    if (pathprefix === 'tags') {
+      this.hashTag = match.params.tag;
+    } else {
+      this.username = location.pathname === '/posts' ? currentUser.username : match.params.username;
+    }
+
+    this.props.getPosts(1, this.username, this.hashTag).then(({ data }) => {
       data.docs.length && this.scrollToTop();
     });
   }
@@ -55,7 +62,7 @@ class PostsList extends Component {
     //when delete message load more if the are some posts
     if (this.props.posts.length < this.props.limit && this.props.hasMore) {
       this.props.cleanPosts();
-      this.props.getPosts(1, this.username);
+      this.props.getPosts(1, this.username, this.hashTag);
     }
     //scroll to previous last element
     if (snapshot !== null) {
@@ -79,7 +86,7 @@ class PostsList extends Component {
       !this.props.isLoading
     ) {
       // console.log('get more in handle scroll');
-      this.props.getPosts(this.props.nextPage, this.username);
+      this.props.getPosts(this.props.nextPage, this.username, this.hashTag);
     }
   };
 
@@ -122,7 +129,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPosts: (page, username) => dispatch(getPosts(page, username)),
+  getPosts: (page, username, hashTag) => dispatch(getPosts(page, username, hashTag)),
   cleanPosts: () => dispatch(cleanPosts()),
 });
 

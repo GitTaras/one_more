@@ -11,6 +11,11 @@ const PostForm = props => {
   const { isLoading, post } = props;
   const handleSubmit = values => {
     if (!isLoading) {
+      // Match #
+      //  ^@(\w+)|(\s)@(\w+)
+      //  ^@(\w+)|(\s)@(\w+)|@(\w+)
+      //  (?<=\s)#(\w+)|^#(\w+)
+      // const hashTags = values.message.much('');
       return post({ message: values.message });
     }
   };
