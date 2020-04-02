@@ -10,6 +10,8 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ACTION.AUTH_CLEAR_ERROR:
+      return { ...state, isError: false, errorMessage: '' };
     case ACTION.AUTH:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 

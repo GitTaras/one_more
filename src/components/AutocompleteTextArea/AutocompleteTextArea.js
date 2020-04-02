@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAutocompleteUsers } from '../../store/autocomplete/autocompleteActions';
+import { getAutocompleteUsers, getAutocompleteHashTags } from '../../store/autocomplete/autocompleteActions';
 import ReactTextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
 import '@webscopeio/react-textarea-autocomplete/style.css';
 
@@ -7,6 +7,10 @@ const AutocompleteItem = ({ entity: { username } }) => <div>{username}</div>;
 const AutocompleteLoading = () => <div>Loading ...</div>;
 
 const AutocompleteTextArea = props => {
+  const autocompleteHashDataProvider = async searchStr => {
+    return await getAutocompleteHashTags(searchStr);
+  }
+
   const autocompleteUsernameDataProvider = async searchStr => {
     return await getAutocompleteUsers(searchStr);
   };
@@ -16,6 +20,11 @@ const AutocompleteTextArea = props => {
   };
 
   const autocompleteTriggers = {
+    '#': {
+      component: AutocompleteItem,
+      dataProvider: autocompleteHashDataProvider,
+      output: (word) => `#${word}`,
+    },
     '@': {
       component: AutocompleteItem,
       dataProvider: autocompleteUsernameDataProvider,

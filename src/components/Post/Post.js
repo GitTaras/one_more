@@ -19,16 +19,23 @@ function Post(props) {
   let messageWithLinks = '';
   const allowedChars = [' ', '\n', undefined];
 
-  messageWithLinks = reactStringReplace(message, /@(\w+)/gim, (match, i, offset) => {
+  messageWithLinks = reactStringReplace(message, /[@|#](\w+)/gim, (match, i, offset) => {
     const wordPosition = offset + (i - 1) / 2;
-    const firstChar = message[wordPosition]; // get '@'
+    const firstChar = message[wordPosition]; // get '@' or '#'
     const charBeforeWord = message[wordPosition - 1];
 
     if (allowedChars.includes(charBeforeWord)) {
-      return (
+      return firstChar === '@' ? (
         <Link
           key={match + i}
           to={currentUser.username === match ? `/posts` : `/users/${match}/posts`}
+        >
+          {firstChar + match}
+        </Link>
+      ) : (
+        <Link
+          key={match + i}
+          to={ `/tags/${match}/posts`}
         >
           {firstChar + match}
         </Link>

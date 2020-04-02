@@ -5,4 +5,5 @@ export default {
   CLEAN_POSTS: 'CLEAN_POSTS',
   AUTH: 'AUTH',
   AUTH_CLEAR: 'AUTH_CLEAR',
+  AUTH_CLEAR_ERROR : "AUTH_CLEAR_ERROR",
 };
