@@ -20,11 +20,11 @@ const AutocompleteTextArea = props => {
   };
 
   const autocompleteTriggers = {
-    '#': {
-      component: AutocompleteItem,
-      dataProvider: autocompleteHashDataProvider,
-      output: (word) => `#${word}`,
-    },
+    // '#': {
+    //   component: AutocompleteItem,
+    //   dataProvider: autocompleteHashDataProvider,
+    //   output: (word) => `#${word}`,
+    // },
     '@': {
       component: AutocompleteItem,
       dataProvider: autocompleteUsernameDataProvider,
