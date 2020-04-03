@@ -11,7 +11,9 @@ const PostForm = props => {
   const { isLoading, post } = props;
   const handleSubmit = values => {
     if (!isLoading) {
-      return post({ message: values.message });
+      const hashTags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
+      const withoutSharp = hashTags ? hashTags.map(item => item.slice(1, Infinity)) : [];
+      return post({ message: values.message, hashtags: withoutSharp });
     }
   };
 
@@ -33,6 +35,7 @@ const PostForm = props => {
             <AutocompleteTextArea
               value={values.message}
               onChange={handleChange}
+              onKeyDown={e => (e.ctrlKey && e.key === 'Enter') && handleSubmit()}
               error={errors.message}
               name="message"
             />
@@ -53,7 +56,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  post: message => dispatch(post(message)),
+  post: postData => dispatch(post(postData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

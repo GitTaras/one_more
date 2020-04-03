@@ -5,11 +5,11 @@ export const cleanPosts = () => ({
   type: ACTION.CLEAN_POSTS,
 });
 
-export const getPosts = (page = 1, username = '') => dispatch => {
+export const getPosts = (page = 1, username = '', hashTag = '') => dispatch => {
   return dispatch({
     type: ACTION.FETCH_POSTS,
     request: {
-      url: `${restURL}/posts/${username}?page=${page}`,
+      url: `${restURL}/posts/${username}?page=${page}&hash_tag=${hashTag}`,
     },
     meta: {
       asPromise: true,
@@ -17,12 +17,12 @@ export const getPosts = (page = 1, username = '') => dispatch => {
   });
 };
 
-export const post = message => (dispatch, getState) => {
+export const post = postData => (dispatch, getState) => {
   return dispatch({
     type: ACTION.POST_MESSAGE,
     request: {
       url: `${restURL}/posts`,
-      data: message,
+      data: postData,
       method: 'post',
     },
     meta: {
