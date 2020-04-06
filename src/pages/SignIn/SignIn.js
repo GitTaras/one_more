@@ -8,9 +8,10 @@ import { Formik, Field } from 'formik';
 import { signInSchema } from '../../utils/validators';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
-import { signIn, clearAuth } from '../../store/auth/authActions';
+import { signIn } from '../../store/auth/authActions';
 import useAuthHook from '../../store/auth/useAuthHook';
 import withLayout from '../../components/Hocs/withLayout';
+import ACTION from '../../store/constants';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -39,10 +40,6 @@ const SignIn = ({ history }) => {
     }
   }, [isLoading, isError, currentUser]);
 
-  const closeSnackbar = () => {
-    dispatch(clearAuth());
-  };
-
   const handleSubmit = values => {
     dispatch(signIn(values));
   };
@@ -60,7 +57,11 @@ const SignIn = ({ history }) => {
           <form onSubmit={handleSubmit}>
             <Paper className={classes.padding}>
               <div className={classes.margin}>
-                <Snackbar open={isError} autoHideDuration={6000} onClose={closeSnackbar}>
+                <Snackbar
+                  open={isError}
+                  autoHideDuration={6000}
+                  onClose={() => dispatch({ type: ACTION.AUTH_CLEAR })}
+                >
                   <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
                 </Snackbar>
                 <Grid container spacing={2} alignItems="flex-end">

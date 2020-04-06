@@ -12,10 +12,15 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ACTION.AUTH_CLEAR_ERROR:
       return { ...state, isError: false, errorMessage: '' };
+
     case ACTION.AUTH:
+    case ACTION.EDIT_ACCOUNT:
+    case ACTION.UPDATE_PASSWORD:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
     case error(ACTION.AUTH):
+    case error(ACTION.EDIT_ACCOUNT):
+    case error(ACTION.UPDATE_PASSWORD):
       return {
         ...state,
         isLoading: false,
@@ -26,6 +31,8 @@ export default (state = initialState, action) => {
       };
 
     case success(ACTION.AUTH):
+    case success(ACTION.EDIT_ACCOUNT):
+    case success(ACTION.UPDATE_PASSWORD):
       return {
         ...state,
         currentUser: action.data.user,

@@ -7,7 +7,8 @@ import MuiAlert from '../../components/UI/Alert/MuiAlert';
 import { makeStyles } from '@material-ui/core/styles';
 import { Face, Fingerprint, Email } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { clearAuth, signUp } from '../../store/auth/authActions';
+import { signUp } from '../../store/auth/authActions';
+import ACTION from '../../store/constants';
 import useAuthHook from '../../store/auth/useAuthHook';
 import withLayout from '../../components/Hocs/withLayout';
 
@@ -38,10 +39,6 @@ const SignUp = ({ history }) => {
     }
   }, [isLoading, isError, currentUser]);
 
-  const closeSnackbar = () => {
-    dispatch(clearAuth());
-  };
-
   const handleSubmit = values => {
     dispatch(signUp(values));
   };
@@ -59,7 +56,11 @@ const SignUp = ({ history }) => {
           <form onSubmit={handleSubmit}>
             <Paper className={classes.padding}>
               <div className={classes.margin}>
-                <Snackbar open={isError} autoHideDuration={6000} onClose={closeSnackbar}>
+                <Snackbar
+                  open={isError}
+                  autoHideDuration={6000}
+                  onClose={() => dispatch({ type: ACTION.AUTH_CLEAR })}
+                >
                   <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
                 </Snackbar>
                 <Grid container spacing={2} alignItems="flex-end">

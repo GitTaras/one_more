@@ -8,7 +8,7 @@ export const getAutocompleteUsers = async name => {
 
 export const getAutocompleteHashTags = async hashTag => {
   const { data } = await axios.get(
-    `${restURL}/hash-tags/autocomplete/?hashTage=${hashTag}&limit=15`
+    `${restURL}/hash-tags/autocomplete/?hashtag=${hashTag}&limit=15`
   );
   return data || [];
 };

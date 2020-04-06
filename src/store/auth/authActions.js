@@ -39,17 +39,27 @@ export const signUp = userData => dispatch => {
   });
 };
 
-export const clearAuth = () => dispatch => {
-  localStorage.removeItem('token');
-  return dispatch({ type: ACTION.AUTH_CLEAR });
-};
+// export const clearAuth = () => dispatch => {
+//   return dispatch({ type: ACTION.AUTH_CLEAR });
+// };
 
 export const editAccount = userData => dispatch => {
   dispatch({
-    type: ACTION.AUTH,
+    type: ACTION.EDIT_ACCOUNT,
     request: {
       url: `${restURL}/users/`,
       data: userData,
+      method: 'put',
+    },
+  });
+};
+
+export const updatePassword = data => dispatch => {
+  dispatch({
+    type: ACTION.UPDATE_PASSWORD,
+    request: {
+      url: `${restURL}/users/update-password`,
+      data: data,
       method: 'put',
     },
   });

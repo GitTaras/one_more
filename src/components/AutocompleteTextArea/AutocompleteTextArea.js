@@ -6,7 +6,8 @@ import {
 import ReactTextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
 import '@webscopeio/react-textarea-autocomplete/style.css';
 
-const AutocompleteItem = ({ entity: { username } }) => <div>{username}</div>;
+const AutocompleteHashtag = ({ entity: { hashtag } }) => <div>{hashtag}</div>;
+const AutocompleteUsername = ({ entity: { username } }) => <div>{username}</div>;
 const AutocompleteLoading = () => <div>Loading ...</div>;
 
 const AutocompleteTextArea = props => {
@@ -19,13 +20,13 @@ const AutocompleteTextArea = props => {
   };
 
   const autocompleteTriggers = {
-    // '#': {
-    //   component: AutocompleteItem,
-    //   dataProvider: autocompleteHashDataProvider,
-    //   output: (word) => `#${word}`,
-    // },
+    '#': {
+      component: AutocompleteHashtag,
+      dataProvider: autocompleteHashDataProvider,
+      output: ({ hashtag }) => `#${hashtag}`,
+    },
     '@': {
-      component: AutocompleteItem,
+      component: AutocompleteUsername,
       dataProvider: autocompleteUsernameDataProvider,
       output: ({ username }) => `@${username}`,
     },

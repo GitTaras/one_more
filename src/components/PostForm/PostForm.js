@@ -12,7 +12,7 @@ const PostForm = props => {
   const handleSubmit = values => {
     if (!isLoading) {
       const hashTags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
-      const withoutSharp = hashTags ? hashTags.map(item => item.slice(1, Infinity)) : [];
+      const withoutSharp = hashTags ? hashTags.map(item => item.slice(1, item.length)) : [];
       return post({ message: values.message, hashtags: withoutSharp });
     }
   };
@@ -35,7 +35,7 @@ const PostForm = props => {
             <AutocompleteTextArea
               value={values.message}
               onChange={handleChange}
-              onKeyDown={e => (e.ctrlKey && e.key === 'Enter') && handleSubmit()}
+              onKeyDown={e => e.ctrlKey && e.key === 'Enter' && handleSubmit()}
               error={errors.message}
               name="message"
             />

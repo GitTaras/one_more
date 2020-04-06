@@ -42,6 +42,22 @@ export const editUserSchema = Yup.object().shape({
     .min(6, 'min length is 6 charts'),
 });
 
+export const updatePasswordSchema = Yup.object().shape({
+  oldPassword: Yup.string()
+    .required()
+    .trim()
+    .min(6, 'min length is 6 charts')
+    .max(50, 'max length is 50 charts'),
+  password: Yup.string()
+    .required()
+    .trim()
+    .max(50, 'max length is 50 charts')
+    .min(6, 'min length is 6 charts')
+    .test('not same', 'new password must differ from old', function(value) {
+      return this.parent.oldPassword !== value;
+    }),
+});
+
 export const signInSchema = Yup.object().shape({
   email: Yup.string()
     .required()

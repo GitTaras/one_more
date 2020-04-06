@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { IconButton, Toolbar, MenuItem, Menu, makeStyles, Link, Avatar } from '@material-ui/core';
 import { AccountCircle, HomeTwoTone } from '@material-ui/icons';
-import { clearAuth } from '../../store/auth/authActions';
 import Grid from '@material-ui/core/Grid';
+import ACTION from '../../store/constants';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -36,7 +36,7 @@ const Header = () => {
 
   const onSignOut = () => {
     history.replace('/sign-in');
-    dispatch(clearAuth());
+    dispatch({ type: ACTION.AUTH_CLEAR });
   };
 
   return (
