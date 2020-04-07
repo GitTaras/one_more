@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
-import MyTextField from '../../components/UI/TextField/TextField';
-import { Paper, Grid, Button, CircularProgress, Snackbar } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import MuiAlert from '../../components/UI/Alert/MuiAlert';
-import { Email, Fingerprint } from '@material-ui/icons';
 import { Formik, Field } from 'formik';
-import { signInSchema } from '../../utils/validators';
+import { Paper, Grid, Button, CircularProgress, Snackbar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Face, Fingerprint, Email } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
-import { signIn } from '../../store/auth/authActions';
-import useAuthHook from '../../store/auth/useAuthHook';
-import withLayout from '../../components/Hocs/withLayout';
-import ACTION from '../../store/constants';
+import MuiAlert from 'components/UI/Alert';
+import MyTextField from 'components/UI/TextField';
+import { signUpSchema } from 'utils/validators';
+import { signUp } from 'store/auth/auth-actions';
+import { clearAuth } from 'store/auth/auth-actions';
+import { useAuth } from 'store/auth/auth-selectors';
+import withLayout from 'components/Hocs/withLayout';
 
 const useStyles = makeStyles(theme => ({
   margin: {
@@ -23,31 +22,31 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialValues = {
+  username: '',
   email: '',
   password: '',
+  confirmPassword: '',
 };
 
-const SignIn = ({ history }) => {
-  const classes = useStyles();
+const SignUp = ({ history }) => {
+  const styles = useStyles();
   const dispatch = useDispatch();
-  const { isLoading, isError, errorMessage, currentUser } = useAuthHook();
+  const { isLoading, isError, errorMessage, currentUser } = useAuth();
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
-      const pathname = history.location.state?.from?.pathname;
-      const search = history.location.state?.from?.search;
-      history.push({ pathname: pathname || '/posts', search: search || '' });
+      history.push('/posts');
     }
   }, [isLoading, isError, currentUser]);
 
   const handleSubmit = values => {
-    dispatch(signIn(values));
+    dispatch(signUp(values));
   };
 
   return (
     <Formik
       initialValues={{ ...initialValues }}
-      validationSchema={signInSchema}
+      validationSchema={signUpSchema}
       onSubmit={values => {
         handleSubmit(values);
       }}
@@ -55,15 +54,31 @@ const SignIn = ({ history }) => {
       {({ handleSubmit }) => (
         <Grid item sm={8}>
           <form onSubmit={handleSubmit}>
-            <Paper className={classes.padding}>
-              <div className={classes.margin}>
+            <Paper className={styles.padding}>
+              <div className={styles.margin}>
                 <Snackbar
                   open={isError}
                   autoHideDuration={6000}
-                  onClose={() => dispatch({ type: ACTION.AUTH_CLEAR })}
+                  onClose={() => dispatch(clearAuth())}
                 >
                   <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
                 </Snackbar>
+                <Grid container spacing={2} alignItems="flex-end">
+                  <Grid item>
+                    <Face />
+                  </Grid>
+                  <Grid item md={true} sm={true} xs={true}>
+                    <Field
+                      component={MyTextField}
+                      name="username"
+                      id="username"
+                      label="User Name"
+                      type="text"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                </Grid>
                 <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>
                     <Email />
@@ -96,27 +111,35 @@ const SignIn = ({ history }) => {
                     />
                   </Grid>
                 </Grid>
+                <Grid container spacing={2} alignItems="flex-end">
+                  <Grid item>
+                    <Fingerprint />
+                  </Grid>
+                  <Grid item md={true} sm={true} xs={true}>
+                    <Field
+                      component={MyTextField}
+                      name="confirmPassword"
+                      id="confirmPassword"
+                      label="Confirm Password"
+                      type="password"
+                      fullWidth
+                      required
+                    />
+                  </Grid>
+                </Grid>
                 <Grid container justify="center" style={{ marginTop: '10px' }}>
                   <Button
                     type="submit"
-                    disabled={isLoading}
                     variant="outlined"
                     color="primary"
+                    disabled={isLoading}
                     style={{ textTransform: 'none' }}
                   >
-                    Sign In
+                    Sign Up
                   </Button>
                 </Grid>
                 <Grid container justify="center" style={{ marginTop: '10px' }}>
                   {isLoading && <CircularProgress size={24} />}
-                </Grid>
-                <Grid container justify="space-between">
-                  <Grid item>
-                    <Link to="#">Forgot password?</Link>
-                  </Grid>
-                  <Grid item>
-                    <Link to={'/sign-up'}>{"Don't have an account? Sign Up"}</Link>
-                  </Grid>
                 </Grid>
               </div>
             </Paper>
@@ -127,4 +150,4 @@ const SignIn = ({ history }) => {
   );
 };
 
-export default withLayout(SignIn);
+export default withLayout(SignUp);

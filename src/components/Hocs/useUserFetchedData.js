@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import useAuthHook from '../../store/auth/useAuthHook';
-import { auth } from '../../store/auth/authActions';
+import { useAuth } from '../../store/auth/auth-selectors';
+import { auth } from '../../store/auth/auth-actions';
 
 function useUserFetchedData() {
   const dispatch = useDispatch();
   let history = useHistory();
-  const { currentUser } = useAuthHook();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     if (!currentUser) {

@@ -5,7 +5,7 @@ import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { IconButton, Toolbar, MenuItem, Menu, makeStyles, Link, Avatar } from '@material-ui/core';
 import { AccountCircle, HomeTwoTone } from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
-import ACTION from '../../store/constants';
+import { clearAuth } from '../../store/auth/auth-actions';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.currentUser);
   let history = useHistory();
@@ -35,15 +35,18 @@ const Header = () => {
   };
 
   const onSignOut = () => {
+    //TODO remove token by utils/ smth...
+    // history.reload();
     history.replace('/sign-in');
-    dispatch({ type: ACTION.AUTH_CLEAR });
+    //TODO DELETE NEXT LINE
+    dispatch(clearAuth());
   };
 
   return (
     <Grid item sm={12} xl={12} xs={12}>
       <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
-          <IconButton component={RouterLink} to={'/posts'} className={classes.title}>
+        <Toolbar className={styles.toolbar}>
+          <IconButton component={RouterLink} to={'/posts'} className={styles.title}>
             <HomeTwoTone />
           </IconButton>
           {currentUser ? (

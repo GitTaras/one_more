@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Navigation from './Navigation';
-import { auth } from './store/auth/authActions';
+import { auth } from './store/auth/auth-actions';
 
 const App = () => {
   const dispatch = useDispatch();

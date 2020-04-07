@@ -2,7 +2,8 @@ import React from 'react';
 import {
   getAutocompleteUsers,
   getAutocompleteHashTags,
-} from '../../store/autocomplete/autocompleteActions';
+} from 'store/autocomplete/autocomplete-actions';
+import { useDispatch } from 'react-redux';
 import ReactTextareaAutocomplete from '@webscopeio/react-textarea-autocomplete';
 import '@webscopeio/react-textarea-autocomplete/style.css';
 
@@ -11,12 +12,18 @@ const AutocompleteUsername = ({ entity: { username } }) => <div>{username}</div>
 const AutocompleteLoading = () => <div>Loading ...</div>;
 
 const AutocompleteTextArea = props => {
-  const autocompleteHashDataProvider = async searchStr => {
-    return await getAutocompleteHashTags(searchStr);
+  const dispatch = useDispatch();
+
+  const autocompleteHashDataProvider = async searchString => {
+    return dispatch(getAutocompleteHashTags(searchString))
+      .then(({ data }) => data)
+      .catch(() => []);
   };
 
-  const autocompleteUsernameDataProvider = async searchStr => {
-    return await getAutocompleteUsers(searchStr);
+  const autocompleteUsernameDataProvider = async searchString => {
+    return dispatch(getAutocompleteUsers(searchString))
+      .then(({ data }) => data)
+      .catch(() => []);
   };
 
   const autocompleteTriggers = {

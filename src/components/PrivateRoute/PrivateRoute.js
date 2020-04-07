@@ -5,6 +5,8 @@ import withLayout from '../Hocs/withLayout';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const currentUser = useUserFetchedData();
+
+  //TODO MOVE WITH LAYOUT TO COMPONENT EXPORT
   const WrappedComponent = withLayout(Component);
 
   return (

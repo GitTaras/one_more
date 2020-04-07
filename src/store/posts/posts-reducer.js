@@ -1,5 +1,7 @@
-import ACTION from '../constants';
 import { success, error } from 'redux-saga-requests';
+//TODO DELETE AUTH_CLEAR ON SIGN OUT LOCATION.RELOAD REFRESH
+import { CREATE_POST, CLEAR_POSTS, DELETE_POST, FETCH_POSTS } from './posts-actions';
+import { AUTH_CLEAR } from '../auth/auth-actions';
 
 const initialState = {
   isError: false,
@@ -14,17 +16,17 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ACTION.AUTH_CLEAR:
-    case ACTION.CLEAN_POSTS:
+    case AUTH_CLEAR:
+    case CLEAR_POSTS:
       return { ...initialState };
 
-    case ACTION.FETCH_POSTS:
-    case ACTION.DELETE_POST:
+    case FETCH_POSTS:
+    case DELETE_POST:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
-    case error(ACTION.FETCH_POSTS):
-    case error(ACTION.POST_MESSAGE):
-    case error(ACTION.DELETE_POST):
+    case error(FETCH_POSTS):
+    case error(CREATE_POST):
+    case error(DELETE_POST):
       return {
         ...state,
         isLoading: false,
@@ -34,7 +36,7 @@ export default (state = initialState, action) => {
           : action.error.message,
       };
 
-    case success(ACTION.FETCH_POSTS):
+    case success(FETCH_POSTS):
       return {
         ...state,
         posts: [...state.posts, ...action.data.docs],
@@ -47,10 +49,10 @@ export default (state = initialState, action) => {
         limit: action.data.limit,
       };
 
-    case ACTION.POST_MESSAGE:
+    case CREATE_POST:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
-    case success(ACTION.POST_MESSAGE): {
+    case success(CREATE_POST): {
       const posts = [action.data, ...state.posts]; /*state.posts.concat(action.data);*/
       return {
         ...state,
@@ -61,7 +63,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case success(ACTION.DELETE_POST): {
+    case success(DELETE_POST): {
       return {
         ...state,
         isLoading: false,

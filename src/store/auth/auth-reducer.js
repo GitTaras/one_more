@@ -1,38 +1,39 @@
-import ACTION from '../constants';
 import { success, error } from 'redux-saga-requests';
+import { AUTH, AUTH_CLEAR_ERROR, EDIT_ACCOUNT, UPDATE_PASSWORD, AUTH_CLEAR } from './auth-actions';
 
 const initialState = {
   isError: false,
   isLoading: false,
-  errorMessage: '',
+  errorObj: null,
   currentUser: null,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ACTION.AUTH_CLEAR_ERROR:
+    case AUTH_CLEAR_ERROR:
       return { ...state, isError: false, errorMessage: '' };
 
-    case ACTION.AUTH:
-    case ACTION.EDIT_ACCOUNT:
-    case ACTION.UPDATE_PASSWORD:
+    case AUTH:
+    case EDIT_ACCOUNT:
+    case UPDATE_PASSWORD:
       return { ...state, isLoading: true, isError: false, errorMessage: '' };
 
-    case error(ACTION.AUTH):
-    case error(ACTION.EDIT_ACCOUNT):
-    case error(ACTION.UPDATE_PASSWORD):
+    case error(AUTH):
+    case error(EDIT_ACCOUNT):
+    case error(UPDATE_PASSWORD): {
+      // console.dir(action.error);
       return {
         ...state,
         isLoading: false,
         isError: true,
-        errorMessage: action.error.response
+        errorObj: action.error.response
           ? action.error.response.data || action.error.response.message
           : action.error.message,
       };
-
-    case success(ACTION.AUTH):
-    case success(ACTION.EDIT_ACCOUNT):
-    case success(ACTION.UPDATE_PASSWORD):
+    }
+    case success(AUTH):
+    case success(EDIT_ACCOUNT):
+    case success(UPDATE_PASSWORD):
       return {
         ...state,
         currentUser: action.data.user,
@@ -41,7 +42,7 @@ export default (state = initialState, action) => {
         errorMessage: '',
       };
 
-    case ACTION.AUTH_CLEAR:
+    case AUTH_CLEAR:
       return { ...initialState };
 
     default:

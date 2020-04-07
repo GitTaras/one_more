@@ -1,12 +1,12 @@
 import React from 'react';
 import moment from 'moment';
-import StyledMessage from './styled-post';
-import { deletePost } from '../../store/posts/postsActions';
 import { connect } from 'react-redux';
 import reactStringReplace from 'react-string-replace';
 import { Avatar, IconButton, Typography } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { useHistory, Link } from 'react-router-dom';
+import StyledMessage from './styled-post';
+import { deletePost } from 'store/posts/posts-actions';
 
 function Post(props) {
   const { id, message, createdAt, deletePost, author, currentUser } = props;

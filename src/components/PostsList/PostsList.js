@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Post from '../Post/Post';
+import Post from 'components/Post';
 import { List } from 'antd';
 import StyledPostsList from './styled-posts-lists';
-import { getPosts, cleanPosts } from '../../store/posts/postsActions';
+import { fetchPosts, cleanPosts } from '../../store/posts/posts-actions';
 import { withRouter } from 'react-router-dom';
 
 class PostsList extends Component {
@@ -29,7 +29,7 @@ class PostsList extends Component {
       this.username = location.pathname === '/posts' ? currentUser.username : match.params.username;
     }
 
-    this.props.getPosts(1, this.username, this.hashTag).then(({ data }) => {
+    this.props.fetchPosts(1, this.username, this.hashTag).then(({ data }) => {
       data.docs.length && this.scrollToTop();
     });
   }
@@ -62,7 +62,7 @@ class PostsList extends Component {
     //when delete message load more if the are some posts
     if (this.props.posts.length < this.props.limit && this.props.hasMore) {
       this.props.cleanPosts();
-      this.props.getPosts(1, this.username, this.hashTag);
+      this.props.fetchPosts(1, this.username, this.hashTag);
     }
     //scroll to previous last element
     if (snapshot !== null) {
@@ -86,7 +86,7 @@ class PostsList extends Component {
       !this.props.isLoading
     ) {
       // console.log('get more in handle scroll');
-      this.props.getPosts(this.props.nextPage, this.username, this.hashTag);
+      this.props.fetchPosts(this.props.nextPage, this.username, this.hashTag);
     }
   };
 
@@ -129,7 +129,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPosts: (page, username, hashTag) => dispatch(getPosts(page, username, hashTag)),
+  fetchPosts: (page, username, hashTag) => dispatch(fetchPosts(page, username, hashTag)),
   cleanPosts: () => dispatch(cleanPosts()),
 });
 

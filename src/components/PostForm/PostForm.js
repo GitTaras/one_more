@@ -1,19 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
-import { postSchema } from '../../utils/validators';
+import { postSchema } from 'utils/validators';
 import { Button } from 'antd';
-import { post } from '../../store/posts/postsActions';
+import { createPost } from 'store/posts/posts-actions';
 import StyledPostForm from './styled-post-form.js';
-import AutocompleteTextArea from '../AutocompleteTextArea/AutocompleteTextArea';
+import AutocompleteTextArea from './AutocompleteTextArea';
 
 const PostForm = props => {
-  const { isLoading, post } = props;
+  const { isLoading, createPost } = props;
   const handleSubmit = values => {
     if (!isLoading) {
       const hashTags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
       const withoutSharp = hashTags ? hashTags.map(item => item.slice(1, item.length)) : [];
-      return post({ message: values.message, hashtags: withoutSharp });
+      return createPost({ message: values.message, hashtags: withoutSharp });
     }
   };
 
@@ -56,7 +56,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  post: postData => dispatch(post(postData)),
+  createPost: postData => dispatch(createPost(postData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

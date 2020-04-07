@@ -15,12 +15,12 @@ import {
 import { AccountCircle, Edit, Cancel } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
-import { editUserSchema, updatePasswordSchema } from '../../utils/validators';
-import MyTextField from '../../components/UI/TextField/TextField';
-import { editAccount, updatePassword } from '../../store/auth/authActions';
-import ACTION from '../../store/constants';
-import useAuthHook from '../../store/auth/useAuthHook';
-import MuiAlert from '../../components/UI/Alert/MuiAlert';
+import { editUserSchema, updatePasswordSchema } from 'utils/validators';
+import MyTextField from 'components/UI/TextField';
+import { editAccount, updatePassword } from 'store/auth/auth-actions';
+import { AUTH_CLEAR_ERROR } from 'store/auth/auth-actions';
+import { useAuth } from 'store/auth/auth-selectors';
+import MuiAlert from 'components/UI/Alert';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,13 +61,13 @@ const useStyles = makeStyles(theme => ({
 
 export default () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
-  const { currentUser, isLoading, isError, errorMessage } = useAuthHook();
+  const styles = useStyles();
+  const { currentUser, isLoading, isError, errorObj } = useAuth();
   const [state, setState] = useState({ isEditingData: false, isEditingPassword: false });
 
   const updateUserData = values => {
     if (JSON.stringify(currentUser) !== JSON.stringify(values)) {
-      dispatch(editAccount(values));
+      return dispatch(editAccount(values));
     }
   };
 
@@ -78,28 +78,28 @@ export default () => {
 
   return (
     <Grid item sm={8}>
-      <Paper elevation={1} className={classes.padding}>
+      <Paper elevation={1} className={styles.padding}>
         <Snackbar
           open={isError}
           autoHideDuration={6000}
-          onClose={() => dispatch({ type: ACTION.AUTH_CLEAR_ERROR })}
+          onClose={() => dispatch({ type: AUTH_CLEAR_ERROR })}
         >
-          <MuiAlert severity="error">Error: {errorMessage.message}</MuiAlert>
+          <MuiAlert severity="error">Error: {errorObj?.message}</MuiAlert>
         </Snackbar>
-        <Card className={classes.root}>
+        <Card className={styles.root}>
           {currentUser.picture ? (
-            <CardMedia className={classes.media} image={currentUser.picture} title="user picture" />
+            <CardMedia className={styles.media} image={currentUser.picture} title="user picture" />
           ) : (
-            <div className={classes.media}>
+            <div className={styles.media}>
               {currentUser.avatar ? (
                 <Avatar
                   alt={currentUser.fullName}
                   srcSet={currentUser.avatar}
                   src={currentUser.avatar}
-                  className={classes.userAvatar}
+                  className={styles.userAvatar}
                 />
               ) : (
-                <AccountCircle className={classes.userIcon} fontSize={'large'} />
+                <AccountCircle className={styles.userIcon} fontSize={'large'} />
               )}
             </div>
           )}
@@ -108,7 +108,9 @@ export default () => {
               initialValues={{ ...currentUser }}
               validationSchema={editUserSchema}
               onSubmit={values => {
-                updateUserData(values);
+                updateUserData(values)
+                  .then(r => console.log(r))
+                  .catch(e => console.log(e));
               }}
             >
               {({ handleSubmit, resetForm }) => (
@@ -143,8 +145,8 @@ export default () => {
                     {isLoading && (
                       <LinearProgress
                         classes={{
-                          colorPrimary: classes.colorPrimary,
-                          barColorPrimary: classes.barColorPrimary,
+                          colorPrimary: styles.colorPrimary,
+                          barColorPrimary: styles.barColorPrimary,
                         }}
                       />
                     )}
@@ -166,7 +168,7 @@ export default () => {
                     <IconButton
                       onClick={() => toggleEdit('isEditingData', resetForm)}
                       aria-label="edit user"
-                      className={classes.alignRight}
+                      className={styles.alignRight}
                     >
                       {state.isEditingData ? <Cancel /> : <Edit />}
                     </IconButton>
@@ -176,7 +178,7 @@ export default () => {
             </Formik>
           </CardContent>
         </Card>
-        <Card className={classes.root}>
+        <Card className={styles.root}>
           <CardContent>
             <Formik
               initialValues={{ oldPassword: '', password: '' }}
@@ -219,8 +221,8 @@ export default () => {
                     {isLoading && (
                       <LinearProgress
                         classes={{
-                          colorPrimary: classes.colorPrimary,
-                          barColorPrimary: classes.barColorPrimary,
+                          colorPrimary: styles.colorPrimary,
+                          barColorPrimary: styles.barColorPrimary,
                         }}
                       />
                     )}
@@ -242,7 +244,7 @@ export default () => {
                     <IconButton
                       onClick={() => toggleEdit('isEditingPassword', resetForm)}
                       aria-label="edit user"
-                      className={classes.alignRight}
+                      className={styles.alignRight}
                     >
                       {state.isEditingPassword ? <Cancel /> : <Edit />}
                     </IconButton>

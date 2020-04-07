@@ -1,5 +1,5 @@
 import React from 'react';
-import PostsList from '../../components/PostsList/PostsList';
+import PostsList from 'components/PostsList';
 import Grid from '@material-ui/core/Grid';
 
 const PostsListPage = () => (

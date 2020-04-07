@@ -1,12 +1,10 @@
-import ACTION from '../constants';
-import { restURL } from '../../utils/baseURL';
-
-//get-user "auth"
+export const AUTH_CLEAR_ERROR = 'AUTH_CLEAR_ERROR';
+export const AUTH = 'AUTH';
 export const auth = () => dispatch => {
   return dispatch({
-    type: ACTION.AUTH,
+    type: AUTH,
     request: {
-      url: `${restURL}/auth/get-user`,
+      url: '/auth/get-user',
     },
     meta: {
       // asPromise: true,
@@ -16,9 +14,9 @@ export const auth = () => dispatch => {
 
 export const signIn = userData => dispatch => {
   return dispatch({
-    type: ACTION.AUTH,
+    type: AUTH,
     request: {
-      url: `${restURL}/auth/sign-in`,
+      url: '/auth/sign-in',
       data: userData,
       method: 'post',
     },
@@ -30,35 +28,39 @@ export const signIn = userData => dispatch => {
 
 export const signUp = userData => dispatch => {
   dispatch({
-    type: ACTION.AUTH,
+    type: AUTH,
     request: {
-      url: `${restURL}/auth/sign-up`,
+      url: '/auth/sign-up',
       data: userData,
       method: 'post',
     },
   });
 };
 
-// export const clearAuth = () => dispatch => {
-//   return dispatch({ type: ACTION.AUTH_CLEAR });
-// };
+export const AUTH_CLEAR = 'AUTH_CLEAR';
+export const clearAuth = () => ({ type: AUTH_CLEAR });
 
+export const EDIT_ACCOUNT = 'EDIT_ACCOUNT';
 export const editAccount = userData => dispatch => {
-  dispatch({
-    type: ACTION.EDIT_ACCOUNT,
+  return dispatch({
+    type: EDIT_ACCOUNT,
     request: {
-      url: `${restURL}/users/`,
+      url: '/users/',
       data: userData,
       method: 'put',
+    },
+    meta: {
+      asPromise: true,
     },
   });
 };
 
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
 export const updatePassword = data => dispatch => {
   dispatch({
-    type: ACTION.UPDATE_PASSWORD,
+    type: UPDATE_PASSWORD,
     request: {
-      url: `${restURL}/users/update-password`,
+      url: '/users/update-password',
       data: data,
       method: 'put',
     },
