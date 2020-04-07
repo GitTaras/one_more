@@ -84,7 +84,7 @@ export default () => {
           autoHideDuration={6000}
           onClose={() => dispatch({ type: ACTION.AUTH_CLEAR_ERROR })}
         >
-          <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
+          <MuiAlert severity="error">Error: {errorMessage.message}</MuiAlert>
         </Snackbar>
         <Card className={classes.root}>
           {currentUser.picture ? (
