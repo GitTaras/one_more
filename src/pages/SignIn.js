@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import MuiAlert from 'components/UI/Alert';
 import { Email, Fingerprint } from '@material-ui/icons';
 import { Formik, Field } from 'formik';
-import { signInSchema } from '../validators';
+import { signInSchema } from '../validation';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../store/auth/auth-actions';
@@ -30,7 +30,7 @@ const initialValues = {
 const SignIn = ({ history }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { isLoading, isError, errorMessage, currentUser } = useAuth();
+  const { isLoading, isError, errorObj, currentUser } = useAuth();
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
@@ -49,7 +49,7 @@ const SignIn = ({ history }) => {
       initialValues={{ ...initialValues }}
       validationSchema={signInSchema}
       onSubmit={values => {
-        handleSubmit(values);
+        dispatch(signIn(values));
       }}
     >
       {({ handleSubmit }) => (
@@ -62,7 +62,7 @@ const SignIn = ({ history }) => {
                   autoHideDuration={6000}
                   onClose={() => dispatch({ type: AUTH_CLEAR_ERROR })}
                 >
-                  <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
+                  <MuiAlert severity="error">Error: {errorObj?.message}</MuiAlert>
                 </Snackbar>
                 <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>

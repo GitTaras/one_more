@@ -6,7 +6,7 @@ import { Face, Fingerprint, Email } from '@material-ui/icons';
 import { useDispatch } from 'react-redux';
 import MuiAlert from 'components/UI/Alert';
 import MyTextField from 'components/UI/TextField';
-import { signUpSchema } from 'utils/validators';
+import { signUpSchema } from 'validation/index';
 import { signUp } from 'store/auth/auth-actions';
 import { clearAuth } from 'store/auth/auth-actions';
 import { useAuth } from 'store/auth/auth-selectors';
@@ -31,7 +31,7 @@ const initialValues = {
 const SignUp = ({ history }) => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { isLoading, isError, errorMessage, currentUser } = useAuth();
+  const { isLoading, isError, errorObj, currentUser } = useAuth();
 
   useEffect(() => {
     if (!isError && !isLoading && currentUser) {
@@ -61,7 +61,7 @@ const SignUp = ({ history }) => {
                   autoHideDuration={6000}
                   onClose={() => dispatch(clearAuth())}
                 >
-                  <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
+                  <MuiAlert severity="error">Error: {errorObj?.message}</MuiAlert>
                 </Snackbar>
                 <Grid container spacing={2} alignItems="flex-end">
                   <Grid item>

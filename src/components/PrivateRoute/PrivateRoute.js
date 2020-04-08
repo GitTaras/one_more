@@ -1,20 +1,19 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import useUserFetchedData from '../Hocs/useUserFetchedData';
-import withLayout from '../Hocs/withLayout';
+import { useAuth } from '../../store/auth/auth-selectors';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const currentUser = useUserFetchedData();
-
-  //TODO MOVE WITH LAYOUT TO COMPONENT EXPORT
-  const WrappedComponent = withLayout(Component);
+  console.log('renderPrivate');
+  const { currentUser } = useAuth();
+  //const currentUser = useUserFetchedData();
 
   return (
     <Route
       {...rest}
       render={props =>
         currentUser ? (
-          <WrappedComponent {...props} />
+          <Component {...props} />
         ) : (
           <Redirect
             to={{

@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import Post from 'components/Post';
 import { List } from 'antd';
 import StyledPostsList from './styled-posts-lists';
-import { fetchPosts, cleanPosts } from '../../store/posts/posts-actions';
+import { fetchPosts, clearPosts, clearPostsError } from '../../store/posts/posts-actions';
 import { withRouter } from 'react-router-dom';
+import MuiAlert from 'components/UI/Alert';
+import { Snackbar } from '@material-ui/core';
 
 class PostsList extends Component {
   constructor(props) {
@@ -55,13 +57,9 @@ class PostsList extends Component {
     if (prevProps.posts.length < this.props.posts.length && !snapshot) {
       return this.scrollToTop();
     }
-
-    if (this.props.isError) {
-      alert(`Error: ${this.props.errorMessage}`);
-    }
     //when delete message load more if the are some posts
     if (this.props.posts.length < this.props.limit && this.props.hasMore) {
-      this.props.cleanPosts();
+      this.props.clearPosts();
       this.props.fetchPosts(1, this.username, this.hashTag);
     }
     //scroll to previous last element
@@ -72,7 +70,7 @@ class PostsList extends Component {
   }
 
   componentWillUnmount() {
-    this.props.cleanPosts();
+    this.props.clearPosts();
   }
 
   handleScroll = () => {
@@ -91,7 +89,7 @@ class PostsList extends Component {
   };
 
   render() {
-    const { posts, isLoading } = this.props;
+    const { posts, isLoading, isError, errorMessage, clearPostsError } = this.props;
     return (
       <StyledPostsList
         onScroll={this.handleScroll}
@@ -111,6 +109,9 @@ class PostsList extends Component {
             </>
           )}
         />
+        <Snackbar open={isError} autoHideDuration={6000} onClose={clearPostsError}>
+          <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
+        </Snackbar>
       </StyledPostsList>
     );
   }
@@ -130,7 +131,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchPosts: (page, username, hashTag) => dispatch(fetchPosts(page, username, hashTag)),
-  cleanPosts: () => dispatch(cleanPosts()),
+  clearPosts: () => dispatch(clearPosts()),
+  clearPostsError: () => dispatch(clearPostsError()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));

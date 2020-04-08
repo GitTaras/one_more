@@ -15,12 +15,13 @@ import {
 import { AccountCircle, Edit, Cancel } from '@material-ui/icons';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
-import { editUserSchema, updatePasswordSchema } from 'utils/validators';
+import { editUserSchema, updatePasswordSchema } from 'validation/index';
 import MyTextField from 'components/UI/TextField';
 import { editAccount, updatePassword } from 'store/auth/auth-actions';
 import { AUTH_CLEAR_ERROR } from 'store/auth/auth-actions';
 import { useAuth } from 'store/auth/auth-selectors';
 import MuiAlert from 'components/UI/Alert';
+import withLayout from 'components/Hocs/withLayout';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -59,7 +60,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default () => {
+const UserProfile = () => {
   const dispatch = useDispatch();
   const styles = useStyles();
   const { currentUser, isLoading, isError, errorObj } = useAuth();
@@ -67,7 +68,7 @@ export default () => {
 
   const updateUserData = values => {
     if (JSON.stringify(currentUser) !== JSON.stringify(values)) {
-      return dispatch(editAccount(values));
+      dispatch(editAccount(values));
     }
   };
 
@@ -75,7 +76,8 @@ export default () => {
     resetForm();
     setState(state => ({ ...state, [field]: !state[field] }));
   };
-
+  // console.log('renderprof', state);
+  // console.log('renderprof', errorObj);
   return (
     <Grid item sm={8}>
       <Paper elevation={1} className={styles.padding}>
@@ -105,12 +107,14 @@ export default () => {
           )}
           <CardContent>
             <Formik
+              enableReinitialize={true}
+              initialErrors={errorObj?.errors}
               initialValues={{ ...currentUser }}
               validationSchema={editUserSchema}
               onSubmit={values => {
-                updateUserData(values)
-                  .then(r => console.log(r))
-                  .catch(e => console.log(e));
+                updateUserData(values);
+                // .then(r => console.log(r))
+                // .catch(e => console.log(e));
               }}
             >
               {({ handleSubmit, resetForm }) => (
@@ -181,9 +185,11 @@ export default () => {
         <Card className={styles.root}>
           <CardContent>
             <Formik
+              enableReinitialize={true}
+              initialErrors={errorObj?.errors}
               initialValues={{ oldPassword: '', password: '' }}
               validationSchema={updatePasswordSchema}
-              onSubmit={values => {
+              onSubmit={(values, { setValues }) => {
                 dispatch(updatePassword(values));
               }}
             >
@@ -258,3 +264,5 @@ export default () => {
     </Grid>
   );
 };
+
+export default withLayout(UserProfile);

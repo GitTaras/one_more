@@ -12,9 +12,10 @@ export const auth = () => dispatch => {
   });
 };
 
+export const SIGN_IN = 'SIGN_IN';
 export const signIn = userData => dispatch => {
   return dispatch({
-    type: AUTH,
+    type: SIGN_IN,
     request: {
       url: '/auth/sign-in',
       data: userData,
@@ -26,9 +27,10 @@ export const signIn = userData => dispatch => {
   });
 };
 
+export const SIGN_UP = 'SIGN_UP';
 export const signUp = userData => dispatch => {
   dispatch({
-    type: AUTH,
+    type: SIGN_UP,
     request: {
       url: '/auth/sign-up',
       data: userData,
@@ -49,15 +51,15 @@ export const editAccount = userData => dispatch => {
       data: userData,
       method: 'put',
     },
-    meta: {
-      asPromise: true,
-    },
+    // meta: {
+    //   asPromise: true,
+    // },
   });
 };
 
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
 export const updatePassword = data => dispatch => {
-  dispatch({
+  return dispatch({
     type: UPDATE_PASSWORD,
     request: {
       url: '/users/update-password',

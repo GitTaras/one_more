@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
-import { postSchema } from 'utils/validators';
+import { postSchema } from 'validation/index';
 import { Button } from 'antd';
 import { createPost } from 'store/posts/posts-actions';
 import StyledPostForm from './styled-post-form.js';
@@ -9,7 +9,7 @@ import AutocompleteTextArea from './AutocompleteTextArea';
 
 const PostForm = props => {
   const { isLoading, createPost } = props;
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
     if (!isLoading) {
       const hashTags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
       const withoutSharp = hashTags ? hashTags.map(item => item.slice(1, item.length)) : [];
@@ -20,14 +20,17 @@ const PostForm = props => {
   return (
     <StyledPostForm>
       <Formik
+        validateOnChange={false}
+        validateOnBlur={false}
         initialValues={{ message: '' }}
         validationSchema={postSchema}
         onSubmit={(values, { resetForm, setErrors }) => {
-          handleSubmit(values).then(() => {
-            resetForm({});
-            setErrors({});
-          });
-          // resetForm({});
+          handleSubmit(values)
+            .then(() => {
+              resetForm();
+              setErrors({});
+            })
+            .catch();
         }}
       >
         {({ handleSubmit, handleChange, values, errors }) => (
