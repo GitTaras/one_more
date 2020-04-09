@@ -33,7 +33,7 @@ function Post(props) {
           {firstChar + match}
         </Link>
       ) : (
-        <Link key={match + i} to={`/tags/${match}/posts`}>
+        <Link key={match + i} to={`/tags/${match.toLowerCase()}/posts`}>
           {firstChar + match}
         </Link>
       );
