@@ -9,11 +9,11 @@ export const clearPostsError = () => ({
 });
 
 export const FETCH_POSTS = 'FETCH_POSTS';
-export const fetchPosts = (page = 1, username = '', hashTag = '') => dispatch => {
+export const fetchPosts = (page = 1, username = '', hashtag = '') => dispatch => {
   return dispatch({
     type: FETCH_POSTS,
     request: {
-      url: `/posts/${username}?page=${page}&hash_tag=${hashTag}`,
+      url: `/posts/${username}?page=${page}&hash_tag=${hashtag}`,
     },
     meta: {
       asPromise: true,

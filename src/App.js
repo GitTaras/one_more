@@ -21,10 +21,10 @@ const useStyles = makeStyles(theme => ({
 const App = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const { /*currentUser,*/ isAuthorizing } = useAuth();
+  const { isAuthorizing } = useAuth();
   console.log('render main');
   useEffect(() => {
-    if (/*!currentUser &&*/ localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       dispatch(auth());
     }
   }, []);
@@ -40,7 +40,7 @@ const App = () => {
             barColorPrimary: styles.barColorPrimary,
           }}
         />
-      )}{' '}
+      )}
     </>
   );
 };

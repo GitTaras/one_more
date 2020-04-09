@@ -11,8 +11,8 @@ const PostForm = props => {
   const { isLoading, createPost } = props;
   const handleSubmit = async values => {
     if (!isLoading) {
-      const hashTags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
-      const withoutSharp = hashTags ? hashTags.map(item => item.slice(1, item.length)) : [];
+      const hashtags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
+      const withoutSharp = hashtags ? hashtags.map(item => item.slice(1, item.length)) : [];
       return createPost({ message: values.message, hashtags: withoutSharp });
     }
   };

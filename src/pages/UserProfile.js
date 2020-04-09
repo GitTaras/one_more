@@ -76,8 +76,6 @@ const UserProfile = () => {
     resetForm();
     setState(state => ({ ...state, [field]: !state[field] }));
   };
-  // console.log('renderprof', state);
-  // console.log('renderprof', errorObj);
   return (
     <Grid item sm={8}>
       <Paper elevation={1} className={styles.padding}>
@@ -265,4 +263,5 @@ const UserProfile = () => {
   );
 };
 
+// export default UserProfile;
 export default withLayout(UserProfile);

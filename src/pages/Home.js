@@ -15,4 +15,5 @@ const Home = () => (
   </Grid>
 );
 
+//export default Home;
 export default withLayout(Home);

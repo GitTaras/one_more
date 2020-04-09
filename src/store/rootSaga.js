@@ -22,11 +22,9 @@ axios.interceptors.response.use(
   error => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
-      // history.push('/sign-in');
       window.location.replace('/sign-in');
     }
     if (error.response && error.response.status === 404) {
-      // history.push('/not_found');
       window.location.replace('/not_found');
     }
     return Promise.reject(error);
@@ -54,7 +52,6 @@ function* rootSaga() {
       delete axios.defaults.headers.common['Authorization'];
       localStorage.removeItem('token');
     }),
-    //takeLatest(error(AUTH), action => localStorage.removeItem('token')),
   ]);
 }
 

@@ -45,6 +45,8 @@ const SignUp = ({ history }) => {
 
   return (
     <Formik
+      enableReinitialize={true}
+      initialErrors={errorObj?.errors}
       initialValues={{ ...initialValues }}
       validationSchema={signUpSchema}
       onSubmit={values => {
