@@ -8,7 +8,7 @@ import { useAuth } from 'store/auth/auth-selectors';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: 'flex',
+    marginTop: '50vh',
   },
   colorPrimary: {
     backgroundColor: '#e8eaf6',
@@ -22,7 +22,6 @@ const App = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
   const { isAuthorizing } = useAuth();
-  console.log('render main');
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(auth());
@@ -34,12 +33,14 @@ const App = () => {
       {!isAuthorizing ? (
         <Navigation />
       ) : (
-        <LinearProgress
-          classes={{
-            colorPrimary: styles.colorPrimary,
-            barColorPrimary: styles.barColorPrimary,
-          }}
-        />
+        <div className={styles.root}>
+          <LinearProgress
+            classes={{
+              colorPrimary: styles.colorPrimary,
+              barColorPrimary: styles.barColorPrimary,
+            }}
+          />
+        </div>
       )}
     </>
   );
