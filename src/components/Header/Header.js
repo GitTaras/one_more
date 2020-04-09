@@ -1,11 +1,11 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import { IconButton, Toolbar, MenuItem, Menu, makeStyles, Link, Avatar } from '@material-ui/core';
 import { AccountCircle, HomeTwoTone } from '@material-ui/icons';
-import { clearAuth } from '../../store/auth/authActions';
 import Grid from '@material-ui/core/Grid';
+import { clearAuth } from 'store/auth/auth-actions';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -18,11 +18,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   const dispatch = useDispatch();
   const currentUser = useSelector(state => state.auth.currentUser);
-  let history = useHistory();
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isOpen = Boolean(anchorEl);
 
@@ -35,17 +33,27 @@ const Header = () => {
   };
 
   const onSignOut = () => {
-    history.replace('/sign-in');
     dispatch(clearAuth());
+    window.location.reload();
   };
 
   return (
     <Grid item sm={12} xl={12} xs={12}>
       <AppBar position="static">
-        <Toolbar className={classes.toolbar}>
-          <IconButton component={RouterLink} to={'/posts'} className={classes.title}>
-            <HomeTwoTone />
-          </IconButton>
+        <Toolbar className={styles.toolbar}>
+          <div>
+            <IconButton component={RouterLink} to={'/posts'} className={styles.title}>
+              <HomeTwoTone />
+            </IconButton>
+            <IconButton
+              size="small"
+              component={RouterLink}
+              to={'/users/all/posts'}
+              className={styles.title}
+            >
+              All Posts
+            </IconButton>
+          </div>
           {currentUser ? (
             <div>
               <IconButton

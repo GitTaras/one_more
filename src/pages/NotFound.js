@@ -10,9 +10,9 @@ const useStyles = makeStyles({
 });
 
 const NotFound = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   return (
-    <Grid container item justify="center" alignItems="center" sm={12} className={classes.root}>
+    <Grid container item justify="center" alignItems="center" sm={12} className={styles.root}>
       <Typography variant="h5" component="h2">
         Not Found
       </Typography>

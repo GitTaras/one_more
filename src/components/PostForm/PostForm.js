@@ -1,36 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
-import { postSchema } from '../../utils/validators';
+import { postSchema } from 'validation/index';
 import { Button } from 'antd';
-import { post } from '../../store/posts/postsActions';
+import { createPost } from 'store/posts/posts-actions';
 import StyledPostForm from './styled-post-form.js';
-import AutocompleteTextArea from '../AutocompleteTextArea/AutocompleteTextArea';
+import AutocompleteTextArea from './AutocompleteTextArea';
 
 const PostForm = props => {
-  const { isLoading, post } = props;
-  const handleSubmit = values => {
+  const { isLoading, createPost } = props;
+  const handleSubmit = async values => {
     if (!isLoading) {
-      // Match #
-      //  ^@(\w+)|(\s)@(\w+)
-      //  ^@(\w+)|(\s)@(\w+)|@(\w+)
-      //  (?<=\s)#(\w+)|^#(\w+)
-      // const hashTags = values.message.much('');
-      return post({ message: values.message });
+      const hashtags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
+      const withoutSharp = hashtags ? hashtags.map(item => item.slice(1, item.length)) : [];
+      return createPost({ message: values.message, hashtags: withoutSharp });
     }
   };
 
   return (
     <StyledPostForm>
       <Formik
+        validateOnChange={false}
+        validateOnBlur={false}
         initialValues={{ message: '' }}
         validationSchema={postSchema}
         onSubmit={(values, { resetForm, setErrors }) => {
-          handleSubmit(values).then(() => {
-            resetForm({});
-            setErrors({});
-          });
-          // resetForm({});
+          handleSubmit(values)
+            .then(() => {
+              resetForm();
+              setErrors({});
+            })
+            .catch();
         }}
       >
         {({ handleSubmit, handleChange, values, errors }) => (
@@ -38,6 +38,7 @@ const PostForm = props => {
             <AutocompleteTextArea
               value={values.message}
               onChange={handleChange}
+              onKeyDown={e => e.ctrlKey && e.key === 'Enter' && handleSubmit()}
               error={errors.message}
               name="message"
             />
@@ -58,7 +59,7 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  post: message => dispatch(post(message)),
+  createPost: postData => dispatch(createPost(postData)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

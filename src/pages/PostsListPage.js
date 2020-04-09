@@ -1,6 +1,7 @@
 import React from 'react';
-import PostsList from '../../components/PostsList/PostsList';
+import PostsList from 'components/PostsList';
 import Grid from '@material-ui/core/Grid';
+import withLayout from 'components/Hocs/withLayout';
 
 const PostsListPage = () => (
   <Grid container direction={'row'} justify={'center'}>
@@ -9,5 +10,5 @@ const PostsListPage = () => (
     </Grid>
   </Grid>
 );
-
-export default PostsListPage;
+// export default PostsListPage;
+export default withLayout(PostsListPage);

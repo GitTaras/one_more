@@ -4,8 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import { requestsPromiseMiddleware } from 'redux-saga-requests';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootSaga from './rootSaga';
-import posts from './posts/postsReducer';
-import auth from './auth/authReducer';
+import posts from './posts/posts-reducer';
+import auth from './auth/auth-reducer';
 
 const reducers = combineReducers({
   posts,

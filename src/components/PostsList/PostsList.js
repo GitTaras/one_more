@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Post from '../Post/Post';
+import Post from 'components/Post';
 import { List } from 'antd';
 import StyledPostsList from './styled-posts-lists';
-import { getPosts, cleanPosts } from '../../store/posts/postsActions';
+import { fetchPosts, clearPosts, clearPostsError } from 'store/posts/posts-actions';
 import { withRouter } from 'react-router-dom';
+import MuiAlert from 'components/UI/Alert';
+import { Snackbar } from '@material-ui/core';
 
 class PostsList extends Component {
   constructor(props) {
     super(props);
+    console.log('PostsList', props);
     this.messagesStart = React.createRef();
     this.scroller = React.createRef();
     //this.username = '';
@@ -19,17 +22,18 @@ class PostsList extends Component {
   };
 
   componentDidMount() {
+    console.log('didmount');
     const { location, currentUser, match } = this.props;
     //debugger
     const pathprefix = location.pathname.split('/')[1];
 
     if (pathprefix === 'tags') {
-      this.hashTag = match.params.tag;
+      this.hashtag = match.params.tag;
     } else {
       this.username = location.pathname === '/posts' ? currentUser.username : match.params.username;
     }
 
-    this.props.getPosts(1, this.username, this.hashTag).then(({ data }) => {
+    this.props.fetchPosts(1, this.username, this.hashtag).then(({ data }) => {
       data.docs.length && this.scrollToTop();
     });
   }
@@ -52,17 +56,36 @@ class PostsList extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     //added new one post
+    console.log('did update');
+    if (prevProps.match.params !== this.props.match.params) {
+      console.log('not equal params');
+      const pathprefix = this.props.location.pathname.split('/')[1];
+
+      if (pathprefix === 'posts') {
+        console.log('pathprefix posts');
+        //do nothing would be resolved by router
+        this.username = this.props.currentUser.username;
+      } else {
+        this.hashtag = pathprefix === 'tags' ? this.props.match.params.tag : undefined;
+        if (this.props.match.params.username) {
+          this.username = this.props.match.params.username;
+        } else {
+          this.username = undefined;
+        }
+
+        this.props.clearPosts();
+        return this.props.fetchPosts(1, this.username, this.hashtag).then(({ data }) => {
+          data.docs.length && this.scrollToTop();
+        });
+      }
+    }
     if (prevProps.posts.length < this.props.posts.length && !snapshot) {
       return this.scrollToTop();
     }
-
-    if (this.props.isError) {
-      alert(`Error: ${this.props.errorMessage}`);
-    }
     //when delete message load more if the are some posts
     if (this.props.posts.length < this.props.limit && this.props.hasMore) {
-      this.props.cleanPosts();
-      this.props.getPosts(1, this.username, this.hashTag);
+      this.props.clearPosts();
+      this.props.fetchPosts(1, this.username, this.hashtag);
     }
     //scroll to previous last element
     if (snapshot !== null) {
@@ -72,7 +95,8 @@ class PostsList extends Component {
   }
 
   componentWillUnmount() {
-    this.props.cleanPosts();
+    console.log('will unmount');
+    this.props.clearPosts();
   }
 
   handleScroll = () => {
@@ -86,12 +110,12 @@ class PostsList extends Component {
       !this.props.isLoading
     ) {
       // console.log('get more in handle scroll');
-      this.props.getPosts(this.props.nextPage, this.username, this.hashTag);
+      this.props.fetchPosts(this.props.nextPage, this.username, this.hashtag);
     }
   };
 
   render() {
-    const { posts, isLoading } = this.props;
+    const { posts, isLoading, isError, errorMessage, clearPostsError } = this.props;
     return (
       <StyledPostsList
         onScroll={this.handleScroll}
@@ -111,6 +135,9 @@ class PostsList extends Component {
             </>
           )}
         />
+        <Snackbar open={isError} autoHideDuration={6000} onClose={clearPostsError}>
+          <MuiAlert severity="error">Error: {errorMessage}</MuiAlert>
+        </Snackbar>
       </StyledPostsList>
     );
   }
@@ -129,8 +156,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPosts: (page, username, hashTag) => dispatch(getPosts(page, username, hashTag)),
-  cleanPosts: () => dispatch(cleanPosts()),
+  fetchPosts: (page, username, hashtag) => dispatch(fetchPosts(page, username, hashtag)),
+  clearPosts: () => dispatch(clearPosts()),
+  clearPostsError: () => dispatch(clearPostsError()),
 });
 
+//export default connect(mapStateToProps, mapDispatchToProps)(PostsList);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));
