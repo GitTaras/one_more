@@ -10,5 +10,5 @@ const PostsListPage = () => (
     </Grid>
   </Grid>
 );
-// export default PostsListPage;
+
 export default withLayout(PostsListPage);

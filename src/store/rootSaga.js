@@ -17,20 +17,6 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = `Baerer: ${token}`;
 }
 
-axios.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response && error.response.status === 401) {
-      localStorage.removeItem('token');
-      window.location.replace('/sign-in');
-    }
-    if (error.response && error.response.status === 404) {
-      window.location.replace('/not_found');
-    }
-    return Promise.reject(error);
-  }
-);
-
 function* rootSaga() {
   yield createRequestInstance({ driver: createDriver(axios) });
   yield all([

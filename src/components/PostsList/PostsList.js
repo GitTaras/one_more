@@ -11,7 +11,6 @@ import { Snackbar } from '@material-ui/core';
 class PostsList extends Component {
   constructor(props) {
     super(props);
-    console.log('PostsList', props);
     this.messagesStart = React.createRef();
     this.scroller = React.createRef();
     //this.username = '';
@@ -22,9 +21,7 @@ class PostsList extends Component {
   };
 
   componentDidMount() {
-    console.log('didmount');
     const { location, currentUser, match } = this.props;
-    //debugger
     const pathprefix = location.pathname.split('/')[1];
 
     if (pathprefix === 'tags') {
@@ -55,14 +52,10 @@ class PostsList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    //added new one post
-    console.log('did update');
     if (prevProps.match.params !== this.props.match.params) {
-      console.log('not equal params');
       const pathprefix = this.props.location.pathname.split('/')[1];
 
       if (pathprefix === 'posts') {
-        console.log('pathprefix posts');
         //do nothing would be resolved by router
         this.username = this.props.currentUser.username;
       } else {
@@ -79,6 +72,7 @@ class PostsList extends Component {
         });
       }
     }
+    //added new one post
     if (prevProps.posts.length < this.props.posts.length && !snapshot) {
       return this.scrollToTop();
     }
@@ -95,7 +89,6 @@ class PostsList extends Component {
   }
 
   componentWillUnmount() {
-    console.log('will unmount');
     this.props.clearPosts();
   }
 
@@ -161,5 +154,4 @@ const mapDispatchToProps = dispatch => ({
   clearPostsError: () => dispatch(clearPostsError()),
 });
 
-//export default connect(mapStateToProps, mapDispatchToProps)(PostsList);
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsList));

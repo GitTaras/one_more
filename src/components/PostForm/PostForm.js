@@ -12,7 +12,7 @@ const PostForm = props => {
   const handleSubmit = async values => {
     if (!isLoading) {
       const hashtags = values.message.match(/(?<=\s)#(\w+)|^#(\w+)/gim);
-      const withoutSharp = hashtags ? hashtags.map(item => item.slice(1, item.length)) : [];
+      const withoutSharp = hashtags ? hashtags.map(item => item.slice(1, item.length).toLowerCase()) : [];
       return createPost({ message: values.message, hashtags: withoutSharp });
     }
   };
