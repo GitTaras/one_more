@@ -65,10 +65,11 @@ const UserProfile = () => {
   const styles = useStyles();
   const { currentUser, isLoading, isError, errorObj } = useAuth();
   const [state, setState] = useState({ isEditingData: false, isEditingPassword: false });
+  const [isSuccess, setSuccess] = useState(false);
 
   const updateUserData = values => {
     if (JSON.stringify(currentUser) !== JSON.stringify(values)) {
-      dispatch(editAccount(values));
+      dispatch(editAccount(values)).then(() => setSuccess(true));
     }
   };
 
@@ -85,6 +86,9 @@ const UserProfile = () => {
           onClose={() => dispatch({ type: AUTH_CLEAR_ERROR })}
         >
           <MuiAlert severity="error">Error: {errorObj?.message}</MuiAlert>
+        </Snackbar>
+        <Snackbar open={isSuccess} autoHideDuration={6000} onClose={() => setSuccess(false)}>
+          <MuiAlert severity="success">Success</MuiAlert>
         </Snackbar>
         <Card className={styles.root}>
           {currentUser.picture ? (
@@ -111,8 +115,6 @@ const UserProfile = () => {
               validationSchema={editUserSchema}
               onSubmit={values => {
                 updateUserData(values);
-                // .then(r => console.log(r))
-                // .catch(e => console.log(e));
               }}
             >
               {({ handleSubmit, resetForm }) => (
@@ -188,7 +190,7 @@ const UserProfile = () => {
               initialValues={{ oldPassword: '', password: '' }}
               validationSchema={updatePasswordSchema}
               onSubmit={(values, { setValues }) => {
-                dispatch(updatePassword(values));
+                dispatch(updatePassword(values)).then(() => setSuccess(true));
               }}
             >
               {({ handleSubmit, resetForm }) => (
@@ -263,5 +265,4 @@ const UserProfile = () => {
   );
 };
 
-// export default UserProfile;
 export default withLayout(UserProfile);
