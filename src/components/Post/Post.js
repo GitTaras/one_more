@@ -28,12 +28,12 @@ function Post(props) {
       return firstChar === '@' ? (
         <Link
           key={match + i}
-          to={currentUser.username === match ? `/posts` : `/users/${match}/posts`}
+          to={currentUser.username === match ? `/posts` : `/posts/users/${match}`}
         >
           {firstChar + match}
         </Link>
       ) : (
-        <Link key={match + i} to={`/tags/${match.toLowerCase()}/posts`}>
+        <Link key={match + i} to={`/posts/tags/${match.toLowerCase()}`}>
           {firstChar + match}
         </Link>
       );
@@ -45,7 +45,7 @@ function Post(props) {
   function handleAvatarClick() {
     currentUser.id === author.id
       ? history.push('/posts')
-      : history.push(`/users/${author.username}/posts`);
+      : history.push(`/posts/users/${author.username}`);
   }
 
   return (

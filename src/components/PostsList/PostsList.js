@@ -22,12 +22,23 @@ class PostsList extends Component {
 
   componentDidMount() {
     const { location, currentUser, match } = this.props;
-    const pathprefix = location.pathname.split('/')[1];
 
-    if (pathprefix === 'tags') {
+    if (location.pathname === '/posts') {
+      this.username = currentUser.username;
+      this.props.fetchPosts(1, this.username, this.hashtag).then(({ data }) => {
+        data.docs.length && this.scrollToTop();
+      });
+
+      return;
+    }
+
+    const subPath = location.pathname.split('/')[2];
+    if (subPath === 'tags') {
       this.hashtag = match.params.tag;
-    } else {
-      this.username = location.pathname === '/posts' ? currentUser.username : match.params.username;
+    }
+
+    if (subPath === 'users') {
+      this.username = match.params.username === currentUser.username ? currentUser.username : match.params.username;
     }
 
     this.props.fetchPosts(1, this.username, this.hashtag).then(({ data }) => {
@@ -52,26 +63,23 @@ class PostsList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.match.params !== this.props.match.params) {
-      const pathprefix = this.props.location.pathname.split('/')[1];
 
-      if (pathprefix === 'posts') {
-        //do nothing would be resolved by router
-        this.username = this.props.currentUser.username;
-      } else {
-        this.hashtag = pathprefix === 'tags' ? this.props.match.params.tag : undefined;
-        if (this.props.match.params.username) {
-          this.username = this.props.match.params.username;
-        } else {
-          this.username = undefined;
-        }
+    const {match, location, currentUser, history } = this.props;
 
-        this.props.clearPosts();
-        return this.props.fetchPosts(1, this.username, this.hashtag).then(({ data }) => {
-          data.docs.length && this.scrollToTop();
-        });
+    if (prevProps.match.params !== match.params) {
+      this.hashtag = match.params.tag ? match.params.tag : undefined;
+      this.username = match.params.username ? match.params.username : undefined;
+
+      if( this.username === currentUser.username ) {
+        return history.push('/posts');
       }
+
+      this.props.clearPosts();
+      return this.props.fetchPosts(1, this.username, this.hashtag).then(({ data }) => {
+        data.docs.length && this.scrollToTop();
+      });
     }
+
     //added new one post
     if (prevProps.posts.length < this.props.posts.length && !snapshot) {
       return this.scrollToTop();

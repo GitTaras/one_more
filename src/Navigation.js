@@ -13,9 +13,9 @@ const Navigation = () => (
     <Switch>
       <Route path="/sign-in/" component={SignIn} />
       <Route path="/sign-up/" component={SignUp} />
-      <PrivateRoute component={Home} path="/posts" />
-      <PrivateRoute path="/users/:username/posts" component={PostsListPage} />
-      <PrivateRoute path="/tags/:tag/posts" component={PostsListPage} />
+      <PrivateRoute component={Home} exact path="/posts" />
+      <PrivateRoute path="/posts/users/:username" component={PostsListPage} />
+      <PrivateRoute path="/posts/tags/:tag" component={PostsListPage} />
       <PrivateRoute path="/profile/" component={UserProfile} />
       <Route exact path="/">
         <Redirect to="/posts" />

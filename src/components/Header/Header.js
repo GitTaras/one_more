@@ -48,7 +48,7 @@ const Header = () => {
             <IconButton
               size="small"
               component={RouterLink}
-              to={'/users/all/posts'}
+              to={'/posts/users/all'}
               className={styles.title}
             >
               All Posts
