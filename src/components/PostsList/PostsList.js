@@ -38,7 +38,10 @@ class PostsList extends Component {
     }
 
     if (subPath === 'users') {
-      this.username = match.params.username === currentUser.username ? currentUser.username : match.params.username;
+      this.username =
+        match.params.username === currentUser.username
+          ? currentUser.username
+          : match.params.username;
     }
 
     this.props.fetchPosts(1, this.username, this.hashtag).then(({ data }) => {
@@ -63,14 +66,13 @@ class PostsList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-
-    const {match, location, currentUser, history } = this.props;
+    const { match, location, currentUser, history } = this.props;
 
     if (prevProps.match.params !== match.params) {
       this.hashtag = match.params.tag ? match.params.tag : undefined;
       this.username = match.params.username ? match.params.username : undefined;
 
-      if( this.username === currentUser.username ) {
+      if (this.username === currentUser.username) {
         return history.push('/posts');
       }
 

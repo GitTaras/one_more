@@ -68,8 +68,13 @@ const UserProfile = () => {
   const [isSuccess, setSuccess] = useState(false);
 
   const updateUserData = values => {
-    if (JSON.stringify(currentUser) !== JSON.stringify(values)) {
-      dispatch(editAccount(values)).then(() => setSuccess(true));
+    if (
+      JSON.stringify({ username: currentUser.username, email: currentUser.email }) !==
+      JSON.stringify(values)
+    ) {
+      dispatch(editAccount(values))
+        .then(() => setSuccess(true))
+        .catch(() => {});
     }
   };
 
@@ -111,7 +116,7 @@ const UserProfile = () => {
             <Formik
               enableReinitialize={true}
               initialErrors={errorObj?.errors}
-              initialValues={{ ...currentUser }}
+              initialValues={{ username: currentUser.username, email: currentUser.email }}
               validationSchema={editUserSchema}
               onSubmit={values => {
                 updateUserData(values);
@@ -190,7 +195,9 @@ const UserProfile = () => {
               initialValues={{ oldPassword: '', password: '' }}
               validationSchema={updatePasswordSchema}
               onSubmit={(values, { setValues }) => {
-                dispatch(updatePassword(values)).then(() => setSuccess(true));
+                dispatch(updatePassword(values))
+                  .then(() => setSuccess(true))
+                  .catch(()=>{});
               }}
             >
               {({ handleSubmit, resetForm }) => (
