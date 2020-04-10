@@ -11,8 +11,9 @@ import {
 } from './auth/auth-actions';
 import { all, takeLatest } from '@redux-saga/core/effects';
 
-axios.defaults.baseURL = process.env.restURL || 'http://localhost:8000';
+axios.defaults.baseURL = process.env.REACT_APP_restURL;
 const token = localStorage.getItem('token');
+
 if (token) {
   axios.defaults.headers.common['Authorization'] = `Baerer: ${token}`;
 }

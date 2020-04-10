@@ -11,8 +11,8 @@ import PostsListPage from 'pages/PostsListPage';
 const Navigation = () => (
   <Router>
     <Switch>
-      <Route path="/sign-in/" component={SignIn} />
-      <Route path="/sign-up/" component={SignUp} />
+      <Route path="/sign-in" component={SignIn} />
+      <Route path="/sign-up" component={SignUp} />
       <PrivateRoute component={Home} exact path="/posts" />
       <PrivateRoute path="/posts/users/:username" component={PostsListPage} />
       <PrivateRoute path="/posts/tags/:tag" component={PostsListPage} />

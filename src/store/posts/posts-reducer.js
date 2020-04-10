@@ -65,7 +65,7 @@ export default (state = initialState, action) => {
         errorMessage: '',
         hasMore: action.data.page < action.data.pages,
         page: action.data.page,
-        nextPage: action.data.nextPage,
+        nextPage: +action.data.page + 1,
         limit: action.data.limit,
       };
 
