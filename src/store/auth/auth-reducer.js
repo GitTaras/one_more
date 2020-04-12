@@ -7,6 +7,7 @@ import {
   AUTH_CLEAR,
   SIGN_IN,
   SIGN_UP,
+  EDIT_AVATAR,
 } from './auth-actions';
 
 const initialState = {
@@ -29,13 +30,15 @@ export default (state = initialState, action) => {
     case SIGN_UP:
     case EDIT_ACCOUNT:
     case UPDATE_PASSWORD:
+    case EDIT_AVATAR:
       return { ...state, isLoading: true, isError: false, errorObj: null };
 
     case error(AUTH):
     case error(SIGN_IN):
     case error(SIGN_UP):
     case error(EDIT_ACCOUNT):
-    case error(UPDATE_PASSWORD): {
+    case error(UPDATE_PASSWORD):
+    case error(EDIT_AVATAR): {
       //console.dir(action.error);
       return {
         ...state,
@@ -55,6 +58,7 @@ export default (state = initialState, action) => {
     case success(SIGN_UP):
     case success(EDIT_ACCOUNT):
     case success(UPDATE_PASSWORD):
+    case success(EDIT_AVATAR):
       return {
         ...state,
         currentUser: action.data.user,

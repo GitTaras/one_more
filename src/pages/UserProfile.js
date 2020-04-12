@@ -6,7 +6,7 @@ import {
   Paper,
   CardContent,
   Card,
-  CardMedia,
+
   Button,
   Avatar,
   Snackbar,
@@ -17,7 +17,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
 import { editUserSchema, updatePasswordSchema } from 'validation/index';
 import MyTextField from 'components/UI/TextField';
-import { editAccount, updatePassword } from 'store/auth/auth-actions';
+import { editAccount, updatePassword, editAvatar } from 'store/auth/auth-actions';
 import { AUTH_CLEAR_ERROR } from 'store/auth/auth-actions';
 import { useAuth } from 'store/auth/auth-selectors';
 import MuiAlert from 'components/UI/Alert';
@@ -82,6 +82,26 @@ const UserProfile = () => {
     resetForm();
     setState(state => ({ ...state, [field]: !state[field] }));
   };
+
+  const openFileInput = () => {
+    const fileInput = document.getElementById('file');
+    fileInput.click();
+  };
+
+  const onFileInputChange = e => {
+    const file = e.target.files[0];
+
+    document.getElementById('file').value = null;
+
+    if (!file) {
+      return;
+    }
+
+    dispatch(editAvatar(file))
+      .then(() => setSuccess(true))
+      .catch(() => {});
+  };
+
   return (
     <Grid item sm={8}>
       <Paper elevation={1} className={styles.padding}>
@@ -96,21 +116,27 @@ const UserProfile = () => {
           <MuiAlert severity="success">Success</MuiAlert>
         </Snackbar>
         <Card className={styles.root}>
-          {currentUser.picture ? (
-            <CardMedia className={styles.media} image={currentUser.picture} title="user picture" />
-          ) : (
-            <div className={styles.media}>
-              {currentUser.avatar ? (
-                <Avatar
-                  alt={currentUser.fullName}
-                  srcSet={currentUser.avatar}
-                  src={currentUser.avatar}
-                  className={styles.userAvatar}
-                />
-              ) : (
-                <AccountCircle className={styles.userIcon} fontSize={'large'} />
-              )}
-            </div>
+          <div className={styles.media}>
+            {currentUser.avatar ? (
+              <Avatar
+                alt={currentUser.username}
+                srcSet={
+                  currentUser.avatar.startsWith('http')
+                    ? currentUser.avatar
+                    : `http://localhost:8000${currentUser.avatar}`
+                }
+                src={
+                  currentUser.avatar.startsWith('http')
+                    ? currentUser.avatar
+                    : `http://localhost:8000${currentUser.avatar}`
+                }
+                className={styles.userAvatar}
+                onClick={openFileInput}
+              />
+            ) : (
+              <AccountCircle className={styles.userIcon} fontSize={'large'} />
+            )}
+          </div>
           )}
           <CardContent>
             <Formik
@@ -186,6 +212,13 @@ const UserProfile = () => {
               )}
             </Formik>
           </CardContent>
+          <input
+            type="file"
+            onChange={onFileInputChange}
+            accept="image/x-png,image/gif,image/jpeg"
+            style={{ display: 'none' }}
+            id="file"
+          />
         </Card>
         <Card className={styles.root}>
           <CardContent>
@@ -194,10 +227,10 @@ const UserProfile = () => {
               initialErrors={errorObj?.errors}
               initialValues={{ oldPassword: '', password: '' }}
               validationSchema={updatePasswordSchema}
-              onSubmit={(values, { setValues }) => {
+              onSubmit={(values) => {
                 dispatch(updatePassword(values))
                   .then(() => setSuccess(true))
-                  .catch(()=>{});
+                  .catch(() => {});
               }}
             >
               {({ handleSubmit, resetForm }) => (

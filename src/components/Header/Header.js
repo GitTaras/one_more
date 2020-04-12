@@ -64,7 +64,19 @@ const Header = () => {
                 color="inherit"
               >
                 {currentUser.avatar ? (
-                  <Avatar alt="Remy Sharp" srcSet={currentUser.avatar} src={currentUser.avatar} />
+                  <Avatar
+                    alt={currentUser.username}
+                    srcSet={
+                      currentUser.avatar.startsWith('http')
+                        ? currentUser.avatar
+                        : `http://localhost:8000${currentUser.avatar}`
+                    }
+                    src={
+                      currentUser.avatar.startsWith('http')
+                        ? currentUser.avatar
+                        : `http://localhost:8000${currentUser.avatar}`
+                    }
+                  />
                 ) : (
                   <AccountCircle />
                 )}

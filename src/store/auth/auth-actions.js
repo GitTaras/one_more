@@ -43,6 +43,24 @@ export const editAccount = userData => ({
   },
 });
 
+export const EDIT_AVATAR = 'EDIT_AVATAR';
+export const editAvatar = file => {
+  const formData = new FormData();
+  formData.append('avatar', file);
+
+  return {
+    type: EDIT_AVATAR,
+    request: {
+      url: '/users/update-avatar',
+      data: formData,
+      method: 'put',
+    },
+    meta: {
+      asPromise: true,
+    },
+  };
+};
+
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
 export const updatePassword = data => ({
   type: UPDATE_PASSWORD,
