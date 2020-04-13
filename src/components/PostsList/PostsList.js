@@ -66,7 +66,7 @@ class PostsList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { match, location, currentUser, history } = this.props;
+    const { match, currentUser, history } = this.props;
 
     if (prevProps.match.params !== match.params) {
       this.hashtag = match.params.tag ? match.params.tag : undefined;

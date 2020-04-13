@@ -52,7 +52,19 @@ function Post(props) {
     <StyledMessage>
       {author.avatar ? (
         <IconButton onClick={handleAvatarClick}>
-          <Avatar alt="Remy Sharp" srcSet={author.avatar} src={author.avatar} />
+          <Avatar
+            alt={author.username}
+            srcSet={
+              author.avatar.startsWith('http')
+                ? author.avatar
+                : `http://localhost:8000${author.avatar}`
+            }
+            src={
+              author.avatar.startsWith('http')
+                ? author.avatar
+                : `http://localhost:8000${author.avatar}`
+            }
+          />
         </IconButton>
       ) : (
         <AccountCircle />
