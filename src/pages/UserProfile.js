@@ -6,7 +6,6 @@ import {
   Paper,
   CardContent,
   Card,
-
   Button,
   Avatar,
   Snackbar,
@@ -43,8 +42,8 @@ const useStyles = makeStyles(theme => ({
     flex: 1,
   },
   userAvatar: {
-    height: '100%',
-    width: 'fit-content',
+    height: 200,
+    width: 200,
   },
   email: {
     marginBottom: 12,
@@ -137,7 +136,6 @@ const UserProfile = () => {
               <AccountCircle className={styles.userIcon} fontSize={'large'} />
             )}
           </div>
-          )}
           <CardContent>
             <Formik
               enableReinitialize={true}
