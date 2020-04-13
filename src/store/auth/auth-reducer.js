@@ -2,18 +2,20 @@ import { success, error } from 'redux-saga-requests';
 import {
   AUTH,
   AUTH_CLEAR_ERROR,
-  EDIT_ACCOUNT,
+  UPDATE_ACCOUNT,
   UPDATE_PASSWORD,
   AUTH_CLEAR,
   SIGN_IN,
   SIGN_UP,
-  EDIT_AVATAR,
+  UPDATE_AVATAR,
 } from './auth-actions';
 
 const initialState = {
   isError: false,
   isAuthorizing: false,
   isLoading: false,
+  isUpdatingPassword: false,
+  isUpdatingAvatar: false,
   errorObj: null,
   currentUser: null,
 };
@@ -28,18 +30,17 @@ export default (state = initialState, action) => {
 
     case SIGN_IN:
     case SIGN_UP:
-    case EDIT_ACCOUNT:
-    case UPDATE_PASSWORD:
-    case EDIT_AVATAR:
+    case UPDATE_ACCOUNT:
       return { ...state, isLoading: true, isError: false, errorObj: null };
+    case UPDATE_PASSWORD:
+      return { ...state, isUpdatingPassword: true, isError: false, errorObj: null };
+    case UPDATE_AVATAR:
+      return { ...state, isUpdatingAvatar: true, isError: false, errorObj: null };
 
     case error(AUTH):
     case error(SIGN_IN):
     case error(SIGN_UP):
-    case error(EDIT_ACCOUNT):
-    case error(UPDATE_PASSWORD):
-    case error(EDIT_AVATAR): {
-      //console.dir(action.error);
+    case error(UPDATE_ACCOUNT):
       return {
         ...state,
         isAuthorizing: false,
@@ -52,18 +53,62 @@ export default (state = initialState, action) => {
           errors: action.error?.response?.data?.errors,
         },
       };
+
+    case error(UPDATE_PASSWORD):
+      return {
+        ...state,
+        isUpdatingPassword: false,
+        isError: true,
+        errorObj: {
+          message: action.error.response
+            ? action.error.response.data.message
+            : action.error.message,
+          errors: action.error?.response?.data?.errors,
+        },
+      };
+
+    case error(UPDATE_AVATAR): {
+      //console.dir(action.error);
+      return {
+        ...state,
+        isUpdatingAvatar: false,
+        isError: true,
+        errorObj: {
+          message: action.error.response
+            ? action.error.response.data.message
+            : action.error.message,
+          errors: action.error?.response?.data?.errors,
+        },
+      };
     }
+
     case success(AUTH):
     case success(SIGN_IN):
     case success(SIGN_UP):
-    case success(EDIT_ACCOUNT):
-    case success(UPDATE_PASSWORD):
-    case success(EDIT_AVATAR):
+    case success(UPDATE_ACCOUNT):
       return {
         ...state,
         currentUser: action.data.user,
         isAuthorizing: false,
         isLoading: false,
+        isError: false,
+        errorObj: null,
+      };
+
+    case success(UPDATE_PASSWORD):
+      return {
+        ...state,
+        currentUser: action.data.user,
+        isUpdatingPassword: false,
+        isError: false,
+        errorObj: null,
+      };
+
+    case success(UPDATE_AVATAR):
+      return {
+        ...state,
+        currentUser: action.data.user,
+        isUpdatingAvatar: false,
         isError: false,
         errorObj: null,
       };

@@ -16,7 +16,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
 import { editUserSchema, updatePasswordSchema } from 'validation/index';
 import MyTextField from 'components/UI/TextField';
-import { editAccount, updatePassword, editAvatar } from 'store/auth/auth-actions';
+import { updateAccount, updatePassword, updateAvatar } from 'store/auth/auth-actions';
 import { AUTH_CLEAR_ERROR } from 'store/auth/auth-actions';
 import { useAuth } from 'store/auth/auth-selectors';
 import MuiAlert from 'components/UI/Alert';
@@ -62,7 +62,14 @@ const useStyles = makeStyles(theme => ({
 const UserProfile = () => {
   const dispatch = useDispatch();
   const styles = useStyles();
-  const { currentUser, isLoading, isError, errorObj } = useAuth();
+  const {
+    currentUser,
+    isLoading,
+    isError,
+    errorObj,
+    isUpdatingPassword,
+    isUpdatingAvatar,
+  } = useAuth();
   const [state, setState] = useState({ isEditingData: false, isEditingPassword: false });
   const [isSuccess, setSuccess] = useState(false);
 
@@ -71,7 +78,7 @@ const UserProfile = () => {
       JSON.stringify({ username: currentUser.username, email: currentUser.email }) !==
       JSON.stringify(values)
     ) {
-      dispatch(editAccount(values))
+      dispatch(updateAccount(values))
         .then(() => setSuccess(true))
         .catch(() => {});
     }
@@ -96,7 +103,7 @@ const UserProfile = () => {
       return;
     }
 
-    dispatch(editAvatar(file))
+    dispatch(updateAvatar(file))
       .then(() => setSuccess(true))
       .catch(() => {});
   };
@@ -136,6 +143,14 @@ const UserProfile = () => {
               <AccountCircle className={styles.userIcon} fontSize={'large'} />
             )}
           </div>
+          {isUpdatingAvatar && (
+            <LinearProgress
+              classes={{
+                colorPrimary: styles.colorPrimary,
+                barColorPrimary: styles.barColorPrimary,
+              }}
+            />
+          )}
           <CardContent>
             <Formik
               enableReinitialize={true}
@@ -176,12 +191,14 @@ const UserProfile = () => {
                       />
                     </Grid>
                     {isLoading && (
-                      <LinearProgress
-                        classes={{
-                          colorPrimary: styles.colorPrimary,
-                          barColorPrimary: styles.barColorPrimary,
-                        }}
-                      />
+                      <Grid item>
+                        <LinearProgress
+                          classes={{
+                            colorPrimary: styles.colorPrimary,
+                            barColorPrimary: styles.barColorPrimary,
+                          }}
+                        />
+                      </Grid>
                     )}
                   </Grid>
                   <Grid container spacing={2} direction="row">
@@ -225,7 +242,7 @@ const UserProfile = () => {
               initialErrors={errorObj?.errors}
               initialValues={{ oldPassword: '', password: '' }}
               validationSchema={updatePasswordSchema}
-              onSubmit={(values) => {
+              onSubmit={values => {
                 dispatch(updatePassword(values))
                   .then(() => setSuccess(true))
                   .catch(() => {});
@@ -262,13 +279,15 @@ const UserProfile = () => {
                         component={MyTextField}
                       />
                     </Grid>
-                    {isLoading && (
-                      <LinearProgress
-                        classes={{
-                          colorPrimary: styles.colorPrimary,
-                          barColorPrimary: styles.barColorPrimary,
-                        }}
-                      />
+                    {isUpdatingPassword && (
+                      <Grid item>
+                        <LinearProgress
+                          classes={{
+                            colorPrimary: styles.colorPrimary,
+                            barColorPrimary: styles.barColorPrimary,
+                          }}
+                        />
+                      </Grid>
                     )}
                   </Grid>
                   <Grid container spacing={2} direction="row">
@@ -278,7 +297,7 @@ const UserProfile = () => {
                           type="submit"
                           variant="outlined"
                           color="primary"
-                          disabled={isLoading}
+                          disabled={isUpdatingPassword}
                           style={{ textTransform: 'none' }}
                         >
                           Save

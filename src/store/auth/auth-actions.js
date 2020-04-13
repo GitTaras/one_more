@@ -30,9 +30,9 @@ export const signUp = userData => ({
 export const AUTH_CLEAR = 'AUTH_CLEAR';
 export const clearAuth = () => ({ type: AUTH_CLEAR });
 
-export const EDIT_ACCOUNT = 'EDIT_ACCOUNT';
-export const editAccount = userData => ({
-  type: EDIT_ACCOUNT,
+export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
+export const updateAccount = userData => ({
+  type: UPDATE_ACCOUNT,
   request: {
     url: '/users/',
     data: userData,
@@ -43,13 +43,13 @@ export const editAccount = userData => ({
   },
 });
 
-export const EDIT_AVATAR = 'EDIT_AVATAR';
-export const editAvatar = file => {
+export const UPDATE_AVATAR = 'UPDATE_AVATAR';
+export const updateAvatar = file => {
   const formData = new FormData();
   formData.append('avatar', file);
 
   return {
-    type: EDIT_AVATAR,
+    type: UPDATE_AVATAR,
     request: {
       url: '/users/update-avatar',
       data: formData,

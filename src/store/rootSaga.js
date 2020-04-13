@@ -4,7 +4,8 @@ import { createDriver } from 'redux-saga-requests-axios';
 import {
   AUTH,
   AUTH_CLEAR,
-  EDIT_ACCOUNT,
+  UPDATE_ACCOUNT,
+  UPDATE_AVATAR,
   SIGN_IN,
   SIGN_UP,
   UPDATE_PASSWORD,
@@ -24,8 +25,9 @@ function* rootSaga() {
     watchRequests(),
     takeLatest(
       [
+        success(UPDATE_AVATAR),
         success(UPDATE_PASSWORD),
-        success(EDIT_ACCOUNT),
+        success(UPDATE_ACCOUNT),
         success(SIGN_UP),
         success(SIGN_IN),
         success(AUTH),
